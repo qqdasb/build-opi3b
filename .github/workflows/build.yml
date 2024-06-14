@@ -40,6 +40,12 @@ jobs:
         sudo chroot arch pacman-key --init
         sudo chroot arch pacman-key --populate
         sudo chroot arch pacman -Syyu
-        sudo chroot arch 
+        sudo chroot arch pacman -S make base-devel git sudo
+        sudo chroot arch pacman -R linux-arm64 linux-firmware
+        sudo chroot arch git clone https://github.com/armbian/firmware
+        sudo chroot arch mv firmware /usr/lib/
+        sudo chroot arch ldconfig
+        sudo chroot arch ls /usr/lib/modules
+        sudo chroot arch
     - name: make distcheck
       run: make distcheck
