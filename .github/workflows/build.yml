@@ -35,6 +35,8 @@ jobs:
       run: |
         cd linux-rockchip
         make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
+        cd ..
+        mv linux-rockchip arch/linux
     - name: Build rootfs
       run: |
         sudo chroot arch pacman-key --init
@@ -45,9 +47,9 @@ jobs:
         sudo chroot arch git clone https://github.com/armbian/firmware
         sudo chroot arch mv firmware /usr/lib/
         sudo chroot arch ldconfig
-        sudo chroot arch 
-        sudo chroot arch 
-        sudo chroot arch 
+        sudo chroot arch make linux/ INSTALL_MOD_PATH=/usr modules_install
+        sudo chroot arch make linux/ dtbs_install
+        sudo chroot arch make linux/ INSTALL_HDR_PATH=/ headers_install
         sudo chroot arch ls /usr/lib/modules && ls /boot
         sudo chroot arch mkinitcpio --generate /boot/initrd.img- --kernel 
         sudo umount ~/workspace/arch/run
