@@ -35,7 +35,11 @@ jobs:
       run: |
         cd linux-rockchip
         make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
-    - name: make check
-      run: make check
+    - name: Build rootfs
+      run: |
+        sudo chroot arch pacman-key --init
+        sudo chroot arch pacman-key --populate
+        sudo chroot arch pacman -Syyu
+        sudo chroot arch 
     - name: make distcheck
       run: make distcheck
