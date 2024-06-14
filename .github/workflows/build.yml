@@ -17,7 +17,7 @@ jobs:
       run: |
         sudo apt update
         sudo apt install build-essential openssl pkg-config libssl-dev libncurses5-dev pkg-config minizip libelf-dev flex bison  libc6-dev libidn11-dev rsync bc liblz4-tool gcc-aarch64-linux-gnu dpkg-dev dpkg git qemu-user-static
-        wget https://github.com/qqdasb/my-files/raw/master/linux-rk35xx-legacy.config
+        wget https://raw.githubusercontent.com/qqdasb/my-files/master/linux-rk35xx-legacy.config
         git clone https://github.com/armbian/linux-rockchip/
         mv linux-rk35xx-legacy.config linux-rockchip/.config
         wget http://os.archlinuxarm.org/os/ArchLinuxARM-aarch64-latest.tar.gz
@@ -65,3 +65,7 @@ jobs:
         sudo umount rootfs/
         e2fsck -p -f archlinux.img
         resize2fs -M archlinux.img
+    - uses: actions/upload-artifact@v3
+      with:
+        name: ArchLinuxArm-OrangePi3B
+        path: archlinux.img
