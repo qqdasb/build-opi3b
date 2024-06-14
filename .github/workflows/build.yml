@@ -45,6 +45,9 @@ jobs:
         sudo chroot arch git clone https://github.com/armbian/firmware
         sudo chroot arch mv firmware /usr/lib/
         sudo chroot arch ldconfig
+        sudo chroot arch 
+        sudo chroot arch 
+        sudo chroot arch 
         sudo chroot arch ls /usr/lib/modules && ls /boot
         sudo chroot arch mkinitcpio --generate /boot/initrd.img- --kernel 
         sudo umount ~/workspace/arch/run
@@ -52,5 +55,11 @@ jobs:
         sudo umount arch/proc
         sudo umount arch/dev/pts
         sudo umount arch/dev
-    - name: make distcheck
-      run: make distcheck
+    - name: Build image
+      run: |
+        mkdir rootfs
+        sudo mount archlinux.img rootfs/
+        sudo cp -rfp arch/*  rootfs/
+        sudo umount rootfs/
+        e2fsck -p -f archlinux.img
+        resize2fs -M archlinux.img
