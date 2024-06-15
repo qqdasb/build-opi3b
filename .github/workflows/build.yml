@@ -16,10 +16,11 @@ jobs:
     - name: Prepare
       run: |
         sudo apt update
-        sudo apt install build-essential openssl pkg-config libssl-dev libncurses5-dev pkg-config minizip libelf-dev flex bison  libc6-dev libidn11-dev rsync bc liblz4-tool gcc-aarch64-linux-gnu dpkg-dev dpkg git qemu-user-static
+        sudo apt install build-essential openssl pkg-config libssl-dev libncurses5-dev pkg-config minizip libelf-dev flex bison  libc6-dev libidn11-dev rsync bc liblz4-tool gcc-aarch64-linux-gnu gcc u-boot-tools dpkg-dev dpkg git qemu-user-static
         wget https://raw.githubusercontent.com/qqdasb/my-files/master/linux-rk35xx-legacy.config
         git clone https://github.com/armbian/linux-rockchip.git --depth 1
         mv linux-rk35xx-legacy.config linux-rockchip/.config
+        git clone https://github.com/w568w/u-boot-orangepi-3b --recursive
         wget http://os.archlinuxarm.org/os/ArchLinuxARM-aarch64-latest.tar.gz
         sudo dd if=/dev/zero of=archlinux.img bs=3G count=6
         sudo mkfs.ext4 archlinux.img
@@ -38,7 +39,14 @@ jobs:
         make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
         cd ..
         mv linux-rockchip arch/linux
-    - name: Build rootfs
+    - name: Build U-boot
+      run: |
+        cd u-boot-orangepi3b
+        chmod +x orangepi-3b-build.sh
+        ./orangepi-3b-build.sh
+        cp u-boot-rockchip.bin ..
+        cd ..
+    - name: Build Rootfs
       run: |
         sudo chroot arch pacman-key --init
         sudo chroot arch pacman-key --populate
@@ -66,6 +74,7 @@ jobs:
         sudo umount rootfs/
         sudo e2fsck -p -f archlinux.img
         sudo resize2fs -M archlinux.img
+        sudo dd if=u-boot-rockchip.bin of=./archlinux.img seek=64
     - uses: actions/upload-artifact@v3
       with:
         name: ArchLinuxArm-OrangePi3B
