@@ -18,7 +18,7 @@ jobs:
         sudo apt update
         sudo apt install build-essential openssl pkg-config libssl-dev libncurses5-dev pkg-config minizip libelf-dev flex bison  libc6-dev libidn11-dev rsync bc liblz4-tool gcc-aarch64-linux-gnu dpkg-dev dpkg git qemu-user-static
         wget https://raw.githubusercontent.com/qqdasb/my-files/master/linux-rk35xx-legacy.config
-        git clone https://github.com/armbian/linux-rockchip/
+        git clone https://github.com/armbian/linux-rockchip.git --depth 1
         mv linux-rk35xx-legacy.config linux-rockchip/.config
         wget http://os.archlinuxarm.org/os/ArchLinuxARM-aarch64-latest.tar.gz
         sudo dd if=/dev/zero of=archlinux.img bs=3G count=6
@@ -45,7 +45,7 @@ jobs:
         sudo chroot arch pacman -Syyu
         sudo chroot arch pacman -S make git networkmanager
         sudo chroot arch pacman -R linux-arm64 linux-firmware
-        sudo chroot arch git clone https://github.com/armbian/firmware
+        sudo chroot arch git clone https://github.com/armbian/firmware.git --depth 1
         sudo chroot arch mv firmware /usr/lib/
         sudo chroot arch ldconfig
         sudo chroot arch make linux/ INSTALL_MOD_PATH=/usr modules_install
