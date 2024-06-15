@@ -42,11 +42,11 @@ jobs:
         mv linux-rockchip arch/linux
     - name: Build U-boot
       run: |
-        cd u-boot-orangepi3b
+        cd /home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/u-boot-orangepi-3b
         chmod +x orangepi-3b-build.sh
         ./orangepi-3b-build.sh
-        cp u-boot-rockchip.bin ..
-        cd ..
+        cp u-boot-rockchip.bin /home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/
+        cd /home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/
     - name: Build Rootfs
       run: |
         sudo chroot arch pacman-key --init
@@ -75,8 +75,8 @@ jobs:
         sudo umount rootfs/
         sudo e2fsck -p -f archlinux.img
         sudo resize2fs -M archlinux.img
-        sudo dd if=u-boot-rockchip.bin of=./archlinux.img seek=64
+        sudo dd if=u-boot-rockchip.bin of=/home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/archlinux.img seek=64
     - uses: actions/upload-artifact@v3
       with:
         name: ArchLinuxArm-OrangePi3B
-        path: archlinux.img
+        path: /home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/archlinux.img
