@@ -59,9 +59,11 @@ jobs:
     - name: Build Image
       run: |
         sudo umount arch
+        sudo losetup /dev/loop1 archlinux.img
+        sudo dd if=/home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/u-boot-rockchip.bin of=/dev/loop1 seek=64
+        sudo losetup -d /dev/loop1
         sudo e2fsck -p -f archlinux.img
         sudo resize2fs -M archlinux.img
-        sudo dd if=/home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/u-boot-rockchip.bin of=/home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/archlinux.img seek=64
     - uses: actions/upload-artifact@v4
       with:
         name: ArchLinuxArm-OrangePi3B
