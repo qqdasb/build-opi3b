@@ -34,8 +34,7 @@ jobs:
         cd linux-rockchip
         make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
         cd ..
-        sudo mv linux-rockchip arch/linux
-    - name: Build U-boot
+    - name: Build U-Boot
       run: |
         cd /home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/u-boot-orangepi-3b
         chmod +x orangepi-3b-build.sh
@@ -52,9 +51,9 @@ jobs:
         sudo arch-chroot arch git clone https://github.com/armbian/firmware.git --depth 1
         sudo arch-chroot arch mv firmware /usr/lib/
         sudo arch-chroot arch ldconfig
-        sudo arch-chroot arch make -C linux/ INSTALL_MOD_PATH=/usr modules_install
-        sudo arch-chroot arch make -C linux/ dtbs_install
-        sudo arch-chroot arch make -C linux/ INSTALL_HDR_PATH=/ headers_install
+        sudo make -C linux-rockchip/ INSTALL_MOD_PATH=arch/usr/ modules_install
+        sudo make -C linux-rockchip/ INSTALL_DTBS_PATH=arch/boot/ dtbs_install
+        sudo make -C linux-rockchip/ INSTALL_HDR_PATH=arch/ headers_install
         sudo arch-chroot arch ls /usr/lib/modules && ls /boot
         sudo arch-chroot arch mkinitcpio --generate /boot/initrd.img- --kernel 
     - name: Build Image
