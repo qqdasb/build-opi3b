@@ -34,7 +34,7 @@ jobs:
         cd linux-rockchip
         make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
         cd ..
-        mv linux-rockchip arch/linux
+        sudo mv linux-rockchip arch/linux
     - name: Build U-boot
       run: |
         cd /home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/u-boot-orangepi-3b
