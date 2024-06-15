@@ -22,7 +22,7 @@ jobs:
         mv linux-rk35xx-legacy.config linux-rockchip/.config
         wget http://os.archlinuxarm.org/os/ArchLinuxARM-aarch64-latest.tar.gz
         sudo dd if=/dev/zero of=archlinux.img bs=3G count=6
-        mkfs.ext4 archlinux.img
+        sudo mkfs.ext4 archlinux.img
         mkdir arch
         sudo tar xvf ArchLinuxARM-aarch64-latest.tar.gz -C arch
         sudo cp /etc/resolv.conf arch/etc/resolv.conf
@@ -63,8 +63,8 @@ jobs:
         sudo mount archlinux.img rootfs/
         sudo cp -rfp arch/*  rootfs/
         sudo umount rootfs/
-        e2fsck -p -f archlinux.img
-        resize2fs -M archlinux.img
+        sudo e2fsck -p -f archlinux.img
+        sudo resize2fs -M archlinux.img
     - uses: actions/upload-artifact@v3
       with:
         name: ArchLinuxArm-OrangePi3B
