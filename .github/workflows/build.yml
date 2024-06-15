@@ -58,11 +58,9 @@ jobs:
         sudo arch-chroot arch mkinitcpio --generate /boot/initrd.img-5.10.160 --kernel 5.10.160
     - name: Build Image
       run: |
+        sudo arch-chroot arch lsblk -a -p
+        sudo arch-chroot arch dd if=/home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/u-boot-rockchip.bin of= seek=64
         sudo umount arch
-        sudo umount archlinux.img
-        sudo losetup /dev/loop1 archlinux.img
-        sudo dd if=/home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/u-boot-rockchip.bin of=/dev/loop1 seek=64
-        sudo losetup -d /dev/loop1
         sudo e2fsck -p -f archlinux.img
         sudo resize2fs -M archlinux.img
     - uses: actions/upload-artifact@v4
