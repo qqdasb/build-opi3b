@@ -26,8 +26,8 @@ jobs:
         sudo dd if=/dev/zero of=archlinux.img bs=3G count=6
         sudo mkfs.ext4 archlinux.img
         mkdir arch
+        mount archlinux.img arch
         sudo tar xvf ArchLinuxARM-aarch64-latest.tar.gz -C arch
-        sudo cp -b /etc/resolv.conf arch/etc/resolv.conf
         sudo cp /usr/bin/qemu-aarch64-static arch/usr/bin/
     - name: Build Kernel
       run: |
@@ -57,16 +57,13 @@ jobs:
         sudo arch-chroot arch make linux/ INSTALL_HDR_PATH=/ headers_install
         sudo arch-chroot arch ls /usr/lib/modules && ls /boot
         sudo arch-chroot arch mkinitcpio --generate /boot/initrd.img- --kernel 
-    - name: Build image
+    - name: Build Image
       run: |
-        mkdir rootfs
-        sudo mount archlinux.img rootfs/
-        sudo cp -rfp arch/*  rootfs/
-        sudo umount rootfs/
+        sudo umount arch
         sudo e2fsck -p -f archlinux.img
         sudo resize2fs -M archlinux.img
-        sudo dd if=u-boot-rockchip.bin of=/home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/archlinux.img seek=64
-    - uses: actions/upload-artifact@v3
+        sudo dd if=/home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/u-boot-rockchip.bin of=/home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/archlinux.img seek=64
+    - uses: actions/upload-artifact@v4
       with:
         name: ArchLinuxArm-OrangePi3B
         path: /home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/archlinux.img
