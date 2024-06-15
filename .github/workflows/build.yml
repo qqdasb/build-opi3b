@@ -52,9 +52,9 @@ jobs:
         sudo arch-chroot arch git clone https://github.com/armbian/firmware.git --depth 1
         sudo arch-chroot arch mv firmware /usr/lib/
         sudo arch-chroot arch ldconfig
-        sudo arch-chroot arch make linux/ INSTALL_MOD_PATH=/usr modules_install
-        sudo arch-chroot arch make linux/ dtbs_install
-        sudo arch-chroot arch make linux/ INSTALL_HDR_PATH=/ headers_install
+        sudo arch-chroot arch make -C linux/ INSTALL_MOD_PATH=/usr modules_install
+        sudo arch-chroot arch make -C linux/ dtbs_install
+        sudo arch-chroot arch make -C linux/ INSTALL_HDR_PATH=/ headers_install
         sudo arch-chroot arch ls /usr/lib/modules && ls /boot
         sudo arch-chroot arch mkinitcpio --generate /boot/initrd.img- --kernel 
     - name: Build Image
