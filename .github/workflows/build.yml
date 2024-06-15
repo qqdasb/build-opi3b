@@ -26,7 +26,7 @@ jobs:
         sudo dd if=/dev/zero of=archlinux.img bs=3G count=6
         sudo mkfs.ext4 archlinux.img
         mkdir arch
-        mount archlinux.img arch
+        sudo mount archlinux.img arch
         sudo tar xvf ArchLinuxARM-aarch64-latest.tar.gz -C arch
         sudo cp /usr/bin/qemu-aarch64-static arch/usr/bin/
     - name: Build Kernel
@@ -39,7 +39,7 @@ jobs:
       run: |
         cd /home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/u-boot-orangepi-3b
         chmod +x orangepi-3b-build.sh
-        ./orangepi-3b-build.sh
+        sudo ./orangepi-3b-build.sh
         cp u-boot-rockchip.bin /home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/
         cd /home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/
     - name: Build Rootfs
