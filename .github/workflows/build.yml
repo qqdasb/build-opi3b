@@ -25,8 +25,8 @@ jobs:
         sudo mkfs.ext4 archlinux.img
         mkdir arch
         sudo tar xvf ArchLinuxARM-aarch64-latest.tar.gz -C arch
-        sudo rm arch/resolv.conf
-        sudo cp /etc/resolv.conf arch/etc/resolv.conf
+        sudo cp -b /etc/resolv.conf arch/etc/resolv.conf
+        sudo cp /usr/bin/qemu-aarch64-static arch/usr/bin/
         sudo mount --bind /dev arch/dev
         sudo mount -t devpts devpts arch/dev/pts -o gid=5,mode=620
         sudo mount -t proc proc arch/proc
