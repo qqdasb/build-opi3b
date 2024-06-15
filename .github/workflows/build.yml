@@ -43,7 +43,7 @@ jobs:
         sudo chroot arch pacman-key --init
         sudo chroot arch pacman-key --populate
         sudo chroot arch pacman -Syyu
-        sudo chroot arch pacman -S make base-devel git sudo networkmanager pulseaudio-bluetooth bluez
+        sudo chroot arch pacman -S make git networkmanager
         sudo chroot arch pacman -R linux-arm64 linux-firmware
         sudo chroot arch git clone https://github.com/armbian/firmware
         sudo chroot arch mv firmware /usr/lib/
