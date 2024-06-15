@@ -51,10 +51,10 @@ jobs:
         sudo arch-chroot arch git clone https://github.com/armbian/firmware.git --depth 1
         sudo arch-chroot arch mv firmware /usr/lib/
         sudo arch-chroot arch ldconfig
+        export INSTALL_DTBS_PATH=arch/boot/dtbs/
         sudo make -C linux-rockchip/ INSTALL_MOD_PATH=arch/usr/ modules_install
-        sudo make -C linux-rockchip/ INSTALL_DTBS_PATH=arch/boot/ dtbs_install
+        sudo make -C linux-rockchip/ dtbs_install
         sudo make -C linux-rockchip/ INSTALL_HDR_PATH=arch/ headers_install
-        sudo arch-chroot arch ls /usr/lib/modules && ls /boot
         sudo arch-chroot arch mkinitcpio --generate /boot/initrd.img- --kernel 
     - name: Build Image
       run: |
