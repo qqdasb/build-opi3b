@@ -16,7 +16,7 @@ jobs:
     - name: Prepare
       run: |
         sudo apt update
-        sudo apt install build-essential openssl pkg-config libssl-dev libncurses5-dev pkg-config minizip libelf-dev flex bison  libc6-dev libidn11-dev rsync bc liblz4-tool gcc-aarch64-linux-gnu gcc u-boot-tools dpkg-dev dpkg git python3-pip qemu-user-static
+        sudo apt install arch-install-scripts build-essential openssl pkg-config libssl-dev libncurses5-dev pkg-config minizip libelf-dev flex bison  libc6-dev libidn11-dev rsync bc liblz4-tool gcc-aarch64-linux-gnu gcc u-boot-tools dpkg-dev dpkg git python3-pip qemu-user-static
         sudo pip install pyelftools
         wget https://raw.githubusercontent.com/qqdasb/my-files/master/linux-rk35xx-legacy.config
         git clone https://github.com/armbian/linux-rockchip.git --depth 1
@@ -29,12 +29,6 @@ jobs:
         sudo tar xvf ArchLinuxARM-aarch64-latest.tar.gz -C arch
         sudo cp -b /etc/resolv.conf arch/etc/resolv.conf
         sudo cp /usr/bin/qemu-aarch64-static arch/usr/bin/
-        sudo mount --bind /dev arch/dev
-        sudo mount -t devpts devpts arch/dev/pts -o gid=5,mode=620
-        sudo mount -t proc proc arch/proc
-        sudo mount -t sysfs sysfs arch/sys
-        sudo mount -t tmpfs tmpfs arch/run
-        sudo mount --bind arch arch
     - name: Build Kernel
       run: |
         cd linux-rockchip
@@ -50,24 +44,19 @@ jobs:
         cd /home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/
     - name: Build Rootfs
       run: |
-        sudo chroot arch pacman-key --init
-        sudo chroot arch pacman-key --populate
-        sudo chroot arch pacman -Syyu --noconfirm
-        sudo chroot arch pacman -S --noconfirm base-devel make git networkmanager
-        sudo chroot arch pacman -R --noconfirm linux-arm64 linux-firmware
-        sudo chroot arch git clone https://github.com/armbian/firmware.git --depth 1
-        sudo chroot arch mv firmware /usr/lib/
-        sudo chroot arch ldconfig
-        sudo chroot arch make linux/ INSTALL_MOD_PATH=/usr modules_install
-        sudo chroot arch make linux/ dtbs_install
-        sudo chroot arch make linux/ INSTALL_HDR_PATH=/ headers_install
-        sudo chroot arch ls /usr/lib/modules && ls /boot
-        sudo chroot arch mkinitcpio --generate /boot/initrd.img- --kernel 
-        sudo umount ~/workspace/arch/run
-        sudo umount arch/sys
-        sudo umount arch/proc
-        sudo umount arch/dev/pts
-        sudo umount arch/dev
+        sudo arch-chroot arch pacman-key --init
+        sudo arch-chroot arch pacman-key --populate
+        sudo arch-chroot arch pacman -Syyu --noconfirm
+        sudo arch-chroot arch pacman -S --noconfirm base-devel make git networkmanager
+        sudo arch-chroot arch pacman -R --noconfirm linux-arm64 linux-firmware
+        sudo arch-chroot arch git clone https://github.com/armbian/firmware.git --depth 1
+        sudo arch-chroot arch mv firmware /usr/lib/
+        sudo arch-chroot arch ldconfig
+        sudo arch-chroot arch make linux/ INSTALL_MOD_PATH=/usr modules_install
+        sudo arch-chroot arch make linux/ dtbs_install
+        sudo arch-chroot arch make linux/ INSTALL_HDR_PATH=/ headers_install
+        sudo arch-chroot arch ls /usr/lib/modules && ls /boot
+        sudo arch-chroot arch mkinitcpio --generate /boot/initrd.img- --kernel 
     - name: Build image
       run: |
         mkdir rootfs
