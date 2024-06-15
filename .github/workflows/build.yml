@@ -52,10 +52,10 @@ jobs:
         sudo arch-chroot arch mv firmware /usr/lib/
         sudo arch-chroot arch ldconfig
         export INSTALL_DTBS_PATH=arch/boot/dtbs/5.10.160/
-        sudo make -C linux-rockchip/ INSTALL_PATH=arch/boot install 
-        sudo make -C linux-rockchip/ INSTALL_MOD_PATH=arch/usr/ modules_install
-        sudo make -C linux-rockchip/ dtbs_install
-        sudo make -C linux-rockchip/ INSTALL_HDR_PATH=arch/usr headers_install
+        sudo make -C linux-rockchip/ ARCH=arm64 INSTALL_PATH=arch/boot install 
+        sudo make -C linux-rockchip/ ARCH=arm64 INSTALL_MOD_PATH=arch/usr/ modules_install
+        sudo make -C linux-rockchip/ ARCH=arm64 dtbs_install
+        sudo make -C linux-rockchip/ ARCH=arm64 INSTALL_HDR_PATH=arch/usr headers_install
         sudo arch-chroot arch mkinitcpio --generate /boot/initrd.img-5.10.160 --kernel 5.10.160
     - name: Build Image
       run: |
