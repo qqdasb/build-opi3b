@@ -17,7 +17,7 @@ jobs:
       run: |
         sudo apt update
         sudo apt install build-essential openssl pkg-config libssl-dev libncurses5-dev pkg-config minizip libelf-dev flex bison  libc6-dev libidn11-dev rsync bc liblz4-tool gcc-aarch64-linux-gnu gcc u-boot-tools dpkg-dev dpkg git python3-pip qemu-user-static
-        sudo pip install elftools --break-system-packages
+        sudo pip install pyelftools --break-system-packages
         wget https://raw.githubusercontent.com/qqdasb/my-files/master/linux-rk35xx-legacy.config
         git clone https://github.com/armbian/linux-rockchip.git --depth 1
         mv linux-rk35xx-legacy.config linux-rockchip/.config
