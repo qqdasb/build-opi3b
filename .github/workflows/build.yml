@@ -33,6 +33,7 @@ jobs:
         sudo mount -t proc proc arch/proc
         sudo mount -t sysfs sysfs arch/sys
         sudo mount -t tmpfs tmpfs arch/run
+        sudo mount --bind arch arch
     - name: Build Kernel
       run: |
         cd linux-rockchip
