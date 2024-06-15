@@ -42,7 +42,7 @@ jobs:
       run: |
         sudo chroot arch pacman-key --init
         sudo chroot arch pacman-key --populate
-        sudo chroot arch pacman -Syyu
+        sudo chroot arch pacman -Syyu --noconfirm
         sudo chroot arch pacman -S --noconfirm base-devel make git networkmanager
         sudo chroot arch pacman -R --noconfirm linux-arm64 linux-firmware
         sudo chroot arch git clone https://github.com/armbian/firmware.git --depth 1
