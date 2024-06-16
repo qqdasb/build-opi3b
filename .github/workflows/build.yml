@@ -49,7 +49,6 @@ jobs:
         sudo make -C linux-rockchip/ ARCH=arm64 INSTALL_DTBS_PATH=/home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/arch/boot/dtbs/5.10.160/ dtbs_install
         sudo make -C linux-rockchip/ ARCH=arm64 INSTALL_HDR_PATH=/home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/arch/usr/ headers_install
         sudo arch-chroot arch mkinitcpio --generate /boot/initrd.img-5.10.160 --kernel 5.10.160
-        sudo arch-chroot arch wget 
     - name: Build Image
       run: |
         sudo e2fsck -p -f archlinux.img
