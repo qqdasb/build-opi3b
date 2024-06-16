@@ -17,8 +17,9 @@ jobs:
       run: |
         git clone https://github.com/armbian/build --depth 1 -b main
         cd build
-        ./compile.sh BOARD=orangepi3b BRANCH=legacy RELEASE=sid BUILD_ONLY= KERNEL_CONFIGURE=no BUILD_MINIMAL=yes BUILD_DESKTOP=no EXTERNAL=yes INSTALL_HEADERS=yes
+        pwd
+#        ./compile.sh BOARD=orangepi3b BRANCH=legacy RELEASE=sid BUILD_ONLY= KERNEL_CONFIGURE=no BUILD_MINIMAL=yes BUILD_DESKTOP=no EXTERNAL=yes INSTALL_HEADERS=yes EXTERNAL_NEW=compile
     - uses: actions/upload-artifact@v4
       with:
         name: Armbian-OPI3B-Debian-sid
-        path: output/images/*
+        path: 1
