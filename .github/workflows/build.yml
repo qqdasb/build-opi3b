@@ -58,12 +58,12 @@ jobs:
         sudo arch-chroot arch mkinitcpio --generate /boot/initrd.img-5.10.160 --kernel 5.10.160
     - name: Build Image
       run: |
-        sudo umount arch 
-        sudo umount arch/proc 
-        sudo umount arch/sys 
-        sudo umount arch/dev 
-        sudo umount arch/pts 
-        sudo umount arch/shm 
+        sudo umount arch
+        sudo umount arch/proc
+        sudo umount arch/sys
+        sudo umount arch/dev
+        sudo umount arch/pts
+        sudo umount arch/shm
         sudo umount arch/run
         sudo umount arch/tmp
         sudo losetup /dev/loop0 archlinux.img
