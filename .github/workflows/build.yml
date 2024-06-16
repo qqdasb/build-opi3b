@@ -46,7 +46,7 @@ jobs:
         sudo arch-chroot arch pacman-key --init
         sudo arch-chroot arch pacman-key --populate
         sudo arch-chroot arch pacman -Syy --noconfirm
-        sudo arch-chroot arch pacman -R --noconfirm linux-aarch64 linux-firmware
+        sudo arch-chroot arch pacman -R --noconfirm linux-aarch64 linux-firmware linux-api-headers linux-firmware-whence
         sudo arch-chroot arch pacman -Syu --noconfirm base-devel make git networkmanager python3 wget
         sudo arch-chroot arch git clone https://github.com/armbian/firmware.git --depth 1
         sudo arch-chroot arch mv firmware /usr/lib/
