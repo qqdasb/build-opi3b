@@ -29,6 +29,7 @@ jobs:
         sudo mount archlinux.img arch
         sudo tar xvf ArchLinuxARM-aarch64-latest.tar.gz -C arch
         sudo cp /usr/bin/qemu-aarch64-static arch/usr/bin/
+        sudo losetup -f
     - name: Build Kernel
       run: |
         cd linux-rockchip
