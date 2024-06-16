@@ -59,6 +59,7 @@ jobs:
     - name: Build Image
       run: |
         sudo umount arch/
+        sudo df
         sudo losetup /dev/loop0 archlinux.img
         sudo dd if=./u-boot-rockchip.bin of=/dev/loop0 seek=64
         sudo losetup -d /dev/loop4
