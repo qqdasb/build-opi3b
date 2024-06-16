@@ -1,18 +1,12 @@
-name: Build Armbian
-
+name: "Build Armbian"
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
+  workflow_dispatch:
 jobs:
   build:
     name: "Build Armbian"
     runs-on: ubuntu-latest
     steps:
-
-      - uses: armbian/build@v24.8.0-trunk.147
+      - uses: armbian/build@main
         with:
           armbian_token:              "${{secrets.GITHUB_TOKEN}}"
           armbian_target:             build
