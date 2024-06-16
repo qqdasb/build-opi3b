@@ -34,20 +34,13 @@ jobs:
         cd linux-rockchip
         make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
         cd ..
-    - name: Build U-Boot
-      run: |
-        cd /home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/u-boot-orangepi-3b
-        chmod +x orangepi-3b-build.sh
-        sudo ./orangepi-3b-build.sh
-        cp u-boot-rockchip.bin /home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/
-        cd /home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/
     - name: Build Rootfs
       run: |
         sudo arch-chroot arch pacman-key --init
         sudo arch-chroot arch pacman-key --populate
         sudo arch-chroot arch pacman -Syy --noconfirm
         sudo arch-chroot arch pacman -R --noconfirm linux-aarch64 linux-firmware
-        sudo arch-chroot arch pacman -Syu --noconfirm base-devel make git networkmanager python3
+        sudo arch-chroot arch pacman -Syu --noconfirm base-devel make git networkmanager python3 wget
         sudo arch-chroot arch git clone https://github.com/armbian/firmware.git --depth 1
         sudo arch-chroot arch mv firmware /usr/lib/
         sudo arch-chroot arch ldconfig
@@ -56,19 +49,9 @@ jobs:
         sudo make -C linux-rockchip/ ARCH=arm64 INSTALL_DTBS_PATH=/home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/arch/boot/dtbs/5.10.160/ dtbs_install
         sudo make -C linux-rockchip/ ARCH=arm64 INSTALL_HDR_PATH=/home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/arch/usr/ headers_install
         sudo arch-chroot arch mkinitcpio --generate /boot/initrd.img-5.10.160 --kernel 5.10.160
+        sudo arch-chroot arch wget 
     - name: Build Image
       run: |
-        sudo umount arch
-        sudo umount arch/proc
-        sudo umount arch/sys
-        sudo umount arch/dev
-        sudo umount arch/pts
-        sudo umount arch/shm
-        sudo umount arch/run
-        sudo umount arch/tmp
-        sudo losetup /dev/loop0 archlinux.img
-        dd if=/home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/u-boot-rockchip.bin of=/dev/loop0 seek=64
-        sudo losetup -d /dev/loop0
         sudo e2fsck -p -f archlinux.img
         sudo resize2fs -M archlinux.img
     - uses: actions/upload-artifact@v4
