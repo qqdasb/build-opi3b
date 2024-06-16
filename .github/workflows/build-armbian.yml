@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - uses: armbian/build@main
+      - uses: armbian/build@v24.8.0-trunk.147
         with:
           armbian_token:              "${{secrets.GITHUB_TOKEN}}"
           armbian_target:             build
