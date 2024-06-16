@@ -36,10 +36,10 @@ jobs:
         cd ..
     - name: Build U-Boot
       run: |
-        cd u-boot-rockchip
+        cd /home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/u-boot-rockchip
         sudo ./orangepi-3b-build.sh
-        cp u-boot-rockchip.bin ..
-        cd ..
+        cp u-boot-rockchip.bin /home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/
+        cd /home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/
     - name: Build Rootfs
       run: |
         sudo arch-chroot arch pacman-key --init
