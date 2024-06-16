@@ -1,0 +1,26 @@
+name: Build Armbian
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: "Build Armbian"
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: armbian/build@main
+        with:
+          armbian_token:              "${{secrets.GITHUB_TOKEN}}"
+          armbian_target:             build
+          armbian_release:            sid
+          armbian_kernel_branch:      legacy
+          armbian_ui:                 kde-plasma
+          armbian_board:              orangepi3b
+          armbian_release_tittle:     "Armbian Orange Pi 3B with KDE Plasma desktop"
+          armbian_release_body:       "Armbian for OPI3B but sid"
+          armbian_pgp_key:            "${{secrets.GPG_KEY1}}"
+          armbian_pgp_password:       "${{secrets.GPG_PASSPHRASE1}}"
