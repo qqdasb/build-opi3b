@@ -28,7 +28,7 @@ jobs:
         mkdir arch
         sudo tar xf ArchLinuxARM-aarch64-latest.tar.gz -C arch
         sudo cp /usr/bin/qemu-aarch64-static arch/usr/bin/
-        sudo mount temp.img arch/
+        sudo mount arch/ temp.img
     - name: Build Kernel
       run: |
         cd linux-rockchip
@@ -55,7 +55,7 @@ jobs:
         sudo make -C linux-rockchip/ ARCH=arm64 INSTALL_DTBS_PATH=/home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/arch/boot/dtbs/5.10.160/ dtbs_install
         sudo make -C linux-rockchip/ ARCH=arm64 INSTALL_HDR_PATH=/home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/arch/usr/ headers_install
         sudo arch-chroot arch mkinitcpio --generate /boot/initrd.img-5.10.160 --kernel 5.10.160
-        sudo umount arch/
+        sudo umount temp.img
     - name: Build Image
       run: |
         sudo dd if=/dev/zero of=archlinux.img bs=1M count=4000
