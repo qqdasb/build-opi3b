@@ -22,7 +22,7 @@ jobs:
         git clone https://github.com/armbian/linux-rockchip.git --depth 1
         mv linux-rk35xx-legacy.config linux-rockchip/.config
         git clone https://github.com/w568w/u-boot-orangepi-3b --recursive
-        wget https://os.archlinuxarm.org/os/ArchLinuxARM-aarch64-latest.tar.gz
+        wget http://os.archlinuxarm.org/os/ArchLinuxARM-aarch64-latest.tar.gz
         mkdir arch
         sudo tar xf ArchLinuxARM-aarch64-latest.tar.gz -C arch
         sudo cp /usr/bin/qemu-aarch64-static arch/usr/bin/
