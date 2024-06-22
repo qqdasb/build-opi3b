@@ -40,16 +40,16 @@ jobs:
          make -C linux-6.1/ ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bindeb-pkg -j$(nproc)
          make -C linux-5.10/ ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- targz-pkg -j$(nproc)
          make -C linux-5.10/ ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bindeb-pkg -j$(nproc)
-    - name: 'Upload Linux-6.1-source'
-      uses: actions/upload-artifact@v4
-      with:
-        name: 6.1-source
-        path: linux-6.1
-    - name: 'Upload Linux-5.10-source'
-      uses: actions/upload-artifact@v4
-      with:
-        name: 5.10-source
-        path: linux-5.10
+#    - name: 'Upload Linux-6.1-source'
+#      uses: actions/upload-artifact@v4
+#      with:
+#        name: 6.1-source
+#        path: linux-6.1
+#    - name: 'Upload Linux-5.10-source'
+#      uses: actions/upload-artifact@v4
+#      with:
+#        name: 5.10-source
+#        path: linux-5.10
     - name: 'Upload Linux-6.1-deb'
       uses: actions/upload-artifact@v4
       with:
@@ -70,3 +70,8 @@ jobs:
       with:
         name: linux-5.10-tar-xz
         path: linux-5.10/*.tar.xz
+    - name: 'Test'
+      uses: actions/upload-artifact@v4
+      with:
+        name: Test
+        path: ./*.deb
