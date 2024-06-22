@@ -36,7 +36,25 @@ jobs:
         make -C linux-6.1/ ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
     - name: Build Packages
       run: |
-         make -C linux-5.10/ ARCH=arm64 tarzst-pkg -j16
-         make -C linux-5.10/ ARCH=arm64 bindeb-pkg -j16
          make -C linux-6.1/ ARCH=arm64 tarzst-pkg -j16
          make -C linux-6.1/ ARCH=arm64 bindeb-pkg -j16
+    - name: 'Linux-6.1-source'
+      uses: actions/upload-artifact@v4
+      with:
+        name: 6.1-source
+        path: linux-6.1
+    - name: 'Linux-5.10-source'
+      uses: actions/upload-artifact@v4
+      with:
+        name: 5.10-source
+        path: linux-5.10
+    - name: 'Linux-6.1-deb'
+      uses: actions/upload-artifact@v4
+      with:
+        name: linux-6.1-deb
+        path: linux-6.1/*.deb
+    - name: 'Linux-6.1-tar-zst'
+      uses: actions/upload-artifact@v4
+      with:
+        name: linux-6.1-tar-zst
+        path: linux-6.1/*.tar.zst
