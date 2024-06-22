@@ -15,8 +15,8 @@ jobs:
     - uses: actions/checkout@v4
     - name: Prepare
       run: |
-        git clone https://github.com/armbian/linux-rockchip.git linux-5.10
-        git clone https://github.com/armbian/linux-rockchip.git -b rk-6.1-rkr1 linux-6.1
+        git clone https://github.com/armbian/linux-rockchip.git linux-5.10 --depth 1
+        git clone https://github.com/armbian/linux-rockchip.git -b rk-6.1-rkr1 linux-6.1 --depth 1
         sudo apt-get update && sudo apt-get upgrade -y
         sudo apt-get install -y build-essential gcc-aarch64-linux-gnu bison \
         qemu-user-static qemu-system-arm qemu-efi u-boot-tools binfmt-support \
@@ -38,23 +38,35 @@ jobs:
       run: |
          make -C linux-6.1/ ARCH=arm64 tarzst-pkg -j16
          make -C linux-6.1/ ARCH=arm64 bindeb-pkg -j16
-    - name: 'Linux-6.1-source'
+         make -C linux-5.10/ ARCH=arm64 targz-pkg -j16
+         make -C linux-5.10/ ARCH=arm64 bindeb-pkg -j16
+    - name: 'Upload Linux-6.1-source'
       uses: actions/upload-artifact@v4
       with:
         name: 6.1-source
         path: linux-6.1
-    - name: 'Linux-5.10-source'
+    - name: 'Upload Linux-5.10-source'
       uses: actions/upload-artifact@v4
       with:
         name: 5.10-source
         path: linux-5.10
-    - name: 'Linux-6.1-deb'
+    - name: 'Upload Linux-6.1-deb'
       uses: actions/upload-artifact@v4
       with:
         name: linux-6.1-deb
         path: linux-6.1/*.deb
-    - name: 'Linux-6.1-tar-zst'
+    - name: 'Upload Linux-6.1-tar-zst'
       uses: actions/upload-artifact@v4
       with:
         name: linux-6.1-tar-zst
         path: linux-6.1/*.tar.zst
+    - name: 'Upload Linux-5.10-deb'
+      uses: actions/upload-artifact@v4
+      with:
+        name: linux-5.10-deb
+        path: linux-5.10/*.deb
+    - name: 'Upload Linux-5.10-tar-xz'
+      uses: actions/upload-artifact@v4
+      with:
+        name: linux-5.10-tar-xz
+        path: linux-5.10/*.tar.xz
