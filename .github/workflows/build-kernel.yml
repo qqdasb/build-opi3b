@@ -26,8 +26,8 @@ jobs:
         python3-distutils python3-pkg-resources swig libfdt-dev libpython3-dev dctrl-tools
     - name: Copy Config
       run: |
-        wget https://raw.githubusercontent.com/qqdasb/my-files/linux-5.10-rkr6.config
-        wget https://raw.githubusercontent.com/qqdasb/my-files/linux-6.1-rkr1.config
+        wget https://raw.githubusercontent.com/qqdasb/my-files/main/linux-5.10-rkr6.config
+        wget https://raw.githubusercontent.com/qqdasb/my-files/main/linux-6.1-rkr1.config
         cp linux-5.10-rkr6.config linux-5.10/.config
         cp linux-6.1-rkr1.config linux-6.1/.config
     - name: Build
