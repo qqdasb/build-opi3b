@@ -36,4 +36,7 @@ jobs:
         make -C linux-6.1/ ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
     - name: Build Packages
       run: |
-         
+         make -C linux-5.10/ tarzst-pkg -j16
+         make -C linux-5.10/ bindeb-pkg -j16
+         make -C linux-6.1/ tarzst-pkg -j16
+         make -C linux-6.1/ bindeb-pkg -j16
