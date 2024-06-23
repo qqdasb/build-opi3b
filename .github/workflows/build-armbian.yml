@@ -17,6 +17,9 @@ jobs:
       run: |
         git clone https://github.com/armbian/build --depth 1 -b main
         cd build
+        wget https://raw.githubusercontent.com/qqdasb/my-files/main/linux-5.10-rkr6.config
+        wget https://raw.githubusercontent.com/qqdasb/my-files/main/linux-6.1-rkr1.config
+        rm 
         ./compile.sh BOARD=orangepi3b BRANCH=edge RELEASE=sid BUILD_ONLY= KERNEL_CONFIGURE=no BUILD_MINIMAL=yes BUILD_DESKTOP=no EXTERNAL=yes INSTALL_HEADERS=yes EXTERNAL_NEW=compile
     - uses: actions/upload-artifact@v4
       with:
