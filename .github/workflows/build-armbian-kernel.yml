@@ -22,8 +22,8 @@ jobs:
         rm config/kernel/linux-rk35xx-vendor.config config/kernel/linux-rk35xx-legacy.config
         mv linux-5.10-rkr6.config config/kernel/linux-rk35xx-legacy.config
         mv linux-6.1-rkr1.config config/kernel/linux-rk35xx-vendor.config
+        ./compile.sh kernel BOARD=orangepi3b BRANCH=vendor
         ./compile.sh kernel BOARD=orangepi3b BRANCH=legacy
-        ./compile.sh kernel BOARD=orangepi3b BRANCH=current
     - uses: actions/upload-artifact@v4
       with:
         name: Armbian-Kernel-legacy-and-vendor
