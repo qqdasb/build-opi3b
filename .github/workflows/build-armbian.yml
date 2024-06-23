@@ -19,9 +19,17 @@ jobs:
         cd build
         wget https://raw.githubusercontent.com/qqdasb/my-files/main/linux-5.10-rkr6.config
         wget https://raw.githubusercontent.com/qqdasb/my-files/main/linux-6.1-rkr1.config
-        rm 
+        rm config/kernel/linux-rk35xx-vendor.config config/kernel/linux-rk35xx-legacy.config
+        mv linux-5.10-rkr6.config config/kernel/linux-rk35xx-legacy.config
+        mv linux-6.1-rkr1.config config/kernel/linux-rk35xx-vendor.config
         ./compile.sh BOARD=orangepi3b BRANCH=edge RELEASE=sid BUILD_ONLY= KERNEL_CONFIGURE=no BUILD_MINIMAL=yes BUILD_DESKTOP=no EXTERNAL=yes INSTALL_HEADERS=yes EXTERNAL_NEW=compile
+        ./compile.sh kernel BOARD=orangepi3b BRANCH=legacy
+        ./compile.sh kernel BOARD=orangepi3b BRANCH=current
     - uses: actions/upload-artifact@v4
       with:
-        name: Armbian-Opi3b-Debian-sid-edge
+        name: Armbian-opi3b-Debian-sid-edge
         path: /home/runner/work/build-opi3b/build-opi3b/build/output/images/*
+    - uses: actions/upload-artifact@v4
+      with:
+        name: Armbian-Kernel-legacy-and-vendor
+        path: /home/runner/work/build-opi3b/build-opi3b/build/output/debs/*
