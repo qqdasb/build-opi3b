@@ -27,7 +27,7 @@ jobs:
       run: |
         wget https://raw.githubusercontent.com/qqdasb/my-files/main/linux-noble-next.config
         rm linux-noble/arch/arm64/configs/defconfig
-        cp linux-noble-next.config linux-noble/arch/arm64/configs/rockchip_linux_defconfig
+        cp linux-noble-next.config linux-noble/arch/arm64/configs/defconfig
     - name: Build
       run: |
         export $(dpkg-architecture -aarm64)
