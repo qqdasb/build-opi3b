@@ -33,9 +33,10 @@ jobs:
         export CROSS_COMPILE=aarch64-linux-gnu-
         export CC=aarch64-linux-gnu-gcc
         export LANG=C
-        fakeroot linux-noble/debian/rules clean binary-headers binary-rockchip do_mainline_build=true
+        cd linux-noble
+        fakeroot debian/rules clean binary-headers binary-rockchip do_mainline_build=true
     - name: 'Linux-noble-debs'
       uses: actions/upload-artifact@v4
       with:
         name: Linux-ubuntu-debs
-        path: ./*.deb
+        path: linux-noble/*.deb
