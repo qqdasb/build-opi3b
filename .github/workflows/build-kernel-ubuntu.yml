@@ -26,15 +26,14 @@ jobs:
         python3-distutils python3-pkg-resources swig libfdt-dev libpython3-dev dctrl-tools
     - name: Copy Config
       run: |
-        
+        wget
+        cp linux-noble-next.config linux-noble/.config
     - name: Build
       run: |
         export $(dpkg-architecture -aarm64)
         export CROSS_COMPILE=aarch64-linux-gnu-
         export CC=aarch64-linux-gnu-gcc
         export LANG=C
-        wget 
-        cp linux-noble-next.config linux-noble/.config
         fakeroot linux-noble/debian/rules clean binary-headers binary-rockchip do_mainline_build=true
     - name: 'Linux-noble-debs'
       uses: actions/upload-artifact@v4
