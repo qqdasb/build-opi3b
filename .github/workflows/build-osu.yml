@@ -23,9 +23,11 @@ jobs:
     - name: Get source
       run: git clone https://github.com/ppy/osu
     - name: Build
-      run: dotnet build -c Release -warnaserror osu.Desktop.slnf --output osu-linux
+      run: |
+         cd osu
+         dotnet build -c Release -warnaserror osu.Desktop.slnf --output osu-linux
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v4
       with:
         name: osu-linux-dotnet
-        path: osu-linux
+        path: osu/osu-linux
