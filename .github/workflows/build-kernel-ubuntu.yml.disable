@@ -1,4 +1,4 @@
-name: Build Kernel (Nightly)
+name: Build Kernel for Ubuntu (Nightly)
 
 on:
   push:
