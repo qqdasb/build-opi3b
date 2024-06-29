@@ -1,0 +1,43 @@
+name: Build Kernel (Nightly)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+#  schedule:
+#    - cron: "0 0 * * *"
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Prepare
+      run: |
+        git clone https://github.com/Joshua-Riek/linux-rockchip -b noble-next linux-noble
+        sudo apt-get update && sudo apt-get upgrade -y
+        sudo apt-get install -y build-essential gcc-aarch64-linux-gnu bison \
+        qemu-user-static qemu-system-arm qemu-efi u-boot-tools binfmt-support \
+        debootstrap flex libssl-dev bc rsync kmod cpio xz-utils fakeroot parted \
+        udev dosfstools uuid-runtime git-lfs device-tree-compiler python2 python3 \
+        python-is-python3 fdisk bc debhelper python3-pyelftools python3-setuptools \
+        python3-distutils python3-pkg-resources swig libfdt-dev libpython3-dev dctrl-tools
+    - name: Copy Config
+      run: |
+        
+    - name: Build
+      run: |
+        export $(dpkg-architecture -aarm64)
+        export CROSS_COMPILE=aarch64-linux-gnu-
+        export CC=aarch64-linux-gnu-gcc
+        export LANG=C
+        wget 
+        cp linux-noble-next.config linux-noble/.config
+        fakeroot linux-noble/debian/rules clean binary-headers binary-rockchip do_mainline_build=true
+    - name: 'Linux-noble-debs'
+      uses: actions/upload-artifact@v4
+      with:
+        name: Linux-ubuntu-debs
+        path: ./*.deb
