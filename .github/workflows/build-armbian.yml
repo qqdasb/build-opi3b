@@ -19,11 +19,8 @@ jobs:
       run: |
         git clone https://github.com/armbian/build --depth 1 -b main
         cd build
-        wget https://raw.githubusercontent.com/qqdasb/my-files/main/linux-6.1-rkr1.config
-        mkdir -p userpatches
-        mv linux-6.1-rkr1.config userpatches/linux-rk35xx-vendor.config
-        ./compile.sh NETWORKING_STACK=network-manager RELEASE=sid KERNEL_CONFIGURE=no BUILD_DESKTOP=no BUILD_MINIMAL=no EXTERNAL=yes INSTALL_HEADERS=yes EXTERNAL_NEW=compile BUILD_ALL=yes BOARD=orangepi3b BRANCH=vendor
+        ./compile.sh NETWORKING_STACK=network-manager RELEASE=sid KERNEL_CONFIGURE=no BUILD_DESKTOP=no BUILD_MINIMAL=no EXTERNAL=yes INSTALL_HEADERS=yes EXTERNAL_NEW=compile BUILD_ALL=yes BOARD=orangepi3b BRANCH=edge
     - uses: actions/upload-artifact@v4
       with:
-        name: Armbian-sid-opi3b
+        name: Armbian-sid-edge-opi3b
         path: /home/runner/work/build-opi3b/build-opi3b/build/output/images/*
