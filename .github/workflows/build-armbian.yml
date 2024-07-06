@@ -1,0 +1,29 @@
+name: Build Armbian
+
+on:
+#  schedule:
+#    - cron: "0 0 * * *"
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build Armbian Kernel
+      run: |
+        git clone https://github.com/armbian/build --depth 1 -b main
+        cd build
+        wget https://raw.githubusercontent.com/qqdasb/my-files/main/linux-6.1-rkr1.config
+        rm config/kernel/linux-rk35xx-vendor.config
+        mv linux-6.1-rkr1.config config/kernel/linux-rk35xx-vendor.config
+        ./compile.sh kernel BOARD=orangepi3b BRANCH=vendor
+    - uses: actions/upload-artifact@v4
+      with:
+        name: Armbian-opi3b
+        path: /home/runner/work/build-opi3b/build-opi3b/build/output/images/*
