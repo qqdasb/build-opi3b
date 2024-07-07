@@ -19,7 +19,7 @@ jobs:
       run: |
         git clone https://github.com/armbian/build --depth 1 -b main
         cd build
-        ./compile.sh BETA=yes BOARD=orangepi3b BRANCH=vendor BUILD_DESKTOP=yes DESKTOP_ENVIRONMENT=kde-plasma NETWORKING_STACK=network-manager RELEASE=noble ENABLE_EXTENSIONS=v4l2loopback-dkms,mesa-vpu DESKTOP_ENVIRONMENT_CONFIG_NAME=config_base DESKTOP_APPGROUPS_SELECTED=browsers,chat,desktop_tools,editors,email,internet,languages,multimedia,office,programming,remote_desktop DESKTOP_ENVIRONMENT=gnome KERNEL_CONFIGURE=no BUILD_MINIMAL=no EXTERNAL=yes INSTALL_HEADERS=yes EXTERNAL_NEW=compile BUILD_ALL=yes
+        ./compile.sh BETA=yes BOARD=orangepi3b BRANCH=vendor BUILD_DESKTOP=yes DESKTOP_ENVIRONMENT=kde-plasma NETWORKING_STACK=network-manager RELEASE=noble ENABLE_EXTENSIONS=v4l2loopback-dkms,mesa-vpu DESKTOP_ENVIRONMENT_CONFIG_NAME=config_base DESKTOP_APPGROUPS_SELECTED=browsers,chat,desktop_tools,editors,email,internet,languages,multimedia,office,programming,remote_desktop DESKTOP_ENVIRONMENT=kde-plasma KERNEL_CONFIGURE=no BUILD_MINIMAL=no EXTERNAL=yes INSTALL_HEADERS=yes EXTERNAL_NEW=compile BUILD_ALL=yes
     - uses: actions/upload-artifact@v4
       with:
         name: Armbian-noble-edge-opi3b
