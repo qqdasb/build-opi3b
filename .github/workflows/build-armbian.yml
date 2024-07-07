@@ -19,7 +19,7 @@ jobs:
       run: |
         git clone https://github.com/armbian/build --depth 1 -b main
         cd build
-        ./compile.sh NETWORKING_STACK=network-manager RELEASE=noble KERNEL_CONFIGURE=no BUILD_DESKTOP=no BUILD_MINIMAL=no EXTERNAL=yes INSTALL_HEADERS=yes EXTERNAL_NEW=compile BUILD_ALL=yes BOARD=orangepi3b BRANCH=edge
+        ./compile.sh NETWORKING_STACK=network-manager RELEASE=noble BETA=yes ENABLE_EXTENSIONS=v4l2loopback-dkms,mesa-vpu KERNEL_CONFIGURE=no BUILD_DESKTOP=no BUILD_MINIMAL=no EXTERNAL=yes INSTALL_HEADERS=yes EXTERNAL_NEW=compile BUILD_ALL=yes BOARD=orangepi3b BRANCH=edge
     - uses: actions/upload-artifact@v4
       with:
         name: Armbian-noble-edge-opi3b
