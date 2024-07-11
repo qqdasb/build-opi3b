@@ -1,0 +1,22 @@
+name: Less Action
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Download
+      run: wget https://github.com/Joshua-Riek/ubuntu-rockchip/releases/download/v2.2.1/ubuntu-24.04-preinstalled-desktop-arm64-orangepi-3b.img.xz
+    - name: 'Upload'
+      uses: actions/upload-artifact@v4
+      with:
+        name: File
+        path: ./*.xz
