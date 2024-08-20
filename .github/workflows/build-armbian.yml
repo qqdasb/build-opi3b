@@ -19,7 +19,7 @@ jobs:
       run: |
         git clone https://github.com/armbian/build --depth 1 -b main
         cd build
-        ./compile.sh BOARD=orangepi3b BRANCH=legacy NETWORKING_STACK=network-manager,systemd-networkd RELEASE=sid ENABLE_EXTENSIONS=v4l2loopback-dkms,mesa-vpu,u-boot-menu,rkbin-tools,preset-firstrun KERNEL_CONFIGURE=no BUILD_MINIMAL=no BUILD_DESKTOP=no EXTERNAL=yes INSTALL_HEADERS=yes EXTERNAL_NEW=compile BUILD_ALL=yes
+        ./compile.sh BOARD=orangepi3b BRANCH=vendor NETWORKING_STACK=network-manager,systemd-networkd RELEASE=sid ENABLE_EXTENSIONS=v4l2loopback-dkms,mesa-vpu,u-boot-menu,rkbin-tools,preset-firstrun KERNEL_CONFIGURE=no BUILD_MINIMAL=no BUILD_DESKTOP=no EXTERNAL=yes INSTALL_HEADERS=yes
     - uses: actions/upload-artifact@v4
       with:
         name: Armbian-noble-edge-opi3b
