@@ -18,7 +18,7 @@ jobs:
       run: |
         git clone https://github.com/armbian/build -b main
         cd build
-        ./compile.sh kernel BOARD=orangepi3b BRANCH=edge
+        ./compile.sh kernel BOARD=orangepi3b BRANCH=edge KERNEL_CONFIGURE=no KERNEL_ONLY=yes
     - uses: actions/upload-artifact@v4
       with:
         name: Armbian-Kernel-Mainline
