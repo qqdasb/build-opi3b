@@ -1,0 +1,21 @@
+name: Build Armbian Kernel
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build Armbian Kernel
+      run: |
+        git clone https://github.com/armbian/build --depth 1 -b main
+        ./compile.sh kernel BOARD=orangepi3b BRANCH=edge
+    - uses: actions/upload-artifact@v4
+      with:
+        name: Armbian-Kernel-Mainline
+        path: /home/runner/work/build-opi3b/build-opi3b/build/output/debs/*
