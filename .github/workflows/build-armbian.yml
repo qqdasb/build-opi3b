@@ -24,3 +24,7 @@ jobs:
       with:
         name: Armbian-sid-edge-opi3b
         path: /home/runner/work/build-opi3b/build-opi3b/build/output/images/*
+    - uses: actions/upload-artifact@v4
+      with:
+        name: Armbian-packages
+        path: /home/runner/work/build-opi3b/build-opi3b/build/output/debs/*
