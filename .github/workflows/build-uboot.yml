@@ -23,8 +23,8 @@ jobs:
     - name: Build
       run: |
         cd u-boot
-        export ROCKCHIP_TPL=../rkbin/bin/rk35/rk3568_bl31_v1.34.elf
-        export BL31=../rkbin/bin/rk35/rk3566_ddr_1056MHz_v1.21.bin
+        export ROCKCHIP_TPL=../rkbin/bin/rk35/rk3566_ddr_1056MHz_v1.21.bin
+        export BL31=../rkbin/bin/rk35/rk3568_bl31_v1.34.elf
         make orangepi-3b-rk3566_defconfig
         make CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
     - name: 'Upload Built Binary.'
