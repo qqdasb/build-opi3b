@@ -19,7 +19,7 @@ jobs:
         sudo apt install wget
         wget https://mirrors.manjaro.org/repo/unstable/extra/x86_64/manjaro-arm-tools-2.11.3+17+g2f50087-1-any.pkg.tar.zst
         mkdir tools
-        tar zxf manjaro-arm-tools-2.11.3+17+g2f50087-1-any.pkg.tar.zst -C tools
+        tar xf manjaro-arm-tools-2.11.3+17+g2f50087-1-any.pkg.tar.zst -C tools
         rm tools/.BUILDINFO tools/.MTREE tools/.PKGINFO
         sudo cp -r tools/* /
     - name: make
