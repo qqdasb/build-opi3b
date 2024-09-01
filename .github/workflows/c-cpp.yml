@@ -1,0 +1,30 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Prepare
+      run: |
+        sudo apt update
+        sudo apt install wget
+        wget https://mirrors.manjaro.org/repo/unstable/extra/x86_64/manjaro-arm-tools-2.11.3+17+g2f50087-1-any.pkg.tar.zst
+        mkdir tools
+        tar zxf manjaro-arm-tools-2.11.3+17+g2f50087-1-any.pkg.tar.zst -C tools
+        rm tools/.BUILDINFO tools/.MTREE tools/.PKGINFO
+        sudo cp -r tools/* /
+    - name: make
+      run: make
+    - name: make check
+      run: make check
+    - name: make distcheck
+      run: make distcheck
