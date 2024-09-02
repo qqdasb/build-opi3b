@@ -1,0 +1,25 @@
+name: Build Manjaro ARM Minimal
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Prepare
+      run: |
+        wget https://github.com/manjaro-arm/opi-3b-images/releases/download/20240131/Manjaro-ARM-minimal-opi3b-20240131.img.xz
+        sudo apt update && sudo apt install arch-install-scripts
+        tar zxf Manjaro-ARM-minimal-opi3b-20240131.img.xz
+        sudo mount Manjaro-ARM-minimal-opi3b-20240131.img ./manjaro
+    - name: Build
+      run: |
+        sudo cp /etc/resolv.conf manjaro/etc/resolv.conf
+        sudo arch-chroot ./manjaro
