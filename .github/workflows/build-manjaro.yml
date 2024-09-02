@@ -17,9 +17,11 @@ jobs:
       run: |
         wget https://github.com/manjaro-arm/opi-3b-images/releases/download/20240131/Manjaro-ARM-minimal-opi3b-20240131.img.xz
         sudo apt update && sudo apt install arch-install-scripts
-        tar zxf Manjaro-ARM-minimal-opi3b-20240131.img.xz
+        xz -d Manjaro-ARM-minimal-opi3b-20240131.img.xz
         sudo mount Manjaro-ARM-minimal-opi3b-20240131.img ./manjaro
     - name: Build
       run: |
         sudo cp /etc/resolv.conf manjaro/etc/resolv.conf
-        sudo arch-chroot ./manjaro
+        sudo arch-chroot ./manjaro pacman -Syu --noconfirm
+        sudo arch-chroot ./manjaro pacman -S --needed networkmanager linux-aarch64-rc linux-aarch64-rc-headers --noconfirm
+        sudo umount Manjaro-ARM-minimal-opi3b-20240131.img
