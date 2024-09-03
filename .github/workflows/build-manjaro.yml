@@ -19,7 +19,7 @@ jobs:
         sudo apt update && sudo apt install arch-install-scripts
         xz -d Manjaro-ARM-minimal-opi3b-20240131.img.xz
         mkdir -p manjaro
-        sudo echo $(losetup -f) > loopfile.txt
+        sudo echo $(losetup -f) >> loopfile.txt
         sudo losetup -P $(echo loopfile.txt) ./Manjaro-ARM-minimal-opi3b-20240131.img
         sudo mount $(echo loopfile.txt) ./manjaro
     - name: Build
