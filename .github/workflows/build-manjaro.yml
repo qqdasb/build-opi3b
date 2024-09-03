@@ -18,6 +18,7 @@ jobs:
         wget https://github.com/manjaro-arm/opi-3b-images/releases/download/20240131/Manjaro-ARM-minimal-opi3b-20240131.img.xz
         sudo apt update && sudo apt install arch-install-scripts
         xz -d Manjaro-ARM-minimal-opi3b-20240131.img.xz
+        mkdir -p manjaro
         sudo mount Manjaro-ARM-minimal-opi3b-20240131.img ./manjaro
     - name: Build
       run: |
