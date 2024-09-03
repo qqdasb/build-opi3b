@@ -16,11 +16,11 @@ jobs:
     - name: Prepare
       run: |
         wget https://github.com/manjaro-arm/opi-3b-images/releases/download/20240131/Manjaro-ARM-minimal-opi3b-20240131.img.xz -q
-        sudo apt update && sudo apt install arch-install-scripts
+        sudo apt update && sudo apt install arch-install-scripts mount.ext2
         xz -d Manjaro-ARM-minimal-opi3b-20240131.img.xz
         mkdir -p manjaro
-        sudo losetup -P /dev/loop3 ./Manjaro-ARM-minimal-opi3b-20240131.img
-        sudo fsck -N /dev/loop3
+        sudo losetup -P /dev/loop7 ./Manjaro-ARM-minimal-opi3b-20240131.img
+        sudo mount /dev/loop7 ./manjaro
     - name: Build
       run: |
         sudo cp /etc/resolv.conf manjaro/etc/resolv.conf
