@@ -15,9 +15,8 @@ jobs:
     - uses: actions/checkout@v4
     - name: Prepare
       run: |
-        apt search ext2
         wget https://github.com/manjaro-arm/opi-3b-images/releases/download/20240131/Manjaro-ARM-minimal-opi3b-20240131.img.xz -q
-        sudo apt update && sudo apt install arch-install-scripts mount.ext2
+        sudo apt update && sudo apt install arch-install-scripts mount.ext4
         xz -d Manjaro-ARM-minimal-opi3b-20240131.img.xz
         mkdir -p manjaro
         sudo losetup -P /dev/loop7 ./Manjaro-ARM-minimal-opi3b-20240131.img
