@@ -20,12 +20,10 @@ jobs:
         xz -d Manjaro-ARM-minimal-opi3b-20240131.img.xz
         mkdir -p manjaro
         sudo losetup -P /dev/loop3 ./Manjaro-ARM-minimal-opi3b-20240131.img
-        sudo blkid /dev/loop3
-        sudo mount /dev/loop3 ./manjaro
+        sudo fsck -N /dev/loop3
     - name: Build
       run: |
         sudo cp /etc/resolv.conf manjaro/etc/resolv.conf
         sudo arch-chroot ./manjaro pacman -Sy --noconfirm
         sudo arch-chroot ./manjaro pacman -S --needed networkmanager linux-aarch64-rc linux-aarch64-rc-headers --noconfirm
-        sudo umount ./manjaro
         sudo losetup -d /dev/loop3
