@@ -15,18 +15,16 @@ jobs:
     - uses: actions/checkout@v4
     - name: Prepare
       run: |
-        sudo losetup -f
         wget https://github.com/manjaro-arm/opi-3b-images/releases/download/20240131/Manjaro-ARM-minimal-opi3b-20240131.img.xz -q
         sudo apt update && sudo apt install arch-install-scripts
         xz -d Manjaro-ARM-minimal-opi3b-20240131.img.xz
         mkdir -p manjaro
-        sudo echo $(losetup -f) >> loopfile.txt
-        sudo losetup -P $(echo loopfile.txt) ./Manjaro-ARM-minimal-opi3b-20240131.img
-        sudo mount $(echo loopfile.txt) ./manjaro
+        sudo losetup -P /dev/loop3 ./Manjaro-ARM-minimal-opi3b-20240131.img
+        sudo mount /dev/loop3 ./manjaro
     - name: Build
       run: |
         sudo cp /etc/resolv.conf manjaro/etc/resolv.conf
-        sudo arch-chroot ./manjaro pacman -Syu --noconfirm
+        sudo arch-chroot ./manjaro pacman -Sy --noconfirm
         sudo arch-chroot ./manjaro pacman -S --needed networkmanager linux-aarch64-rc linux-aarch64-rc-headers --noconfirm
         sudo umount ./manjaro
-        sudo losetup -d $(echo loopfile.txt)
+        sudo losetup -d /dev/loop3
