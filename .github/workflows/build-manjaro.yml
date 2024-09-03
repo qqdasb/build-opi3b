@@ -20,6 +20,7 @@ jobs:
         xz -d Manjaro-ARM-minimal-opi3b-20240131.img.xz
         mkdir -p manjaro
         sudo losetup -P /dev/loop3 ./Manjaro-ARM-minimal-opi3b-20240131.img
+        sudo blkid /dev/loop3
         sudo mount /dev/loop3 ./manjaro
     - name: Build
       run: |
