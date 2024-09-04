@@ -21,6 +21,8 @@ jobs:
         mkdir -p manjaro
         sudo losetup -P /dev/loop3 ./Manjaro-ARM-minimal-opi3b-20240131.img
         sudo mount /dev/loop3p1 ./manjaro
+        ls .
+        ls ./manjaro
     - name: Build
       run: |
         sudo arch-chroot ./manjaro pacman -Sy --noconfirm
