@@ -16,14 +16,13 @@ jobs:
     - name: Prepare
       run: |
         wget https://github.com/manjaro-arm/opi-3b-images/releases/download/20240131/Manjaro-ARM-minimal-opi3b-20240131.img.xz -q
-        sudo apt update && sudo apt install arch-install-scripts
+        sudo apt update && sudo apt install arch-install-scripts systemd-container qemu-user-static
         xz -d Manjaro-ARM-minimal-opi3b-20240131.img.xz
         mkdir -p manjaro
         sudo losetup -P /dev/loop3 ./Manjaro-ARM-minimal-opi3b-20240131.img
         sudo mount /dev/loop3p1 ./manjaro
     - name: Build
       run: |
-        sudo cp /etc/resolv.conf manjaro/etc/resolv.conf
         sudo arch-chroot ./manjaro pacman -Sy --noconfirm
         sudo arch-chroot ./manjaro pacman -S --needed networkmanager linux-aarch64-rc linux-aarch64-rc-headers --noconfirm
         sudo arch-chroot ./manjaro sync
