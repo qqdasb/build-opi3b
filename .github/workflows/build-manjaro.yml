@@ -16,20 +16,18 @@ jobs:
     - name: Prepare
       run: |
         wget https://github.com/manjaro-arm/opi-3b-images/releases/download/20240131/Manjaro-ARM-minimal-opi3b-20240131.img.xz -q
-        sudo apt update && sudo apt install arch-install-scripts autofs
+        sudo apt update && sudo apt install arch-install-scripts
         xz -d Manjaro-ARM-minimal-opi3b-20240131.img.xz
         mkdir -p manjaro
-        sudo chown $USER:$USER ./manjaro
-        sudo chown $USER:$USER ./Manjaro-ARM-minimal-opi3b-20240131.img
-        sudo losetup -P /dev/loop7 ./Manjaro-ARM-minimal-opi3b-20240131.img
-        sudo chown $USER:$USER /dev/loop7
-        sudo fsck /dev/loop7
-        sudo fsck ./Manjaro-ARM-minimal-opi3b-20240131.img
-        sudo fsck ./manjaro
-        sudo mount -t ext2 /dev/loop7 ./manjaro
+        sudo losetup -P /dev/loop3 ./Manjaro-ARM-minimal-opi3b-20240131.img
+        sudo mount /dev/loop3p1 ./manjaro
     - name: Build
       run: |
         sudo cp /etc/resolv.conf manjaro/etc/resolv.conf
         sudo arch-chroot ./manjaro pacman -Sy --noconfirm
         sudo arch-chroot ./manjaro pacman -S --needed networkmanager linux-aarch64-rc linux-aarch64-rc-headers --noconfirm
+        sudo arch-chroot ./manjaro sync
+        sudo e2fsck -fyD /dev/loop3p1
+        sudo pkill arch-chroot
+        sudo umount ./manjaro
         sudo losetup -d /dev/loop3
