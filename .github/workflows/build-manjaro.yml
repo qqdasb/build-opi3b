@@ -15,15 +15,16 @@ jobs:
     - uses: actions/checkout@v4
     - name: Prepare
       run: |
-        whoami
         wget https://github.com/manjaro-arm/opi-3b-images/releases/download/20240131/Manjaro-ARM-minimal-opi3b-20240131.img.xz -q
         sudo apt update && sudo apt install arch-install-scripts
         apt search mount
         xz -d Manjaro-ARM-minimal-opi3b-20240131.img.xz
         mkdir -p manjaro
-        sudo chown $USER:$USER ./manjaro
+        sudo chown runner:runner ./manjaro
+        sudo chown runner:runner ./Manjaro-ARM-minimal-opi3b-20240131.img
         sudo losetup -P /dev/loop7 ./Manjaro-ARM-minimal-opi3b-20240131.img
-        sudo mount /dev/loop7 ./manjaro
+        sudo chown runner:runner /dev/loop7
+        sudo mount -t ext2 /dev/loop7 ./manjaro
     - name: Build
       run: |
         sudo cp /etc/resolv.conf manjaro/etc/resolv.conf
