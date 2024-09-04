@@ -28,7 +28,7 @@ jobs:
         sudo arch-chroot ./manjaro pacman -Syu --noconfirm
         sudo arch-chroot ./manjaro pacman -S --needed networkmanager --noconfirm
         sudo arch-chroot ./manjaro sync
-        sudo e2fsck -fyD /dev/loop3p2
         sudo pkill arch-chroot
         sudo umount ./manjaro
+        sudo e2fsck -fyD /dev/loop3p2
         sudo losetup -d /dev/loop3
