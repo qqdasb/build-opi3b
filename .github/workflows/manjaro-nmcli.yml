@@ -1,4 +1,4 @@
-name: Build Manjaro ARM Minimal
+name: Manjaro ARM Minimal with NetworkManager
 
 on:
   push:
@@ -21,11 +21,11 @@ jobs:
         mkdir -p manjaro
         sudo losetup -P /dev/loop3 ./Manjaro-ARM-minimal-opi3b-20240131.img
         sudo mount /dev/loop3p2 ./manjaro
-    - name: Build
+    - name: Install nmcli
       run: |
         sudo arch-chroot ./manjaro pacman-key --init
         sudo arch-chroot ./manjaro pacman-key --populate
-        sudo arch-chroot ./manjaro pacman -Syu --noconfirm
+        sudo arch-chroot ./manjaro pacman -Sy --noconfirm
         sudo arch-chroot ./manjaro pacman -S --needed networkmanager --noconfirm
         sudo arch-chroot ./manjaro sync
         sudo pkill arch-chroot
