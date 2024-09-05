@@ -26,15 +26,15 @@ jobs:
       run: |
         sudo arch-chroot ./manjaro pacman-key --init
         sudo arch-chroot ./manjaro pacman-key --populate
-        sudo arch-chroot ./manjaro pacman -Syu --noconfirm
-        sudo arch-chroot ./manjaro pacman -S --needed networkmanager --noconfirm
         git clone https://github.com/Joshua-Riek/ubuntu-rockchip-firmware.git
         rm -rf ubuntu-rockchip-firmware/debian README.md
         sudo cp -r ubuntu-rockchip-firmware manjaro/usr/lib/firmware
         git clone https://github.com/orangepi-xunlong/firmware.git
-        sudo cp -r manjaro/usr/lib/firmware
+        sudo cp -r firmware manjaro/usr/lib/firmware
         rm -rf ubuntu-rockchip-firmware firmware
         sudo arch-chroot ./manjaro ldconfig
+        sudo arch-chroot ./manjaro pacman -Syu --noconfirm
+        sudo arch-chroot ./manjaro pacman -S --needed networkmanager --noconfirm
         sudo arch-chroot ./manjaro sync
         sudo umount ./manjaro/boot
         sudo umount ./manjaro
