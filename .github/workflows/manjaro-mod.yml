@@ -30,7 +30,7 @@ jobs:
         sudo arch-chroot ./manjaro pacman -S --needed networkmanager --noconfirm
         git clone https://github.com/Joshua-Riek/ubuntu-rockchip-firmware.git
         rm -rf ubuntu-rockchip-firmware/debian README.md
-        sudo cp ubuntu-rockchip-firmware manjaro/usr/lib/firmware
+        sudo cp -r ubuntu-rockchip-firmware manjaro/usr/lib/firmware
         git clone https://github.com/orangepi-xunlong/firmware.git
         sudo cp -r manjaro/usr/lib/firmware
         rm -rf ubuntu-rockchip-firmware firmware
