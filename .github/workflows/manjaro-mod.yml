@@ -28,7 +28,7 @@ jobs:
         wget https://github.com/manjaro-arm/opi-3b-images/releases/download/20240131/Manjaro-ARM-minimal-opi3b-20240131.img.xz -q
         sudo apt update && sudo apt install arch-install-scripts qemu-user-static binfmt-support
         xz -d Manjaro-ARM-minimal-opi3b-20240131.img.xz
-        sudo e2fsck -f -y -p Manjaro-ARM-minimal-opi3b-20240131.img
+        sudo e2fsck -f -p Manjaro-ARM-minimal-opi3b-20240131.img
         sudo resize2fs Manjaro-ARM-minimal-opi3b-20240131.img
         mkdir -p manjaro
         sudo losetup -P /dev/loop3 ./Manjaro-ARM-minimal-opi3b-20240131.img
