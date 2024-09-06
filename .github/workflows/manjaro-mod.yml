@@ -28,8 +28,7 @@ jobs:
         sudo arch-chroot ./manjaro pacman-key --init
         sudo arch-chroot ./manjaro pacman-key --populate
         sudo arch-chroot ./manjaro pacman -Syu --noconfirm
-        sudo arch-chroot ./manjaro pacman -S yay --noconfirm
-        sudo arch-chroot ./manjaro yay -S aur/ffmpeg-rockchip-git aur/rkbin aur/rkrga-git aur/rockchip-alsa-config aur/rockchip-mpp core/linux-firmware --needed --noconfirm
+        sudo arch-chroot ./manjaro pacman -S linux-firmware --needed --noconfirm
         git clone https://github.com/Joshua-Riek/ubuntu-rockchip-firmware.git
         rm -rf ubuntu-rockchip-firmware/debian README.md
         sudo cp -r ubuntu-rockchip-firmware manjaro/usr/lib/firmware
