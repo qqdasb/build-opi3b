@@ -22,6 +22,7 @@ jobs:
         sudo losetup -P /dev/loop3 ./Manjaro-ARM-minimal-opi3b-20240131.img
         sudo mount /dev/loop3p2 ./manjaro
         sudo mount /dev/loop3p1 ./manjaro/boot
+        sudo resize2fs /dev/loop3p2
     - name: Building
       run: |
         sudo cp /usr/bin/qemu-aarch64-static ./manjaro/usr/bin
