@@ -31,6 +31,7 @@ jobs:
         mkdir -p manjaro
         sudo losetup -P /dev/loop3 ./Manjaro-ARM-minimal-opi3b-20240131.img
         sudo e2fsck -f -p /dev/loop3p2
+        sudo lvextend -l +100%FREE /dev/loop3p2
         sudo resize2fs /dev/loop3p2 15G
         sudo resize2fs /dev/loop3p2
         sudo mount /dev/loop3p2 ./manjaro
