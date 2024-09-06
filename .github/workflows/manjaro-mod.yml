@@ -16,7 +16,7 @@ jobs:
     - name: Prepare
       run: |
         wget https://github.com/manjaro-arm/opi-3b-images/releases/download/20240131/Manjaro-ARM-minimal-opi3b-20240131.img.xz -q
-        sudo apt update && sudo apt install arch-install-scripts systemd-container qemu-user-static
+        sudo apt update && sudo apt install arch-install-scripts qemu-user-static
         xz -d Manjaro-ARM-minimal-opi3b-20240131.img.xz
         mkdir -p manjaro
         sudo losetup -P /dev/loop3 ./Manjaro-ARM-minimal-opi3b-20240131.img
@@ -24,10 +24,11 @@ jobs:
         sudo mount /dev/loop3p1 ./manjaro/boot
     - name: Building
       run: |
+        cp /usr/bin/qemu-aarch64-static ./manjaro/usr/bin
         sudo arch-chroot ./manjaro pacman-key --init
         sudo arch-chroot ./manjaro pacman-key --populate
         sudo arch-chroot ./manjaro pacman -Syu --noconfirm
-        sudo arch-chroot ./manjaro pacman -S yay
+        sudo arch-chroot ./manjaro pacman -S yay --noconfirm
         sudo arch-chroot ./manjaro yay -S aur/ffmpeg-rockchip-git aur/rkbin aur/rkrga-git aur/rockchip-alsa-config aur/rockchip-mpp core/linux-firmware --needed --noconfirm
         git clone https://github.com/Joshua-Riek/ubuntu-rockchip-firmware.git
         rm -rf ubuntu-rockchip-firmware/debian README.md
