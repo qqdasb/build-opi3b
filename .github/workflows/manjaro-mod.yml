@@ -39,6 +39,7 @@ jobs:
         sudo arch-chroot ./manjaro pacman -Scc --noconfirm
         sudo arch-chroot ./manjaro pacman -Syu --noconfirm
         sudo arch-chroot ./manjaro pacman -S --needed networkmanager --noconfirm
+        sudo arch-chroot ./manjaro pacman -Scc --noconfirm
         sudo arch-chroot ./manjaro sync
         sudo umount ./manjaro/boot
         sudo umount ./manjaro
