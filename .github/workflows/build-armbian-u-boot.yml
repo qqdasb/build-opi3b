@@ -23,7 +23,7 @@ jobs:
         wget https://github.com/amazingfate/build/raw/76122197b554fa9c62b74cf4b11a0d7371942355/config/boards/orangepi3b.csc -O config/boards/orangepi3b.csc
         mkdir -p patch/u-boot/v2024.10-orangepi3b
         wget https://github.com/amazingfate/build/raw/76122197b554fa9c62b74cf4b11a0d7371942355/patch/u-boot/v2024.10-orangepi3b/0001-rockchip-rk3566-orangepi-3b-enable-npu-regulator.patch -O patch/u-boot/v2024.10-orangepi3b/0001-rockchip-rk3566-orangepi-3b-enable-npu-regulator.patch
-        ./compile.sh u-boot BOARD=orangepi3b
+        ./compile.sh uboot BOARD=orangepi3b
     - name: 'Upload deb'
       uses: actions/upload-artifact@v4
       with:
