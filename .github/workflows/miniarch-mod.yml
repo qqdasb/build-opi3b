@@ -46,7 +46,8 @@ jobs:
         sudo arch-chroot ./miniarch ldconfig
         sudo arch-chroot ./miniarch pacman -Sy --noconfirm
         sudo arch-chroot ./miniarch pacman -Scc --noconfirm
-        sudo arch-chroot ./miniarch pacman -S --needed networkmanager glibc bash filesystem coreutils manjaro-release manjaro-arm-oem-install iproute2 gcc-libs --noconfirm
+        sudo arch-chroot ./miniarch pacman -S --needed networkmanager glibc bash filesystem coreutils iproute2 gcc-libs systemd --noconfirm
+        sudo arch-chroot ./miniarch systemctl enable NetworkManager
         sudo arch-chroot ./miniarch pacman -Scc --noconfirm
         sudo arch-chroot ./miniarch sync
         sudo rm ./miniarch/usr/bin/qemu-aarch64-static
