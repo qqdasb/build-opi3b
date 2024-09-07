@@ -31,7 +31,7 @@ jobs:
         git clone https://github.com/Joshua-Riek/ubuntu-rockchip-firmware.git
         rm -rf ubuntu-rockchip-firmware/debian firmware/README.md
         cp -r firmware/* ubuntu-rockchip-firmware/
-        sudo cp ./ubuntu-rockchip-firmware ./manjaro/usr/lib/firmware
+        sudo cp -r ./ubuntu-rockchip-firmware ./manjaro/usr/lib/firmware
         rm -rf ubuntu-rockchip-firmware firmware
         sudo arch-chroot ./manjaro ldconfig
         sudo arch-chroot ./manjaro pacman -Scc --noconfirm
