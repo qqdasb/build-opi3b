@@ -24,9 +24,9 @@ jobs:
         sudo mount /dev/loop3p1 ./manjaro/boot
     - name: Moding
       run: |
-        sudo arch-chroot ./miniarch pacman-key --init
-        sudo arch-chroot ./miniarch pacman-key --populate
-        sudo arch-chroot ./miniarch pacman -Sy --noconfirm
+        sudo arch-chroot ./manjaro pacman-key --init
+        sudo arch-chroot ./manjaro pacman-key --populate
+        sudo arch-chroot ./manjaro pacman -Sy --noconfirm
         git clone https://github.com/Joshua-Riek/ubuntu-rockchip-firmware.git
         rm -rf ubuntu-rockchip-firmware/debian README.md
         sudo cp -r ubuntu-rockchip-firmware/* manjaro/usr/lib/firmware/
