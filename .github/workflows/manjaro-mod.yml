@@ -29,9 +29,9 @@ jobs:
         sudo arch-chroot ./manjaro pacman -Sy --noconfirm
         git clone https://github.com/Joshua-Riek/ubuntu-rockchip-firmware.git
         rm -rf ubuntu-rockchip-firmware/debian README.md
-        sudo cp -r ubuntu-rockchip-firmware/* manjaro/usr/lib/firmware/
+        sudo mv ubuntu-rockchip-firmware/* manjaro/usr/lib/firmware/
         git clone https://github.com/orangepi-xunlong/firmware.git
-        sudo cp -r firmware/* manjaro/usr/lib/firmware/*
+        sudo mv firmware/* manjaro/usr/lib/firmware/
         rm -rf ubuntu-rockchip-firmware firmware
         sudo arch-chroot ./manjaro ldconfig
         sudo arch-chroot ./manjaro pacman -Scc --noconfirm
