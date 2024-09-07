@@ -40,8 +40,8 @@ jobs:
         sudo arch-chroot ./manjaro pacman -Scc --noconfirm
         sudo arch-chroot ./manjaro pacman-key --recv-keys BA27F219383BB875
         sudo arch-chroot ./manjaro pacman-key --lsign BA27F219383BB875
-        sudo arch-chroot ./manjaro echo '[7Ji]
-        Server = https://github.com/7Ji/archrepo/releases/download/$arch' >> /etc/pacman.conf
+        sudo echo '[7Ji]
+        Server = https://github.com/7Ji/archrepo/releases/download/$arch' >> ./manjaro/etc/pacman.conf
         sudo arch-chroot ./manjaro pacman -Sy 7ji-keyring --needed
         sudo arch-chroot ./manjaro pacman -Rdd linux-aarch64-rc linux-aarch64-rc-headers
         sudo arch-chroot ./manjaro pacman -S linux-aarch64-rockchip-opi3b-npu-w568w
