@@ -38,6 +38,11 @@ jobs:
         sudo arch-chroot ./manjaro pacman -S --needed networkmanager glibc filesystem coreutils iproute2 systemd dbus --noconfirm --overwrite /usr/lib/systemd/system/dbus.service
         sudo arch-chroot ./manjaro systemctl enable NetworkManager
         sudo arch-chroot ./manjaro pacman -Scc --noconfirm
+        sudo echo '[7Ji]
+        Server = https://github.com/7Ji/archrepo/releases/download/$arch' > /etc/pacman.conf
+        sudo arch-chroot ./manjaro pacman -Sy
+        sudo arch-chroot ./manjaro pacman -Rdd linux-aarch64-rc linux-aarch64-rc-headers
+        sudo arch-chroot ./manjaro pacman -S linux-aarch64-rockchip-opi3b-npu-w568w
         sudo arch-chroot ./manjaro sync
         sudo umount ./manjaro/boot
         sudo umount ./manjaro
