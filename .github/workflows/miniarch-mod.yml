@@ -34,11 +34,9 @@ jobs:
         sudo mount /dev/loop3p1 ./miniarch/boot
     - name: Building
       run: |
-        sudo arch-chroot ./miniarch pacman -Qs kernel
         sudo arch-chroot ./miniarch pacman-key --init
         sudo arch-chroot ./miniarch pacman-key --populate
         sudo arch-chroot ./miniarch pacman -Sy --noconfirm
-        sudo arch-chroot ./miniarch pacman -S linux-firmware --noconfirm
         git clone https://github.com/Joshua-Riek/ubuntu-rockchip-firmware.git
         rm -rf ubuntu-rockchip-firmware/debian README.md
         sudo cp -r ubuntu-rockchip-firmware miniarch/usr/lib/firmware
