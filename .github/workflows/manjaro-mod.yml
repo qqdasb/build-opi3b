@@ -46,7 +46,7 @@ jobs:
         sudo arch-chroot ./manjaro ldconfig
         sudo arch-chroot ./manjaro pacman -Sy --noconfirm
         sudo arch-chroot ./manjaro pacman -Scc --noconfirm
-        sudo arch-chroot ./manjaro pacman -S --needed networkmanager --noconfirm
+        sudo arch-chroot ./manjaro pacman -S --needed networkmanager glibc bash filesystem coreutils manjaro-release manjaro-arm-oem-install iproute2 --noconfirm
         sudo arch-chroot ./manjaro pacman -Scc --noconfirm
         sudo arch-chroot ./manjaro sync
         sudo rm ./manjaro/usr/bin/qemu-aarch64-static
