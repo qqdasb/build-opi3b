@@ -35,7 +35,6 @@ jobs:
         sudo mount /dev/loop3p1 ./miniarch/boot
     - name: Building
       run: |
-        sudo cp /usr/bin/qemu-aarch64-static ./miniarch/usr/bin
         sudo arch-chroot ./miniarch pacman -Qs kernel
         sudo arch-chroot ./miniarch pacman-key --init
         sudo arch-chroot ./miniarch pacman-key --populate
@@ -54,11 +53,10 @@ jobs:
         sudo arch-chroot ./miniarch pacman -Su --noconfirm --needed
         sudo arch-chroot ./miniarch pacman -Scc --noconfirm
         sudo arch-chroot ./miniarch sync
-        sudo rm ./miniarch/usr/bin/qemu-aarch64-static
         sudo umount ./miniarch/boot
         sudo umount ./miniarch
         sudo losetup -d /dev/loop3
-        mv ./MiniArch-20240715-6.10.6-board-rk3566.orangepi_3b-SD-Image.img.xz ./MiniArch-OPI3B-Modified.img
+        mv ./MiniArch-20240715-6.10.6-board-rk3566.orangepi_3b-SD-Image.img ./MiniArch-OPI3B-Modified.img
     - name: 'Upload Modified Image'
       uses: actions/upload-artifact@v4
       with:
