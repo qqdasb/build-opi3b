@@ -23,7 +23,7 @@ jobs:
         wget https://github.com/amazingfate/build/raw/76122197b554fa9c62b74cf4b11a0d7371942355/config/boards/orangepi3b.csc -O config/boards/orangepi3b.csc
         mkdir -p patch/u-boot/v2024.10-orangepi3b
         wget https://github.com/amazingfate/build/raw/76122197b554fa9c62b74cf4b11a0d7371942355/patch/u-boot/v2024.10-orangepi3b/0001-rockchip-rk3566-orangepi-3b-enable-npu-regulator.patch -O patch/u-boot/v2024.10-orangepi3b/0001-rockchip-rk3566-orangepi-3b-enable-npu-regulator.patch
-        ./compile.sh BOARD=orangepi3b BRANCH=vendor NETWORKING_STACK=network-manager DOCKER_ARMBIAN_BASE_IMAGE=ubuntu:noble RELEASE=sid ENABLE_EXTENSIONS=v4l2loopback-dkms,mesa-vpu,rkbin-tools KERNEL_COMPILER=clang ROOTFS_TYPE=xfs REPOSITORY_INSTALL= EXPERT=yes BUILD_KSRC=yes INSTALL_KSRC=yes KERNEL_CONFIGURE=no BUILD_MINIMAL=no BUILD_DESKTOP=no EXTERNAL=yes INSTALL_HEADERS=yes EXTERNAL_NEW=compile
+        ./compile.sh BOARD=orangepi3b BRANCH=vendor NETWORKING_STACK=network-manager DOCKER_ARMBIAN_BASE_IMAGE=ubuntu:noble RELEASE=sid ENABLE_EXTENSIONS=v4l2loopback-dkms,mesa-vpu,rkbin-tools,u-boot-menu KERNEL_COMPILER=clang REPOSITORY_INSTALL= EXPERT=yes BUILD_KSRC=yes INSTALL_KSRC=yes KERNEL_CONFIGURE=no BUILD_MINIMAL=no BUILD_DESKTOP=no EXTERNAL=yes INSTALL_HEADERS=yes EXTERNAL_NEW=compile
     - uses: actions/upload-artifact@v4
       with:
         name: Armbian-sid-vendor-opi3b
