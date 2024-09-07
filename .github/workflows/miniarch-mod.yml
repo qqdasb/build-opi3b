@@ -27,6 +27,7 @@ jobs:
       run: |
         wget https://github.com/warpme/miniarch/releases/download/v20240715/MiniArch-20240715-6.10.6-board-rk3566.orangepi_3b-SD-Image.img.xz -q
         sudo apt update && sudo apt install arch-install-scripts qemu-user-static binfmt-support
+        sudo systemctl restart systemd-binfmt
         xz -d ./MiniArch-20240715-6.10.6-board-rk3566.orangepi_3b-SD-Image.img.xz
         mkdir -p miniarch
         sudo losetup -P /dev/loop3 ./MiniArch-20240715-6.10.6-board-rk3566.orangepi_3b-SD-Image.img
@@ -35,8 +36,11 @@ jobs:
     - name: Building
       run: |
         sudo cp /usr/bin/qemu-aarch64-static ./miniarch/usr/bin
+        sudo arch-chroot ./miniarch -Qs kernel
         sudo arch-chroot ./miniarch pacman-key --init
         sudo arch-chroot ./miniarch pacman-key --populate
+        sudo arch-chroot ./miniarch pacman -Sy --noconfirm
+        sudo arch-chroot ./miniarch pacman -S linux-firmware --noconfirm
         git clone https://github.com/Joshua-Riek/ubuntu-rockchip-firmware.git
         rm -rf ubuntu-rockchip-firmware/debian README.md
         sudo cp -r ubuntu-rockchip-firmware miniarch/usr/lib/firmware
@@ -44,10 +48,10 @@ jobs:
         sudo cp -r firmware miniarch/usr/lib/firmware
         rm -rf ubuntu-rockchip-firmware firmware
         sudo arch-chroot ./miniarch ldconfig
-        sudo arch-chroot ./miniarch pacman -Sy --noconfirm
         sudo arch-chroot ./miniarch pacman -Scc --noconfirm
-        sudo arch-chroot ./miniarch pacman -S --needed networkmanager glibc bash filesystem coreutils iproute2 gcc-libs systemd dbus --noconfirm --overwrite /usr/lib/systemd/system/dbus.service
+        sudo arch-chroot ./miniarch pacman -S --needed networkmanager glibc filesystem coreutils iproute2 systemd dbus --noconfirm --overwrite /usr/lib/systemd/system/dbus.service
         sudo arch-chroot ./miniarch systemctl enable NetworkManager
+        sudo arch-chroot ./miniarch pacman -Su --noconfirm --needed
         sudo arch-chroot ./miniarch pacman -Scc --noconfirm
         sudo arch-chroot ./miniarch sync
         sudo rm ./miniarch/usr/bin/qemu-aarch64-static
