@@ -27,9 +27,9 @@ jobs:
       run: |
         wget https://github.com/warpme/miniarch/releases/download/v20240715/MiniArch-20240715-6.10.6-board-rk3566.orangepi_3b-SD-Image.img.xz -q
         sudo apt update && sudo apt install arch-install-scripts qemu-user-static binfmt-support
-        xz -d Manjaro-ARM-minimal-opi3b-20240131.img.xz
+        xz -d ./MiniArch-20240715-6.10.6-board-rk3566.orangepi_3b-SD-Image.img.xz
         mkdir -p miniarch
-        sudo losetup -P /dev/loop3 ./MiniArch-20240715-6.10.6-board-rk3566.orangepi_3b-SD-Image.img.xz
+        sudo losetup -P /dev/loop3 ./MiniArch-20240715-6.10.6-board-rk3566.orangepi_3b-SD-Image.img
         sudo mount /dev/loop3p2 ./miniarch
         sudo mount /dev/loop3p1 ./miniarch/boot
     - name: Building
