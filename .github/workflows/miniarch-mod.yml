@@ -36,7 +36,7 @@ jobs:
     - name: Building
       run: |
         sudo cp /usr/bin/qemu-aarch64-static ./miniarch/usr/bin
-        sudo arch-chroot ./miniarch -Qs kernel
+        sudo arch-chroot ./miniarch pacman -Qs kernel
         sudo arch-chroot ./miniarch pacman-key --init
         sudo arch-chroot ./miniarch pacman-key --populate
         sudo arch-chroot ./miniarch pacman -Sy --noconfirm
