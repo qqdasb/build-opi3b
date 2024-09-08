@@ -45,7 +45,7 @@ jobs:
         sudo arch-chroot ./manjaro pacman -Sy 7ji-keyring --needed --noconfirm
         sudo arch-chroot ./manjaro pacman -Rdd linux-rc linux-rc-headers --noconfirm
         sudo arch-chroot ./manjaro pacman -S mkinitcpio --needed --noconfirm
-        sudo arch-chroot ./manjaro pacman -S linux-aarch64-rockchip-opi3b-npu-w568w --noconfirm
+        sudo arch-chroot ./manjaro pacman -S linux-aarch64-rockchip-opi3b-npu-w568w --noconfirm --overwrite /usr/lib/initcpio/install/sd-encrypt /usr/lib/initcpio/hooks/encrypt /usr/lib/initcpio/install/encrypt
         sudo arch-chroot ./manjaro mkinitcpio -k /boot/vmlinuz-linux-aarch64-rockchip-opi3b-npu-w568w -c /etc/mkinitcpio.conf -g /boot/initramfs-linux-aarch64-rockchip-opi3b-npu-w568w.img -v -z xz
         sudo arch-chroot ./manjaro ldconfig
         sudo arch-chroot ./manjaro sync
