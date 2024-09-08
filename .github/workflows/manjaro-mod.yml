@@ -35,8 +35,7 @@ jobs:
         cp -r opi-firmware/* firmware/
         sudo cp -r firmware/* ./manjaro/usr/lib/firmware/
         rm -rf firmware opi-firmware
-        sudo mkdir ./manjaro/root/ow-dir
-        sudo arch-chroot ./manjaro pacman -S --needed lz4 xz zstd base lzo networkmanager iproute2 filesystem glibc dbus-broker systemd perl wpa_supplicant --noconfirm --overwrite /root/ow-dir/*
+        sudo arch-chroot ./manjaro pacman -S --needed lz4 xz zstd base lzo networkmanager iproute2 filesystem glibc dbus-broker systemd perl wpa_supplicant --noconfirm
         sudo arch-chroot ./manjaro systemctl enable NetworkManager
         sudo arch-chroot ./manjaro pacman -Scc --noconfirm
         sudo arch-chroot ./manjaro pacman-key --recv-keys BA27F219383BB875
@@ -45,9 +44,8 @@ jobs:
         Server = https://github.com/7Ji/archrepo/releases/download/$arch' | sudo tee -a ./manjaro/etc/pacman.conf
         sudo arch-chroot ./manjaro pacman -Sy 7ji-keyring --needed --noconfirm
         sudo arch-chroot ./manjaro pacman -Rdd linux-rc linux-rc-headers --noconfirm
-        sudo arch-chroot ./manjaro pacman -S mkinitcpio --needed --noconfirm --overwrite ow-dir/*
+        sudo arch-chroot ./manjaro pacman -S mkinitcpio cryptsetup --needed --noconfirm
         sudo arch-chroot ./manjaro pacman -S linux-aarch64-rockchip-opi3b-npu-w568w --noconfirm
-        sudo rm -rf ./manjaro/root/ow-dir
         sudo arch-chroot ./manjaro mkinitcpio -k /boot/vmlinuz-linux-aarch64-rockchip-opi3b-npu-w568w -c /etc/mkinitcpio.conf -g /boot/initramfs-linux-aarch64-rockchip-opi3b-npu-w568w.img -v -z xz
         sudo arch-chroot ./manjaro ldconfig
         sudo arch-chroot ./manjaro sync
