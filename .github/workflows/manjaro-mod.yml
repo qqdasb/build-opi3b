@@ -35,7 +35,7 @@ jobs:
         cp -r opi-firmware/* firmware/
         sudo cp -r firmware/* ./manjaro/usr/lib/firmware/
         rm -rf firmware opi-firmware
-        sudo arch-chroot ./manjaro pacman -Su --needed networkmanager iproute2 --noconfirm --overwrite /usr/lib/systemd/system/dbus.service
+        sudo arch-chroot ./manjaro pacman -S --needed networkmanager iproute2 filesystem glibc dbus-broker systemd perl wpa_supplicant --noconfirm --overwrite /usr/lib/systemd/system/dbus.service
         sudo arch-chroot ./manjaro systemctl enable NetworkManager
         sudo arch-chroot ./manjaro pacman -Scc --noconfirm
         sudo arch-chroot ./manjaro pacman-key --recv-keys BA27F219383BB875
