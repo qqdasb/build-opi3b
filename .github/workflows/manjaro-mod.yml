@@ -27,13 +27,6 @@ jobs:
         sudo arch-chroot ./manjaro pacman-key --init
         sudo arch-chroot ./manjaro pacman-key --populate
         sudo arch-chroot ./manjaro pacman -Sy --noconfirm
-        git clone https://github.com/orangepi-xunlong/firmware.git
-        git clone https://github.com/Joshua-Riek/ubuntu-rockchip-firmware.git
-        rm -rf ubuntu-rockchip-firmware/debian firmware/README.md
-        cp -r firmware/* ubuntu-rockchip-firmware/
-        sudo cp -r ./ubuntu-rockchip-firmware/* ./manjaro/usr/lib/firmware/
-        rm -rf ubuntu-rockchip-firmware firmware
-        sudo arch-chroot ./manjaro ldconfig
         sudo arch-chroot ./manjaro pacman -Scc --noconfirm
         sudo arch-chroot ./manjaro pacman -S --needed networkmanager glibc filesystem coreutils iproute2 systemd dbus --noconfirm --overwrite /usr/lib/systemd/system/dbus.service
         sudo arch-chroot ./manjaro systemctl enable NetworkManager
@@ -44,7 +37,7 @@ jobs:
         Server = https://github.com/7Ji/archrepo/releases/download/$arch' | sudo tee -a ./manjaro/etc/pacman.conf
         sudo arch-chroot ./manjaro pacman -Sy 7ji-keyring --needed --noconfirm
         sudo arch-chroot ./manjaro pacman -Rdd linux-rc linux-rc-headers --noconfirm
-        sudo arch-chroot ./manjaro pacman -S linux-aarch64-7ji --noconfirm
+        sudo arch-chroot ./manjaro pacman -S linux-aarch64-rockchip-opi3b-npu-w568w linux-firmware-orangepi-git librga-multi libv4l-rkmpp-git mpp-git v4l-utils-mpp mesa-panvk-git dri2to3-git mesa-panfork-git --noconfirm
         sudo arch-chroot ./manjaro sync
         sudo umount ./manjaro/boot
         sudo umount ./manjaro
