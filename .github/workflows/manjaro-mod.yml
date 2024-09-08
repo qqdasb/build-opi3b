@@ -35,7 +35,7 @@ jobs:
         cp -r opi-firmware/* firmware/
         sudo cp -r firmware/* ./manjaro/usr/lib/firmware/
         rm -rf firmware opi-firmware
-        sudo arch-chroot ./manjaro pacman -S --needed networkmanager glibc filesystem coreutils iproute2 systemd dbus --noconfirm --overwrite /usr/lib/systemd/system/dbus.service
+        sudo arch-chroot ./manjaro pacman -Su --needed networkmanager iproute2 --noconfirm --overwrite /usr/lib/systemd/system/dbus.service
         sudo arch-chroot ./manjaro systemctl enable NetworkManager
         sudo arch-chroot ./manjaro pacman -Scc --noconfirm
         sudo arch-chroot ./manjaro pacman-key --recv-keys BA27F219383BB875
@@ -44,7 +44,7 @@ jobs:
         Server = https://github.com/7Ji/archrepo/releases/download/$arch' | sudo tee -a ./manjaro/etc/pacman.conf
         sudo arch-chroot ./manjaro pacman -Sy 7ji-keyring --needed --noconfirm
         sudo arch-chroot ./manjaro pacman -Rdd linux-rc linux-rc-headers --noconfirm
-        sudo arch-chroot ./manjaro pacman -S linux-aarch64-rockchip-opi3b-npu-w568w librga-multi libv4l-rkmpp-git mpp-git v4l-utils-mpp mesa-panvk-git dri2to3-git --noconfirm
+        sudo arch-chroot ./manjaro pacman -S linux-aarch64-rockchip-opi3b-npu-w568w --noconfirm
         sudo arch-chroot ./manjaro ldconfig
         sudo arch-chroot ./manjaro sync
         sudo rm ./manjaro/usr/bin/qemu-aarch64-static
