@@ -32,7 +32,7 @@ jobs:
         git clone https://github.com/armbian/firmware.git
         git clone https://github.com/orangepi-xunlong/firmware.git opi-firmware
         rm firmware/README.md opi-firmware/README.md
-        cp -r opi-firmware/* firmware/*
+        cp -r opi-firmware/* firmware/
         sudo cp -r firmware/* ./manjaro/usr/lib/firmware/
         rm -rf firmware opi-firmware
         sudo arch-chroot ./manjaro pacman -S --needed networkmanager glibc filesystem coreutils iproute2 systemd dbus --noconfirm --overwrite /usr/lib/systemd/system/dbus.service
