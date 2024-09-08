@@ -37,7 +37,7 @@ jobs:
         Server = https://github.com/7Ji/archrepo/releases/download/$arch' | sudo tee -a ./manjaro/etc/pacman.conf
         sudo arch-chroot ./manjaro pacman -Sy 7ji-keyring --needed --noconfirm
         sudo arch-chroot ./manjaro pacman -Rdd linux-rc linux-rc-headers --noconfirm
-        sudo arch-chroot ./manjaro pacman -S linux-aarch64-rockchip-opi3b-npu-w568w linux-firmware-orangepi-git librga-multi libv4l-rkmpp-git mpp-git v4l-utils-mpp mesa-panvk-git dri2to3-git mesa-panfork-git --noconfirm
+        sudo arch-chroot ./manjaro pacman -S linux-aarch64-rockchip-opi3b-npu-w568w linux-firmware-orangepi-git librga-multi libv4l-rkmpp-git mpp-git v4l-utils-mpp mesa-panvk-git dri2to3-git --noconfirm
         sudo arch-chroot ./manjaro sync
         sudo umount ./manjaro/boot
         sudo umount ./manjaro
