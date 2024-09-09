@@ -49,6 +49,7 @@ jobs:
         sudo arch-chroot ./manjaro mkinitcpio -p linux-aarch64-rockchip-bsp6.1-joshua-git
         sudo arch-chroot ./manjaro ldconfig
         sudo arch-chroot ./manjaro sync
+        sudo ls ./manjaro ./manjaro/boot
         sudo rm ./manjaro/usr/bin/qemu-aarch64-static
         sudo umount ./manjaro/boot
         sudo umount ./manjaro
