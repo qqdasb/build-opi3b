@@ -55,6 +55,8 @@ jobs:
         sudo umount ./manjaro
         sudo losetup -d /dev/loop3
         mv ./Manjaro-ARM-minimal-opi3b-20240131.img ./Manjaro-ARM-Minimal-OPI3B-Modified.img
+        sudo e2fsck -p -f ./Manjaro-ARM-Minimal-OPI3B-Modified.img
+        sudo resize2fs  -M ./Manjaro-ARM-Minimal-OPI3B-Modified.img
     - name: 'Upload Modified Image'
       uses: actions/upload-artifact@v4
       with:
