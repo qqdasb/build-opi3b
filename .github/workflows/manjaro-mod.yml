@@ -27,7 +27,7 @@ jobs:
       id: download-artifact
       uses: dawidd6/action-download-artifact@v6
       with:
-         workflow: build-u-boot.yml
+         workflow: build-uboot.yml
          path: /
     - name: Moding
       run: |
@@ -69,3 +69,8 @@ jobs:
       with:
         name: Manjaro-ARM-OPI3B-Modified
         path: ./Manjaro-ARM-Minimal-OPI3B-Modified.img
+    - name: 'Upload'
+      uses: actions/upload-artifact@v4
+      with:
+        name: extlinux
+        path: ./manjaro/boot/extlinux
