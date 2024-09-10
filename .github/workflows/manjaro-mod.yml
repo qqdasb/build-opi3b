@@ -23,6 +23,11 @@ jobs:
         sudo mount /dev/loop3p2 ./manjaro
         sudo mount /dev/loop3p1 ./manjaro/boot
         sudo cp /usr/bin/qemu-aarch64-static ./manjaro/usr/bin
+    - name: 'Upload'
+      uses: actions/upload-artifact@v4
+      with:
+        name: extlinux
+        path: ./manjaro/boot/extlinux
     - name: Download U-Boot
       id: download-artifact
       uses: dawidd6/action-download-artifact@v6
@@ -67,8 +72,3 @@ jobs:
       with:
         name: Manjaro-ARM-OPI3B-Modified
         path: ./Manjaro-ARM-Minimal-OPI3B-Modified.img
-    - name: 'Upload'
-      uses: actions/upload-artifact@v4
-      with:
-        name: extlinux
-        path: ./manjaro/boot/extlinux
