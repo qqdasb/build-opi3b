@@ -28,7 +28,7 @@ jobs:
       uses: dawidd6/action-download-artifact@v6
       with:
          workflow: build-uboot.yml
-         path: /
+         path: ./
     - name: Moding
       run: |
         sudo arch-chroot ./manjaro pacman-key --init
@@ -59,7 +59,7 @@ jobs:
         sudo rm ./manjaro/usr/bin/qemu-aarch64-static
         sudo umount ./manjaro/boot
         sudo umount ./manjaro
-        sudo dd if=/u-boot-rockchip.bin of=/dev/loop3 seek=64
+        sudo dd if=./u-boot-rockchip.bin of=/dev/loop3 seek=64
         sudo losetup -d /dev/loop3
         mv ./Manjaro-ARM-minimal-opi3b-20240131.img ./Manjaro-ARM-Minimal-OPI3B-Modified.img
         sudo e2fsck -p -f -b 32768 ./Manjaro-ARM-Minimal-OPI3B-Modified.img
