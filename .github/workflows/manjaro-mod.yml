@@ -53,13 +53,16 @@ jobs:
         sudo arch-chroot ./manjaro pacman -S mkinitcpio cryptsetup --needed --noconfirm
         sudo arch-chroot ./manjaro pacman -S 7Ji/linux-aarch64-rockchip-bsp5.10-joshua-git 7Ji/linux-aarch64-rockchip-bsp5.10-joshua-git-headers --noconfirm
         sudo arch-chroot ./manjaro mkinitcpio -p linux-aarch64-rockchip-bsp5.10-joshua-git
-        sudo ln -s ./manjaro/boot/initramfs-linux-aarch64-rockchip-bsp5.10-joshua-git.img ./manjaro/boot/initramfs-linux.img
-        sudo ln -s ./manjaro/boot/initramfs-linux-aarch64-rockchip-bsp5.10-joshua-git-fallback.img ./manjaro/boot/initramfs-linux-fallback.img
-        sudo ln -s ./manjaro/boot/vmlinuz-linux-aarch64-rockchip-bsp5.10-joshua-git ./manjaro/boot/Image
         sudo arch-chroot ./manjaro ldconfig
         sudo arch-chroot ./manjaro sync
-        sudo ls ./manjaro ./manjaro/boot
         sudo rm ./manjaro/usr/bin/qemu-aarch64-static
+    - name: 'Upload'
+      uses: actions/upload-artifact@v4
+      with:
+        name: extlinux
+        path: ./manjaro/boot/extlinux
+    - name: Post Moding
+      run: |
         sudo umount ./manjaro/boot
         sudo umount ./manjaro
         sudo dd if=./u-boot/u-boot-rockchip.bin of=/dev/loop3 seek=64
