@@ -53,16 +53,13 @@ jobs:
         sudo arch-chroot ./manjaro pacman -S mkinitcpio cryptsetup --needed --noconfirm
         sudo arch-chroot ./manjaro pacman -S 7Ji/linux-aarch64-rockchip-bsp5.10-joshua-git 7Ji/linux-aarch64-rockchip-bsp5.10-joshua-git-headers --noconfirm
         sudo arch-chroot ./manjaro mkinitcpio -p linux-aarch64-rockchip-bsp5.10-joshua-git
+        wget https://github.com/qqdasb/my-files/raw/main/extlinux-fix-5.10.tar.gz
+        tar xf extlinux-fix-5.10.tar.gz
+        rm extlinux-fix-5.10.tar.gz
+        sudo mv extlinux.conf ./manjaro/boot/extlinux/
         sudo arch-chroot ./manjaro ldconfig
         sudo arch-chroot ./manjaro sync
         sudo rm ./manjaro/usr/bin/qemu-aarch64-static
-    - name: 'Upload'
-      uses: actions/upload-artifact@v4
-      with:
-        name: extlinux
-        path: ./manjaro/boot/extlinux
-    - name: Post Moding
-      run: |
         sudo umount ./manjaro/boot
         sudo umount ./manjaro
         sudo dd if=./u-boot/u-boot-rockchip.bin of=/dev/loop3 seek=64
