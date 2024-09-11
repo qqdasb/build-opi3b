@@ -53,8 +53,9 @@ jobs:
         sudo arch-chroot ./manjaro pacman -S mkinitcpio cryptsetup --needed --noconfirm
         sudo arch-chroot ./manjaro pacman -S 7Ji/linux-aarch64-rockchip-bsp5.10-joshua-git 7Ji/linux-aarch64-rockchip-bsp5.10-joshua-git-headers --noconfirm
         sudo arch-chroot ./manjaro mkinitcpio -p linux-aarch64-rockchip-bsp5.10-joshua-git
-        sudo arch-chroot ./manjaro ln -s /boot/initramfs-linux-aarch64-rockchip-bsp5.10-joshua-git.img /boot/initramfs-linux.img
-        sudo arch-chroot ./manjaro ln -s /boot/vmlinuz-linux-aarch64-rockchip-bsp5.10-joshua-git /boot/Image
+        sudo ln -s ./manjaro/boot/initramfs-linux-aarch64-rockchip-bsp5.10-joshua-git.img ./manjaro/boot/initramfs-linux.img
+        sudo ln -s ./manjaro/boot/initramfs-linux-aarch64-rockchip-bsp5.10-joshua-git-fallback.img ./manjaro/boot/initramfs-linux-fallback.img
+        sudo ln -s ./manjaro/boot/vmlinuz-linux-aarch64-rockchip-bsp5.10-joshua-git ./manjaro/boot/Image
         sudo arch-chroot ./manjaro ldconfig
         sudo arch-chroot ./manjaro sync
         sudo ls ./manjaro ./manjaro/boot
