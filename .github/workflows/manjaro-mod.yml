@@ -50,7 +50,7 @@ jobs:
         wget https://github.com/qqdasb/my-files/raw/main/extlinux-fix-5.10.tar.gz
         tar xf extlinux-fix-5.10.tar.gz
         rm extlinux-fix-5.10.tar.gz
-        sudo rm ./manjaro/boot/extlinux.conf
+        sudo rm ./manjaro/boot/extlinux/extlinux.conf
         sudo mv extlinux.conf ./manjaro/boot/extlinux/
         sudo arch-chroot ./manjaro ldconfig
         sudo arch-chroot ./manjaro sync
