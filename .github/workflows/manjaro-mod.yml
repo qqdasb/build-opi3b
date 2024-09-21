@@ -19,9 +19,9 @@ jobs:
       run: |
         wget https://github.com/qqdasb/manjaro-arm-opi3b-update/releases/download/rel-1/Manjaro-ARM-minimal-opi3b-20240921.img.xz -q
         sudo apt update && sudo apt install arch-install-scripts qemu-user-static qemu-system-arm qemu-efi binfmt-support
-        xz -d Manjaro-ARM-minimal-opi3b-20240131.img.xz
+        xz -d Manjaro-ARM-minimal-opi3b-20240921.img.xz
         mkdir -p manjaro
-        sudo losetup -P /dev/loop3 Manjaro-ARM-minimal-opi3b-20240131.img
+        sudo losetup -P /dev/loop3 Manjaro-ARM-minimal-opi3b-20240921.img
         sudo mount /dev/loop3p2 ./manjaro
         sudo mount /dev/loop3p1 ./manjaro/boot
         sudo cp /usr/bin/qemu-aarch64-static ./manjaro/usr/bin
@@ -60,7 +60,7 @@ jobs:
         sudo umount ./manjaro/boot
         sudo umount ./manjaro
         sudo losetup -d /dev/loop3
-        mv ./Manjaro-ARM-minimal-opi3b-20240131.img ./Manjaro-ARM-Minimal-OPI3B-Modified.img
+        mv ./Manjaro-ARM-minimal-opi3b-20240921.img ./Manjaro-ARM-Minimal-OPI3B-Modified.img
     - name: 'Upload Modified Image'
       uses: actions/upload-artifact@v4
       with:
