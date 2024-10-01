@@ -9,7 +9,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
@@ -18,58 +18,24 @@ jobs:
         sudo apt update
         sudo apt install arch-install-scripts build-essential openssl pkg-config libssl-dev libncurses5-dev pkg-config minizip libelf-dev flex bison  libc6-dev libidn11-dev rsync bc liblz4-tool gcc-aarch64-linux-gnu gcc u-boot-tools dpkg-dev dpkg git python3-pip qemu-user-static
         sudo pip install pyelftools
-        wget https://raw.githubusercontent.com/qqdasb/my-files/master/linux-rk35xx-legacy.config
-        git clone https://github.com/armbian/linux-rockchip.git --depth 1
-        mv linux-rk35xx-legacy.config linux-rockchip/.config
-        git clone https://github.com/w568w/u-boot-orangepi-3b --recursive
         wget http://os.archlinuxarm.org/os/ArchLinuxARM-aarch64-latest.tar.gz
-        dd if=/dev/zero of=temp.img bs=3G count=6
-        sudo mkfs.ext4 temp.img
         mkdir arch
         sudo tar xf ArchLinuxARM-aarch64-latest.tar.gz -C arch
         sudo cp /usr/bin/qemu-aarch64-static arch/usr/bin/
         sudo mount temp.img arch/
-    - name: Build Kernel
-      run: |
-        cd linux-rockchip
-        make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
-        cd ..
-    - name: Build U-Boot
-      run: |
-        cd u-boot-orangepi-3b
-        sudo ./orangepi-3b-build.sh
-        cp u-boot-rockchip.bin ..
-        cd ..
-    - name: Build Rootfs
+    - name: Updat Rootfs
       run: |
         sudo arch-chroot arch pacman-key --init
         sudo arch-chroot arch pacman-key --populate
         sudo arch-chroot arch pacman -Syy --noconfirm
-        sudo arch-chroot arch pacman -Rdd --noconfirm linux-aarch64 linux-firmware linux-api-headers linux-firmware-whence
+        sudo arch-chroot arch pacman -Rdd --noconfirm linux-aarch64
         sudo arch-chroot arch pacman -Syu --noconfirm git networkmanager python3
         sudo arch-chroot arch git clone https://github.com/armbian/firmware.git --depth 1
-        sudo arch-chroot arch mv firmware /usr/lib/
+        sudo arch-chroot arch cp -r firmware/* /usr/lib/firmware
         sudo arch-chroot arch ldconfig
-        sudo make -C linux-rockchip/ ARCH=arm64 INSTALL_PATH=/home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/arch/boot/ install 
-        sudo make -C linux-rockchip/ ARCH=arm64 INSTALL_MOD_PATH=/home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/arch/usr/ modules_install
-        sudo make -C linux-rockchip/ ARCH=arm64 INSTALL_DTBS_PATH=/home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/arch/boot/dtbs/5.10.160/ dtbs_install
-        sudo make -C linux-rockchip/ ARCH=arm64 INSTALL_HDR_PATH=/home/runner/work/build-archlinuxarm-opi3b/build-archlinuxarm-opi3b/arch/usr/ headers_install
-        sudo arch-chroot arch mkinitcpio --generate /boot/initrd.img-5.10.160 --kernel 5.10.160
-        sudo umount arch/
     - name: Build Image
       run: |
-        sudo dd if=/dev/zero of=archlinux.img bs=1M count=4000
-        sudo mkfs.ext4 archlinux.img
-        mkdir rootfs
-        sudo mount archlinux.img rootfs/
-        sudo cp -rfp arch/*  rootfs/
-        sudo umount rootfs/
-        export LOOP_PATH=$(sudo losetup -f)
-        sudo losetup $LOOP_PATH archlinux.img
-        sudo dd if=./u-boot-rockchip.bin of=$LOOP_PATH seek=64
-        sudo losetup -d $LOOP_PATH
-        sudo e2fsck -p -f archlinux.img
-        sudo resize2fs -M archlinux.img
+        
     - uses: actions/upload-artifact@v4
       with:
         name: ArchLinuxArm-OrangePi3B
