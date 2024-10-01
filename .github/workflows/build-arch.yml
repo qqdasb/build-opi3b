@@ -18,7 +18,7 @@ jobs:
         sudo apt update
         sudo apt install arch-install-scripts build-essential openssl pkg-config libssl-dev libncurses5-dev pkg-config minizip libelf-dev flex bison  libc6-dev libidn11-dev rsync bc liblz4-tool gcc-aarch64-linux-gnu gcc u-boot-tools dpkg-dev dpkg git python3-pip qemu-user-static
         sudo pip install pyelftools
-        wget http://os.archlinuxarm.org/os/ArchLinuxARM-aarch64-latest.tar.gz
+        wget http://os.archlinuxarm.org/os/ArchLinuxARM-aarch64-latest.tar.gz -q
         mkdir arch
         sudo systemctl disable --now systemd-binfmt
         sudo systemctl restart binfmt-support
