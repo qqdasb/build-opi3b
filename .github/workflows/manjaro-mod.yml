@@ -48,10 +48,10 @@ jobs:
         sudo arch-chroot ./manjaro pacman -Sy 7ji-keyring --needed --noconfirm
         sudo arch-chroot ./manjaro pacman -Rdd linux-rc linux-rc-headers --noconfirm
         sudo arch-chroot ./manjaro pacman -S mkinitcpio cryptsetup --needed --noconfirm
-        sudo arch-chroot ./manjaro pacman -S 7Ji/linux-aarch64-rockchip-bsp6.1-joshua-git 7Ji/linux-aarch64-rockchip-bsp6.1-joshua-git-headers --noconfirm
-        wget https://github.com/qqdasb/my-files/raw/refs/heads/main/extlinux-fix-6.1.tar.gz
-        tar xf extlinux-fix-6.1.tar.gz
-        rm extlinux-fix-6.1.tar.gz
+        sudo arch-chroot ./manjaro pacman -S 7Ji/linux-aarch64-rockchip-bsp5.10-joshua-git 7Ji/linux-aarch64-rockchip-bsp5.10-joshua-git-headers --noconfirm
+        wget https://github.com/qqdasb/my-files/raw/refs/heads/main/extlinux-fix-5.10.tar.gz
+        tar xf extlinux-fix-*.tar.gz
+        rm extlinux-fix-*.tar.gz
         sudo rm ./manjaro/boot/extlinux/extlinux.conf
         sudo mv extlinux.conf ./manjaro/boot/extlinux/
         sudo arch-chroot ./manjaro ldconfig
