@@ -1,4 +1,4 @@
-name: Build Armbian (Bookworm)
+name: Build Armbian
 
 on:
   schedule:
@@ -14,7 +14,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: armbian/build@v24.2.1
+      - name: Build
+      - uses: armbian/build@main
         with:
           armbian_token:              "${{secrets.GITHUB_TOKEN}}"
           armbian_target:             build
