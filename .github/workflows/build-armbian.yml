@@ -1,4 +1,4 @@
-name: Build Armbian(Sid)
+name: Build Armbian (Sid)
 
 on:
   schedule:
@@ -10,15 +10,15 @@ on:
 
 jobs:
   build:
-    name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - run: |
-          git clone https://github.com/armbian/build --depth 1 -b main
-          cd build
-          ./compile.sh BOARD=orangepi3b BRANCH=vendor NETWORKING_STACK=network-manager BETA=yes RELEASE=sid ENABLE_EXTENSIONS=v4l2loopback-dkms,mesa-vpu EXPERT=yes KERNEL_CONFIGURE=no BUILD_MINIMAL=yes BUILD_DESKTOP=no INSTALL_HEADERS=no EXTERNAL=no EXTERNAL_NEW=no
-      - uses: actions/upload-artifact@v4
-      - with:
-         name: Armbian-sid-vendor-opi3b
-         path: /home/runner/work/build-opi3b/build-opi3b/build/output/images/*
+    - uses: actions/checkout@v4
+    - name: Build Armbian
+      run: |
+        git clone https://github.com/armbian/build --depth 1 -b main
+        cd build
+        ./compile.sh BOARD=orangepi3b BRANCH=vendor NETWORKING_STACK=network-manager BETA=yes RELEASE=sid ENABLE_EXTENSIONS=v4l2loopback-dkms,mesa-vpu EXPERT=yes KERNEL_CONFIGURE=no BUILD_MINIMAL=yes BUILD_DESKTOP=no INSTALL_HEADERS=no EXTERNAL=no EXTERNAL_NEW=no
+    - uses: actions/upload-artifact@v4
+      with:
+        name: Armbian-bookworm-vendor-opi3b
+        path: /home/runner/work/build-opi3b/build-opi3b/build/output/images/*
