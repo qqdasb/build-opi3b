@@ -20,5 +20,5 @@ jobs:
         ./compile.sh BOARD=orangepi3b BRANCH=vendor NETWORKING_STACK=network-manager BETA=no RELEASE=noble EXPERT=no KERNEL_CONFIGURE=no BUILD_MINIMAL=yes BUILD_DESKTOP=no INSTALL_HEADERS=no EXTERNAL=no EXTERNAL_NEW=no
     - uses: actions/upload-artifact@v4
       with:
-        name: Armbian-bookworm-noble-opi3b
+        name: Armbian-noble-vendor-opi3b
         path: /home/runner/work/build-opi3b/build-opi3b/build/output/images/*
