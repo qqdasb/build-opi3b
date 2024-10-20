@@ -20,11 +20,11 @@ jobs:
         wget https://github.com/manjaro-arm/opi-3b-images/releases/download/20240131/Manjaro-ARM-minimal-opi3b-20240131.img.xz -q
         sudo apt update && sudo apt install arch-install-scripts qemu-user-static binfmt-support
         xz -d Manjaro-ARM-minimal-opi3b-*.img.xz
-        mkdir -p manjaro
+        mkdir -pv manjaro
         sudo losetup -P /dev/loop3 Manjaro-ARM-minimal-opi3b-*.img
         sudo mount /dev/loop3p2 ./manjaro
         sudo mount /dev/loop3p1 ./manjaro/boot
-        sudo cp /usr/bin/qemu-aarch64-static ./manjaro/usr/bin
+        sudo cp -v /usr/bin/qemu-aarch64-static ./manjaro/usr/bin
     - name: Moding
       run: |
         sudo arch-chroot ./manjaro pacman-key --init
@@ -33,10 +33,10 @@ jobs:
         sudo arch-chroot ./manjaro pacman -Scc --noconfirm
         git clone https://github.com/armbian/firmware.git
         git clone https://github.com/orangepi-xunlong/firmware.git opi-firmware
-        rm firmware/README.md opi-firmware/README.md
-        cp -r opi-firmware/* firmware/
-        sudo cp -r firmware/* ./manjaro/usr/lib/firmware/
-        rm -rf firmware opi-firmware
+        rm -v firmware/README.md opi-firmware/README.md
+        cp -rv opi-firmware/* firmware/
+        sudo cp -rv firmware/* ./manjaro/usr/lib/firmware/
+        rm -rfv firmware opi-firmware
         sudo arch-chroot ./manjaro pacman -S --needed lz4 xz zstd networkmanager iproute2 filesystem glibc dbus-broker systemd perl wpa_supplicant openssh --noconfirm
         sudo arch-chroot ./manjaro systemctl enable NetworkManager
         sudo arch-chroot ./manjaro systemctl enable sshd
@@ -52,13 +52,20 @@ jobs:
         wget https://github.com/qqdasb/my-files/raw/refs/heads/main/extlinux-fix-5.10.tar.gz
         tar xf extlinux-fix-*.tar.gz
         rm extlinux-fix-*.tar.gz
-        sudo rm ./manjaro/boot/extlinux/extlinux.conf
-        sudo mv extlinux.conf ./manjaro/boot/extlinux/
+        sudo rm -v ./manjaro/boot/extlinux/extlinux.conf
+        sudo mv -v extlinux.conf ./manjaro/boot/extlinux/
         sudo arch-chroot ./manjaro ldconfig
         sudo arch-chroot ./manjaro sync
-        sudo rm ./manjaro/usr/bin/qemu-aarch64-static
+        sudo rm -v ./manjaro/usr/bin/qemu-aarch64-static
+          sudo umount ./manjaro/boot
+        sudo umount ./manjaro
+        mkdir -p manjaro/boot
+        sudo mount -o ro /dev/loop3p1 ./manjaro/boot
+        sudo umount ./manjaro/boot
+        sudo losetup -d /dev/loop3
+        mv -v ./Manjaro-ARM-minimal-opi3b-*.img ./Manjaro-ARM-Minimal-OPI3B-Modified.img
     - name: 'Upload Modified Image'
       uses: actions/upload-artifact@v4
       with:
         name: Manjaro-ARM-OPI3B-Modified
-        path: ./manjaro/boot/extlinux/extlinux.conf
+        path: ./Manjaro-ARM-Minimal-OPI3B-Modified.img
