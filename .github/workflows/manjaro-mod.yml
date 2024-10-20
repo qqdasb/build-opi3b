@@ -57,15 +57,8 @@ jobs:
         sudo arch-chroot ./manjaro ldconfig
         sudo arch-chroot ./manjaro sync
         sudo rm ./manjaro/usr/bin/qemu-aarch64-static
-        sudo umount ./manjaro/boot
-        sudo umount ./manjaro
-        mkdir -p manjaro/boot
-        sudo mount -o ro /dev/loop3p1 ./manjaro/boot
-        sudo umount ./manjaro/boot
-        sudo losetup -d /dev/loop3
-        mv ./Manjaro-ARM-minimal-opi3b-*.img ./Manjaro-ARM-Minimal-OPI3B-Modified.img
     - name: 'Upload Modified Image'
       uses: actions/upload-artifact@v4
       with:
         name: Manjaro-ARM-OPI3B-Modified
-        path: ./Manjaro-ARM-Minimal-OPI3B-Modified.img
+        path: ./manjaro/boot/extlinux/extlinux.conf
