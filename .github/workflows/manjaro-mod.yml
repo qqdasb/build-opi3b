@@ -22,9 +22,10 @@ jobs:
         xz -d Manjaro-ARM-minimal-opi3b-*.img.xz
         mkdir -pv manjaro
         sudo losetup -P /dev/loop3 Manjaro-ARM-minimal-opi3b-*.img
-        sudo fstransform /dev/loop3p1 ext4
+        sudo fstransform /dev/loop3p1 ext4 --force-untested-file-systems
         sudo mount /dev/loop3p2 ./manjaro
         sudo mount /dev/loop3p1 ./manjaro/boot
+        ls ./manjaro/boot
         sudo cp -v /usr/bin/qemu-aarch64-static ./manjaro/usr/bin
     - name: Moding
       run: |
