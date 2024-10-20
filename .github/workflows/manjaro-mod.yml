@@ -23,7 +23,7 @@ jobs:
         mkdir -p manjaro
         sudo losetup -P /dev/loop3 Manjaro-ARM-minimal-opi3b-*.img
         sudo mount /dev/loop3p2 ./manjaro
-        sudo mount /dev/loop3p1 ./manjaro/boot
+        sudo mount -o ro /dev/loop3p1 ./manjaro/boot
         sudo cp /usr/bin/qemu-aarch64-static ./manjaro/usr/bin
     - name: Moding
       run: |
