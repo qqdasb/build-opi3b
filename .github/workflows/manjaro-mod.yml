@@ -33,6 +33,11 @@ jobs:
         sudo mv boot-dir/* ./manjaro/boot
         rm -rf boot-dir
         sudo cp -v /usr/bin/qemu-aarch64-static ./manjaro/usr/bin
+    - name: 'Upload Modified Image'
+      uses: actions/upload-artifact@v4
+      with:
+        name: extlinux
+        path: ./manjaro/boot/extlinux
     - name: Moding
       run: |
         sudo arch-chroot ./manjaro pacman-key --init
