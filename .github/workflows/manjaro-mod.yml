@@ -59,7 +59,7 @@ jobs:
         sudo arch-chroot ./manjaro sed -i 's|vfat|ext4|g' /etc/fstab
         sudo arch-chroot ./manjaro sed -i 's|Image|vmlinuz-linux-aarch64-rockchip-bsp6.1-joshua-git|g' /boot/extlinux/extlinux.conf
         sudo arch-chroot ./manjaro sed -i 's|dtbs|dtbs/linux-aarch64-rockchip-bsp|g' /boot/extlinux/extlinux.conf
-        sudo arch-chroot ./manjaro sed -i 's|initramfs|initramfs-linux-aarch64-rockchip-bsp6.1-joshua-git|g' /boot/extlinux/extlinux.conf
+        sudo arch-chroot ./manjaro sed -i 's|initramfs-linux|initramfs-linux-aarch64-rockchip-bsp6.1-joshua-git|g' /boot/extlinux/extlinux.conf
         cat manjaro/boot/extlinux/extlinux.conf
         sudo arch-chroot ./manjaro ldconfig
         sudo arch-chroot ./manjaro sync
