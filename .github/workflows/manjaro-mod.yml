@@ -32,11 +32,8 @@ jobs:
         sudo arch-chroot ./manjaro pacman -Sy --noconfirm
         sudo arch-chroot ./manjaro pacman -Scc --noconfirm
         git clone https://github.com/armbian/firmware.git
-        git clone https://github.com/orangepi-xunlong/firmware.git opi-firmware
-        rm -v firmware/README.md opi-firmware/README.md
-        cp -rv opi-firmware/* firmware/
-        sudo cp -rv firmware/* ./manjaro/usr/lib/firmware/
-        rm -rfv firmware opi-firmware
+        sudo cp -rv firmware/uwe5622 ./manjaro/usr/lib/firmware/
+        rm -rfv firmware
         sudo arch-chroot ./manjaro pacman -S --needed lz4 xz zstd networkmanager iproute2 filesystem glibc dbus-broker systemd perl wpa_supplicant openssh --noconfirm
         sudo arch-chroot ./manjaro systemctl enable NetworkManager
         sudo arch-chroot ./manjaro systemctl enable sshd
