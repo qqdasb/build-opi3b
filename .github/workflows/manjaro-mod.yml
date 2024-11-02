@@ -31,6 +31,7 @@ jobs:
         sudo mount /dev/loop3p1 ./manjaro/boot
         sudo rm -rfv ./manjaro/boot/*
         sudo mv -v boot-dir/* ./manjaro/boot
+        ls ./manjaro/boot
         sudo cp -v /usr/bin/qemu-aarch64-static ./manjaro/usr/bin
     - name: Moding
       run: |
