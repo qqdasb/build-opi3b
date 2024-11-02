@@ -31,7 +31,9 @@ jobs:
         sudo mount /dev/loop3p1 ./manjaro/boot
         sudo rm -rfv ./manjaro/boot/*
         sudo mv -v boot-dir/* ./manjaro/boot
+        rm -rf boot-dir
         ls ./manjaro/boot
+        ls ./manjaro/boot/extlinux
         sudo cp -v /usr/bin/qemu-aarch64-static ./manjaro/usr/bin
     - name: Moding
       run: |
@@ -57,7 +59,6 @@ jobs:
         wget https://github.com/qqdasb/my-files/raw/refs/heads/main/extlinux-fix-5.10.tar.gz
         tar xf extlinux-fix-*.tar.gz
         rm extlinux-fix-*.tar.gz
-        sudo rm -v ./manjaro/boot/extlinux/extlinux.conf
         sudo mv -v extlinux.conf ./manjaro/boot/extlinux/
         sudo arch-chroot ./manjaro ldconfig
         sudo arch-chroot ./manjaro sync
