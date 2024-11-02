@@ -42,8 +42,10 @@ jobs:
         sudo arch-chroot ./manjaro pacman -Sy --noconfirm
         sudo arch-chroot ./manjaro pacman -Scc --noconfirm
         git clone https://github.com/armbian/firmware.git
-        sudo cp -rv firmware/uwe5622 ./manjaro/usr/lib/firmware/
-        rm -rf firmware
+        git clone https://github.com/orangepi-xunlong/firmware.git opi-firmware
+        sudo cp -r opi-firmware/* firmware/
+        sudo cp -r firmware/* ./manjaro/usr/lib/firmware/
+        rm -rf firmware opi-firmware
         sudo arch-chroot ./manjaro pacman -S --needed lz4 xz zstd networkmanager iproute2 filesystem glibc dbus-broker systemd perl wpa_supplicant openssh --noconfirm
         sudo arch-chroot ./manjaro systemctl enable NetworkManager
         sudo arch-chroot ./manjaro systemctl enable sshd
@@ -55,12 +57,11 @@ jobs:
         sudo arch-chroot ./manjaro pacman -Sy 7ji-keyring --needed --noconfirm
         sudo arch-chroot ./manjaro pacman -Rdd linux-rc linux-rc-headers --noconfirm
         sudo arch-chroot ./manjaro pacman -S mkinitcpio cryptsetup --needed --noconfirm
-        sudo arch-chroot ./manjaro pacman -S 7Ji/linux-aarch64-rockchip-bsp5.10-joshua-git 7Ji/linux-aarch64-rockchip-bsp5.10-joshua-git-headers --noconfirm
-        wget https://github.com/qqdasb/my-files/raw/refs/heads/main/extlinux-fix-5.10.tar.gz
-        tar xf extlinux-fix-*.tar.gz
-        rm -v extlinux-fix-*.tar.gz
-        sudo rm -v ./manjaro/boot/extlinux.conf
-        sudo mv -v extlinux.conf ./manjaro/boot/extlinux/
+        sudo arch-chroot ./manjaro pacman -S 7Ji/linux-aarch64-rockchip-bsp6.1-joshua-git 7Ji/linux-aarch64-rockchip-bsp6.1-joshua-git-headers --noconfirm
+        sudo arch-chroot ./manjaro sed -i 's|vfat|ext4|g' /etc/fstab
+        sudo arch-chroot ./manjaro sed -i 's|Image|vmlinuz-linux-aarch64-rockchip-bsp6.1-joshua-git|g' /boot/extlinux/extlinux.conf
+        sudo arch-chroot ./manjaro sed -i 's|dtbs|dtbs/linux-aarch64-rockchip-bsp|g' /boot/extlinux/extlinux.conf
+        sudo arch-chroot ./manjaro sed -i 's|initramfs|initramfs-linux-aarch64-rockchip-bsp6.1-joshua-git|g'
         sudo arch-chroot ./manjaro ldconfig
         sudo arch-chroot ./manjaro sync
         sudo rm -v ./manjaro/usr/bin/qemu-aarch64-static
