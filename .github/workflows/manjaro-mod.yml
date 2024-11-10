@@ -29,13 +29,13 @@ jobs:
         sudo mv ./manjaro/boot/* boot-dir/
         sudo umount ./manjaro/boot
         sudo mkfs.ext4 /dev/loop3p1
+        sudo tune2fs /dev/loop3p1 -U ef53631b-1502-49ea-9e22-ce147dd6f0e3
+        cat ./manjaro/etc/fstab
         sudo mount /dev/loop3p1 ./manjaro/boot
         sudo rm -rf ./manjaro/boot/*
         sudo mv boot-dir/* ./manjaro/boot
         rm -rf boot-dir
         sudo cp -v /usr/bin/qemu-aarch64-static ./manjaro/usr/bin
-        sudo tune2fs /dev/loop3p1 -U ef53631b-1502-49ea-9e22-ce147dd6f0e3
-        cat ./manjaro/etc/fstab
     - name: Moding
       run: |
         sudo arch-chroot ./manjaro pacman-key --init
