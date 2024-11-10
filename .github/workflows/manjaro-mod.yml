@@ -37,6 +37,7 @@ jobs:
         sudo cp -v /usr/bin/qemu-aarch64-static ./manjaro/usr/bin
     - name: Moding
       run: |
+        sudo arch-chroot ./manjaro lsblk
         sudo arch-chroot ./manjaro pacman-key --init
         sudo arch-chroot ./manjaro pacman-key --populate
         sudo arch-chroot ./manjaro pacman -Sy --noconfirm
