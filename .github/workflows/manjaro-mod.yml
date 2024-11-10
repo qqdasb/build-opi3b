@@ -31,6 +31,7 @@ jobs:
         sudo mkfs.ext4 /dev/loop3p1
         sudo mount /dev/loop3p1 ./manjaro/boot
         cat ./manjaro/etc/fstab
+        sudo tune2fs /dev/loop3p1 -U 
         sudo rm -rf ./manjaro/boot/*
         sudo mv boot-dir/* ./manjaro/boot
         rm -rf boot-dir
