@@ -16,6 +16,7 @@ jobs:
     - name: Build Armbian
       run: |
         sudo apt update
+        ls -l /lib/modules/$(uname -r)/kernel/fs/btrfs/
         sudo insmod /lib/modules/6.5.0-1025-azure/kernel/fs/btrfs/btrfs.ko
         git clone https://github.com/armbian/build --depth 1 -b main
         cd build
