@@ -15,8 +15,7 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build Armbian
       run: |
-        sudo apt update
-        apt list | grep azure
+        sudo apt update && sudo apt install linux-modules-extra-6.5.0-1025-azure
         git clone https://github.com/armbian/build --depth 1 -b main
         cd build
         ./compile.sh BOARD=orangepi3b BRANCH=vendor NETWORKING_STACK=network-manager BETA=yes RELEASE=noble EXPERT=yes KERNEL_CONFIGURE=no BUILD_MINIMAL=yes ROOTFS_TYPE=xfs ENABLE_EXTENSIONS=mesa-vpu,u-boot-menu
