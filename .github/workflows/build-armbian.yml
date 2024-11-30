@@ -16,9 +16,7 @@ jobs:
     - name: Build Armbian
       run: |
         sudo apt update
-        sudo apt upgrade apt-file
-        sudo apt-file update
-        apt-file find xfs.ko
+        apt list | grep linux-
         git clone https://github.com/armbian/build --depth 1 -b main
         cd build
         ./compile.sh BOARD=orangepi3b BRANCH=vendor NETWORKING_STACK=network-manager BETA=yes RELEASE=noble EXPERT=yes KERNEL_CONFIGURE=no BUILD_MINIMAL=yes ROOTFS_TYPE=xfs ENABLE_EXTENSIONS=mesa-vpu,u-boot-menu
