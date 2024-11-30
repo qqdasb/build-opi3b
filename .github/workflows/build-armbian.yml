@@ -16,8 +16,7 @@ jobs:
     - name: Build Armbian
       run: |
         sudo apt update
-        sudo modprobe {raid6_pq,xor,libcrc32c}
-        sudo insmod /lib/modules/$(uname -r)/kernel/fs/btrfs/btrfs.ko
+        sudo modprobe {raid6_pq,xor,libcrc32c,btrfs}
         git clone https://github.com/armbian/build --depth 1 -b main
         cd build
         ./compile.sh BOARD=orangepi3b BRANCH=vendor NETWORKING_STACK=network-manager BETA=yes RELEASE=noble EXPERT=yes KERNEL_CONFIGURE=no BUILD_MINIMAL=yes ROOTFS_TYPE=btrfs BTRFS_COMPRESSION=zstd ENABLE_EXTENSIONS=u-boot-menu
