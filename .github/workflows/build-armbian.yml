@@ -17,7 +17,6 @@ jobs:
       run: |
         sudo insmod /lib/modules/6.5.0-1025-azure/kernel/lib/raid6/raid6_pq.ko
         sudo insmod /lib/modules/6.5.0-1025-azure/kernel/crypto/xor.ko
-        sudo insmod /lib/modules/6.5.0-1025-azure/kernel/lib/libcrc32c.ko
         sudo insmod /lib/modules/6.5.0-1025-azure/kernel/fs/btrfs/btrfs.ko
         git clone https://github.com/armbian/build --depth 1 -b main
         cd build
