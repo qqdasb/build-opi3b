@@ -16,7 +16,7 @@ jobs:
     - name: Build Armbian
       run: |
         sudo apt update
-        modinfo /lib/modules/$(uname -r)/kernel/fs/btrfs/btrfs.ko  | grep depend
+        sudo modprobe {raid6_pq,xor,libcrc32c}
         sudo insmod /lib/modules/$(uname -r)/kernel/fs/btrfs/btrfs.ko
         git clone https://github.com/armbian/build --depth 1 -b main
         cd build
