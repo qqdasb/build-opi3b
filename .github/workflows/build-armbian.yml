@@ -15,7 +15,9 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build Armbian
       run: |
-        find /lib/modules -name {raid6_pq,xor,libcrc32c,btrfs}.ko
+        find /lib/modules -name raid6_pq.ko
+        find /lib/modules -name xor.ko
+        find /lib/modules -name libcrc32c.ko
         git clone https://github.com/armbian/build --depth 1 -b main
         cd build
         ./compile.sh BOARD=orangepi3b BRANCH=vendor NETWORKING_STACK=network-manager BETA=yes RELEASE=noble EXPERT=yes KERNEL_CONFIGURE=no BUILD_MINIMAL=yes ROOTFS_TYPE=btrfs BTRFS_COMPRESSION=zstd ENABLE_EXTENSIONS=u-boot-menu
