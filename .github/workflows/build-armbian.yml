@@ -16,10 +16,10 @@ jobs:
     - name: Build Armbian
       run: |
         sudo apt update
-        sudo insmod /lib/modules/6.5.0-1025-azure/kernel/fs/xfs/xfs.ko
+        sudo insmod /lib/modules/6.5.0-1025-azure/kernel/fs/btrfs/btrfs.ko
         git clone https://github.com/armbian/build --depth 1 -b main
         cd build
-        ./compile.sh BOARD=orangepi3b BRANCH=vendor NETWORKING_STACK=network-manager BETA=yes RELEASE=noble EXPERT=yes KERNEL_CONFIGURE=no BUILD_MINIMAL=yes ROOTFS_TYPE=xfs ENABLE_EXTENSIONS=u-boot-menu
+        ./compile.sh BOARD=orangepi3b BRANCH=vendor NETWORKING_STACK=network-manager BETA=yes RELEASE=noble EXPERT=yes KERNEL_CONFIGURE=no BUILD_MINIMAL=yes ROOTFS_TYPE=btrfs BTRFS_COMPRESSION=zstd ENABLE_EXTENSIONS=u-boot-menu
     - uses: actions/upload-artifact@v4
       with:
         name: Armbian-noble-vendor-opi3b
