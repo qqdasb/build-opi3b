@@ -11,7 +11,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
     - uses: actions/checkout@v4
@@ -19,6 +19,7 @@ jobs:
       run: |
         wget https://github.com/manjaro-arm/opi-3b-images/releases/download/20240131/Manjaro-ARM-minimal-opi3b-20240131.img.xz -q
         sudo apt update && sudo apt install arch-install-scripts qemu-user-static binfmt-support
+        sudo systemctl restart systemd-binfmt
         xz -d Manjaro-ARM-minimal-opi3b-*.img.xz
         mkdir -pv manjaro
         sudo losetup -P /dev/loop3 Manjaro-ARM-minimal-opi3b-*.img
