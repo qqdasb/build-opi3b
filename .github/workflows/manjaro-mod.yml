@@ -49,7 +49,6 @@ jobs:
         sudo cp -r opi-firmware/* firmware/
         sudo cp -r firmware/* ./manjaro/usr/lib/firmware/
         sudo rm -rf firmware opi-firmware
-        sudo arch-chroot ./manjaro ldconfig
         sudo arch-chroot ./manjaro pacman -S --needed lz4 xz zstd networkmanager iproute2 filesystem glibc dbus-broker systemd perl wpa_supplicant openssh openssl --noconfirm
         sudo arch-chroot ./manjaro systemctl enable NetworkManager
         sudo arch-chroot ./manjaro systemctl enable sshd
