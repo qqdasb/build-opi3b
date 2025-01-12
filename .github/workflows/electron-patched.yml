@@ -1,0 +1,35 @@
+name: Build Electron with Rockchip MPP Patches
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Prepare
+      run: |
+        sudo apt update
+        sudo apt-get install build-essential clang libdbus-1-dev libgtk-3-dev libnotify-dev libasound2-dev libcap-dev libcups2-dev libxtst-dev libxss1 libnss3-dev gcc-multilib g++-multilib curl gperf bison python3-dbusmock openjdk-8-jre libc6-dev-arm64-cross linux-libc-dev-arm64-cross g++-aarch64-linux-gnu
+    - name: Clone Repo
+      run: |
+        git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+        export PATH=$PATH:$(pwd)/depot_tools
+        export GIT_CACHE_PATH="${HOME}/.git_cache"
+        mkdir -p "${GIT_CACHE_PATH}"
+        mkdir electron && cd electron
+        gclient config --name "src/electron" --unmanaged https://github.com/electron/electron
+        gclient sync --with_branch_heads --with_tags
+    - name: Patch
+      run: echo "Not complete"
+    - name: Build
+      run: |
+        cd src
+        export CHROMIUM_BUILDTOOLS_PATH=`pwd`/buildtool
+        gn gen out/Release-arm64 --args='import(\"//electron/build/args/release.gn\") target_cpu = "arm64"'
