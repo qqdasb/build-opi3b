@@ -1,0 +1,105 @@
+name: Build Electron # with Rockchip MPP Patches
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Create src dir
+      run: |
+        mkdir src
+    - name: Checkout Electron
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      with:
+        path: src/electron
+        fetch-depth: 0
+        ref: ${{ github.event.pull_request.head.sha }}
+    - name: Patch
+      run: |
+        echo "Not complete"
+    - name: Setup Node.js/npm
+      if: ${{ inputs.target-platform == 'macos' }}
+      uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
+      with:
+        node-version: 20.11.x
+        cache: yarn
+        cache-dependency-path: src/electron/yarn.lock
+    - name: Install Dependencies
+      uses: ./src/electron/.github/actions/install-dependencies
+    - name: Set GN_EXTRA_ARGS for Linux
+      run: |
+        if [ "${{ inputs.target-arch  }}" = "arm" ]; then
+          if [ "${{ inputs.is-release  }}" = true ]; then
+            GN_EXTRA_ARGS='target_cpu="arm" build_tflite_with_xnnpack=false symbol_level=1'
+          else
+            GN_EXTRA_ARGS='target_cpu="arm" build_tflite_with_xnnpack=false'
+          fi
+        elif [ "${{ inputs.target-arch }}" = "arm64" ]; then
+          GN_EXTRA_ARGS='target_cpu="arm64" fatal_linker_warnings=false enable_linux_installer=false'
+        elif [ "${{ inputs.is-asan }}" = true ]; then
+          GN_EXTRA_ARGS='is_asan=true'
+        fi
+        echo "GN_EXTRA_ARGS=$GN_EXTRA_ARGS" >> $GITHUB_ENV
+    - name: Get Depot Tools
+      timeout-minutes: 5
+      run: |
+        git clone --filter=tree:0 https://chromium.googlesource.com/chromium/tools/depot_tools.git
+
+        SEDOPTION="-i"
+        if [ "`uname`" = "Darwin" ]; then
+          SEDOPTION="-i ''"
+        fi
+
+        # remove ninjalog_uploader_wrapper.py from autoninja since we don't use it and it causes problems
+        sed $SEDOPTION '/ninjalog_uploader_wrapper.py/d' ./depot_tools/autoninja
+
+        # Ensure depot_tools does not update.
+        test -d depot_tools && cd depot_tools
+        touch .disable_auto_update
+    - name: Add Depot Tools to PATH
+      run: echo "$(pwd)/depot_tools" >> $GITHUB_PATH
+    - name: Generate DEPS Hash
+      run: |
+        node src/electron/script/generate-deps-hash.js
+        DEPSHASH=v1-src-cache-$(cat src/electron/.depshash)
+        echo "DEPSHASH=$DEPSHASH" >> $GITHUB_ENV
+        echo "CACHE_PATH=$DEPSHASH.tar" >> $GITHUB_ENV
+    - name: Restore src cache via AKS
+      uses: ./src/electron/.github/actions/restore-cache-aks
+    - name: Checkout Electron
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      with:
+        path: src/electron
+        fetch-depth: 0
+        ref: ${{ github.event.pull_request.head.sha }}
+    - name: Install Build Tools
+      uses: ./src/electron/.github/actions/install-build-tools
+    - name: Init Build Tools
+      run: |
+        e init -f --root=$(pwd) --out=Default ${{ inputs.gn-build-type }} --import ${{ inputs.gn-build-type }} --target-cpu ${{ inputs.target-arch }}
+    - name: Run Electron Only Hooks
+      run: |
+        e d gclient runhooks --spec="solutions=[{'name':'src/electron','url':None,'deps_file':'DEPS','custom_vars':{'process_deps':False},'managed':False}]"
+    - name: Regenerate DEPS Hash
+      run: |
+        (cd src/electron && git checkout .) && node src/electron/script/generate-deps-hash.js
+        echo "DEPSHASH=$(cat src/electron/.depshash)" >> $GITHUB_ENV
+    - name: Add CHROMIUM_BUILDTOOLS_PATH to env
+      run: echo "CHROMIUM_BUILDTOOLS_PATH=$(pwd)/src/buildtools" >> $GITHUB_ENV
+    - name: Setup Number of Ninja Processes
+      run: |
+        echo "NUMBER_OF_NINJA_PROCESSES=${{ inputs.target-platform != 'macos' && '300' || '200' }}" >> $GITHUB_ENV
+    - name: Build Electron
+      uses: ./src/electron/.github/actions/build-electron
+      with:
+        target-arch: arm64
+        target-platform: linux
+        artifact-platform: linux

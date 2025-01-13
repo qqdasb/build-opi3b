@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v4
     - name: Free Disk Space
       uses: jlumbroso/free-disk-space@main
       with:
@@ -22,7 +23,6 @@ jobs:
         large-packages: true
         docker-images: true
         swap-storage: true
-    - uses: actions/checkout@v4
     - name: Prepare
       run: |
         sudo apt update
@@ -37,7 +37,7 @@ jobs:
         gclient config --name "src/electron" --unmanaged https://github.com/electron/electron
         gclient sync --with_branch_heads --with_tags
     - name: Patch
-      run: echo "Not complete"
+      run: echo "Not complete."
     - name: Build
       run: |
         cd src
