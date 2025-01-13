@@ -34,12 +34,12 @@ jobs:
         export GIT_CACHE_PATH="${HOME}/.git_cache"
         mkdir -p "${GIT_CACHE_PATH}"
         mkdir electron && cd electron
-        gclient config --name "src/electron" --unmanaged https://github.com/electron/electron
-        gclient sync --with_branch_heads --with_tags
+        e d gclient config --name "src/electron" --unmanaged
+#        gclient config --name "src/electron" --unmanaged https://github.com/electron/electron
+#        gclient sync --with_branch_heads --with_tags
     - name: Patch
       run: echo "Not complete."
     - name: Build
       run: |
         cd src
-        export CHROMIUM_BUILDTOOLS_PATH=`pwd`/buildtool
         gn gen out/Release-arm64 --args='import(\"//electron/build/args/release.gn\") target_cpu = "arm64"'
