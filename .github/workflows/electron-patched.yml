@@ -63,7 +63,7 @@ jobs:
         cd src/electron
         script/strip-binaries.py -d out/Release-arm64
         ninja -C out/Release-arm64 electron:electron_dist_zip -j$(nproc -a)
-     - uses: actions/upload-artifact@v4
-       with:
+    - uses: actions/upload-artifact@v4
+      with:
         name: Electron-With-MPP
         path: src/electron/out/Release-arm64
