@@ -37,7 +37,6 @@ jobs:
         cd src
         gclient config --name "src/electron" --unmanaged https://github.com/qqdasb/electron-rkmpp
         gclient sync --with_branch_heads --with_tags --no-history
-        find -name ".gn"
     - name: Install depends from build/install-build-deps.sh
       run: |
         pwd
@@ -45,19 +44,17 @@ jobs:
         ./build/install-build-deps.sh
     - name: Build
       run: |
-        pwd
         cd src/src
         mkdir -p out/Release-arm64
-        cp .gn out/Release-arm64
         gn gen out/Release-arm64 --args='import(\"//electron/build/args/release.gn\") target_cpu = "arm64"'
         ninja -C out/Release-arm64 electron -j$(nproc -a)
     - name: Package
       run: |
-        cd src
+        cd src/src
         script/strip-binaries.py -d out/Release-arm64
         ninja -C out/Release-arm64 electron:electron_dist_zip -j$(nproc -a)
         find . -name *.zip
     - uses: actions/upload-artifact@v4
       with:
-        name: Electron-With-MPP
+        name: Electron-With-RKMPP
         path: /home/runner/work/build-opi3b/build-opi3b/src/src/out/Release-arm64
