@@ -37,8 +37,7 @@ jobs:
         cd src
         gclient config --name "src/electron" --unmanaged https://github.com/qqdasb/electron-rkmpp
         gclient sync --with_branch_heads --with_tags --no-history
-        find -name dotfile_settings.gni
-        cat build/dotfile_settings.gni
+        cat src/build/dotfile_settings.gni
     - name: Install Depends from Electron
       run: |
         cd src/src
