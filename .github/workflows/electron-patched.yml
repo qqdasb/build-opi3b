@@ -46,7 +46,7 @@ jobs:
       run: |
         cd src/src
         mkdir -p out/Release-arm64
-        gn gen out/Release-arm64 --args='import(\"//electron/build/args/release.gn\") target_cpu = "arm64"'
+        gn gen out/Release-arm64 --args='import("//electron/build/args/release.gn") target_cpu = "arm64"'
         ninja -C out/Release-arm64 electron -j$(nproc -a)
     - name: Package
       run: |
