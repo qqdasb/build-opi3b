@@ -37,6 +37,8 @@ jobs:
         cd src
         gclient config --name "src/electron" --unmanaged https://github.com/qqdasb/electron-rkmpp
         gclient sync --with_branch_heads --with_tags --no-history
+        find -name dotfile_settings.gni
+        cat build/dotfile_settings.gni
     - name: Install Depends from Electron
       run: |
         cd src/src
@@ -45,9 +47,8 @@ jobs:
     - name: Build
       run: |
         cd src/src
-        cat .gn
         mkdir -p out/Release-rkmpp
-        gn gen out/Release-rkmpp --args='import("//electron/build/args/testing.gn" target_cpu = "arm64"'
+        gn gen out/Release-rkmpp --args="import("//electron/build/args/release.gn") target_cpu = arm64"
         ninja -C out/Release-rkmpp electron -j$(nproc -a)
     - name: Package
       run: |
