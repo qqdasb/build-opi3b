@@ -39,22 +39,31 @@ jobs:
 #        gclient config --name "src/electron" --unmanaged https://github.com/electron/electron
 #        gclient sync --with_branch_heads --with_tags
 # New
-    - name: Clone Repo
+    - name: Init source code
       run: |
         mkdir src
         git clone --depth 1 https://chromium.googlesource.com/chromium/tools/depot_tools.git
         export PATH=$PATH:$(pwd)/depot_tools
         export CHROMIUM_BUILDTOOLS_PATH=$(pwd)/src/buildtools
         cd src
-        gclient config --name "src/electron" --unmanaged https://github.com/electron/electron
+        ls
+        gclient config --name "src/electron" --unmanaged https://github.com/qqdasb/electron
         gclient sync --with_branch_heads --with_tags --no-history
-        pwd
+        ls
+        ls electron
     - name: Install depends from build/install-build-deps.sh
-      run: cd src && ./build/install-build-deps.sh && pwd
-    - name: Patch
-      run: echo "Not complete."
+      run: cd src/electron && ./build/install-build-deps.sh
     - name: Build
       run: |
-        pwd
         cd src
         gn gen out/Release-arm64 --args='import(\"//electron/build/args/release.gn\") target_cpu = "arm64"'
+        ninja -C out/Release-arm64 -j$(nproc -a)
+    - name: Package
+      run: |
+        cd src/electron
+        script/strip-binaries.py -d out/Release-arm64
+        ninja -C out/Release-arm64 electron:electron_dist_zip -j$(nproc -a)
+     - uses: actions/upload-artifact@v4
+       with:
+        name: Electron-With-MPP
+        path: src/electron/out/Release-arm64
