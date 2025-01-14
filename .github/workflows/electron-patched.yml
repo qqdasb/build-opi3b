@@ -49,13 +49,13 @@ jobs:
         ls
         gclient config --name "src/electron" --unmanaged https://github.com/qqdasb/electron-rkmpp
         gclient sync --with_branch_heads --with_tags --no-history
-        ls
-        ls electron
+        ls src
+        ls src/*
     - name: Install depends from build/install-build-deps.sh
       run: cd src/electron && ./build/install-build-deps.sh
     - name: Build
       run: |
-        cd src
+        cd src/electron
         gn gen out/Release-arm64 --args='import(\"//electron/build/args/release.gn\") target_cpu = "arm64"'
         ninja -C out/Release-arm64 -j$(nproc -a)
     - name: Package
