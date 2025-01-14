@@ -2,9 +2,9 @@ name: Build Arch Linux ARM
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "manjaro" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "manjaro" ]
 
 jobs:
   build:
