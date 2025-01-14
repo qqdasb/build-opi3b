@@ -33,15 +33,17 @@ jobs:
         mkdir src
         git clone --depth 1 https://chromium.googlesource.com/chromium/tools/depot_tools.git
         export PATH=$PATH:$(pwd)/depot_tools
-        export CHROMIUM_BUILDTOOLS_PATH=$(pwd)/src/buildtools
+        export CHROMIUM_BUILDTOOLS_PATH=$(pwd)/src/src/buildtools
         cd src
         gclient config --name "src/electron" --unmanaged https://github.com/qqdasb/electron-rkmpp
         gclient sync --with_branch_heads --with_tags --no-history
-    - name: Install depends from build/install-build-deps.sh
+        cat src/build/args/release.gn
+    - name: Install Depends from Electron
       run: |
-        pwd
         cd src/src
-        ./build/install-build-deps.sh
+        cat build/install-build-deps.sh
+        ./build/install-build-deps.sh --no-android
+        ./build/linux/sysroot_scripts/install-sysroot.py --arch=arm64
     - name: Build
       run: |
         cd src/src
