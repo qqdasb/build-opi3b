@@ -37,16 +37,19 @@ jobs:
         cd src
         gclient config --name "src/electron" --unmanaged https://github.com/qqdasb/electron-rkmpp
         gclient sync --with_branch_heads --with_tags --no-history
+        find -name ".gn"
     - name: Build
       run: |
         cd src
+        mkdir -p out/Release-arm64
         gn gen out/Release-arm64 --args='import(\"//electron/build/args/release.gn\") target_cpu = "arm64"'
-        ninja -C out/Release-arm64 -j$(nproc -a)
+        ninja -C out/Release-arm64 electron -j$(nproc -a)
     - name: Package
       run: |
         cd src
         script/strip-binaries.py -d out/Release-arm64
         ninja -C out/Release-arm64 electron:electron_dist_zip -j$(nproc -a)
+        find . -name *.zip
     - uses: actions/upload-artifact@v4
       with:
         name: Electron-With-MPP
