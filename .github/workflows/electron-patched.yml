@@ -22,7 +22,6 @@ jobs:
         docker-images: true
         swap-storage: true
     - uses: actions/setup-node@v4
-    - name: Setup Nodejs
       with:
         node-version: 22.13.0
     - name: Prepare
@@ -65,7 +64,6 @@ jobs:
         script/strip-binaries.py -d out/Release-arm64
         ninja -C out/Release-arm64 electron:electron_dist_zip -j$(nproc -a)
     - uses: actions/upload-artifact@v4
-    - name: Upload Electron
       with:
         name: Electron-With-MPP
         path: src/electron/out/Release-arm64
