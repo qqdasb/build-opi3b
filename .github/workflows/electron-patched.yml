@@ -37,18 +37,16 @@ jobs:
         cd src
         gclient config --name "src/electron" --unmanaged https://github.com/qqdasb/electron-rkmpp
         gclient sync --with_branch_heads --with_tags --no-history
-        cat $(find -name release.gn)
     - name: Install Depends from Electron
       run: |
         cd src/src
-        cat build/install-build-deps.sh
         ./build/install-build-deps.sh --no-android
         ./build/linux/sysroot_scripts/install-sysroot.py --arch=arm64
     - name: Build
       run: |
         cd src/src
         mkdir -p out/Release-arm64
-        gn gen out/Release-arm64 --args='import("//electron/build/args/release.gn") target_cpu = "arm64"'
+        gn gen out/Release-arm64 --args='target_cpu = "arm64"' --is_debug=false
         ninja -C out/Release-arm64 electron -j$(nproc -a)
     - name: Package
       run: |
