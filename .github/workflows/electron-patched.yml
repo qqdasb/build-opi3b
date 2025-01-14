@@ -45,16 +45,17 @@ jobs:
     - name: Build
       run: |
         cd src/src
-        mkdir -p out/Release-arm64
-        gn gen out/Release-arm64 --args='target_cpu = "arm64"' --is_debug=false
-        ninja -C out/Release-arm64 electron -j$(nproc -a)
+        cat .gn
+        mkdir -p out/Release-rkmpp
+        gn gen out/Release-rkmpp --args='import("//electron/build/args/testing.gn" target_cpu = "arm64"'
+        ninja -C out/Release-rkmpp electron -j$(nproc -a)
     - name: Package
       run: |
         cd src/src
-        script/strip-binaries.py -d out/Release-arm64
-        ninja -C out/Release-arm64 electron:electron_dist_zip -j$(nproc -a)
+        script/strip-binaries.py -d out/Release-rkmpp --target=arm64
+        ninja -C out/Release-rkmpp electron:electron_dist_zip -j$(nproc -a)
         find . -name *.zip
     - uses: actions/upload-artifact@v4
       with:
         name: Electron-With-RKMPP
-        path: /home/runner/work/build-opi3b/build-opi3b/src/src/out/Release-arm64
+        path: /home/runner/work/build-opi3b/build-opi3b/src/src/out/Release-rkmpp
