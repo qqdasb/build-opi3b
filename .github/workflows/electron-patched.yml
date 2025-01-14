@@ -37,14 +37,16 @@ jobs:
         cd src
         gclient config --name "src/electron" --unmanaged https://github.com/qqdasb/electron-rkmpp
         gclient sync --with_branch_heads --with_tags --no-history
-        pwd
         find -name ".gn"
     - name: Install depends from build/install-build-deps.sh
-      run: ./src/build/install-build-deps.sh
+      run: |
+        pwd
+        cd src/src
+        ./build/install-build-deps.sh
     - name: Build
       run: |
-        cd src
         pwd
+        cd src/src
         mkdir -p out/Release-arm64
         cp .gn out/Release-arm64
         gn gen out/Release-arm64 --args='import(\"//electron/build/args/release.gn\") target_cpu = "arm64"'
@@ -58,4 +60,4 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: Electron-With-MPP
-        path: src/out/Release-arm64
+        path: /home/runner/work/build-opi3b/build-opi3b/src/src/out/Release-arm64
