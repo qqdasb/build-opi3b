@@ -38,7 +38,9 @@ jobs:
         gclient config --name "src/electron" --unmanaged https://github.com/qqdasb/electron-rkmpp
         gclient sync --with_branch_heads --with_tags --no-history
     - name: Install depends from build/install-build-deps.sh
-      run: cd src && ./build/install-build-deps.sh
+      run: |
+        cd src
+        ./build/install-build-deps.sh
     - name: Build
       run: |
         cd src
