@@ -47,7 +47,7 @@ jobs:
         export CHROMIUM_BUILDTOOLS_PATH=$(pwd)/src/buildtools
         cd src
         gclient config --name "src/electron" --unmanaged https://github.com/electron/electron
-        gclient sync --with_branch_heads --with_tags --no-history --revision
+        gclient sync --with_branch_heads --with_tags --no-history
         pwd
     - name: Install depends from build/install-build-deps.sh
       run: cd src && ./build/install-build-deps.sh && pwd
