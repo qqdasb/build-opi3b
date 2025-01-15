@@ -34,29 +34,22 @@ jobs:
     - name: Init and Sync Source
       run: |
         mkdir -p ./src
-        e init rkmpp-release --import release --fork qqdasb/electron --target-cpu arm64 --use-https --root=./src/electron
-        sed -i 's|electron/electron|qqdasb/electron-rkmpp|g' src/electron/.gclient
+        e init rkmpp-release --import release --fork qqdasb/electron --target-cpu arm64 --use-https --root=./src
+        sed -i 's|electron/electron|qqdasb/electron-rkmpp|g' src/.gclient
         export PATH=$PATH:/home/runner/.electron_build_tools/third_party/depot_tools
         gclient config --name "src/electron" --unmanaged https://github.com/qqdasb/electron-rkmpp
         gclient sync --with_branch_heads --with_tags --no-history
     - name: Install Depends from Electron
       run: |
-        echo "*"
-        ls * -a
-        echo "*/*"
-        ls */* -a
-        find -name install-build-deps.sh
-        cd src/electron
-        ls -a
-        find -name install-build-deps.sh
+        cd src
         ./build/install-build-deps.sh --no-android
         ./build/linux/sysroot_scripts/install-sysroot.py --arch=arm64
     - name: Build and Package
       run: |
-        cd src/electron
+        cd src
         e build --target electron:electron_dist_zip -v
         find -name *.zip
     - uses: actions/upload-artifact@v4
       with:
         name: Electron-With-RKMPP
-        path: /home/runner/work/build-opi3b/build-opi3b/src/electron/out/Release*
+        path: /home/runner/work/build-opi3b/build-opi3b/src/out/Release*
