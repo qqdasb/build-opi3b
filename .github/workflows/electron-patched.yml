@@ -41,6 +41,7 @@ jobs:
         cd src
         gclient config --name "src/electron" --unmanaged https://github.com/qqdasb/electron-rkmpp
         gclient sync --with_branch_heads --with_tags --no-history
+        e init release-rkmpp -i release --root=./src
     - name: Install Depends from Electron
       run: |
         cd src/src
