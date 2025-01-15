@@ -32,7 +32,7 @@ jobs:
         sudo npm i -g @electron/build-tools
         git clone https://github.com/electron/build-tools ~/.electron_build_tools && (cd ~/.electron_build_tools && npm install)
         e build --help
-        grep -nr gen .electron_build_tools/configs
+        grep -nr gen ~/.electron_build_tools/configs
     - name: Init Source
       run: |
         mkdir src
@@ -55,4 +55,4 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: Electron-With-RKMPP
-        path: /home/runner/work/build-opi3b/build-opi3b/src/src/out/Release-rkmpp
+        path: /home/runner/work/build-opi3b/build-opi3b/src/src/out/Release*
