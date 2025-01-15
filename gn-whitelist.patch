@@ -1,8 +1,0 @@
---- a/.gn
-+++ b/.gn
-@@ -176,4 +176,5 @@
-       "//electron/BUILD.gn",
-       "//third_party/electron_node/deps/base64/BUILD.gn",
-       "//third_party/electron_node/deps/base64/unofficial.gni",
-+      "//third_party/electron_node/node.gni"
-     ]
