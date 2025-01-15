@@ -37,6 +37,7 @@ jobs:
     - name: Install Depends from Electron
       run: |
         cd src
+        ls ..
         export CHROMIUM_BUILDTOOLS_PATH=$(pwd)/buildtools
         ./build/install-build-deps.sh --no-android
         ./build/linux/sysroot_scripts/install-sysroot.py --arch=arm64
