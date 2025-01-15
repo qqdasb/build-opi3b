@@ -46,8 +46,9 @@ jobs:
     - name: Build
       run: |
         cd src/src
+        git apply -v ../../gh-whitelist.patch
         mkdir -p out/Release-rkmpp
-        gn gen out/Release-rkmpp --args="import("//electron/build/args/release.gn"),target_cpu = arm64"
+        gn gen out/Release-rkmpp --args='import("//electron/build/args/release.gn") target_cpu = "arm64"'
         ninja -C out/Release-rkmpp electron -j$(nproc -a)
     - name: Package
       run: |
