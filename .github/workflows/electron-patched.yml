@@ -41,6 +41,7 @@ jobs:
     - name: Install Depends from Electron
       run: |
         cd electron
+        ls
         ./build/install-build-deps.sh --no-android
         ./build/linux/sysroot_scripts/install-sysroot.py --arch=arm64
     - name: Build and Package
