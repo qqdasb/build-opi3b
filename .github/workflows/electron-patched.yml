@@ -35,7 +35,7 @@ jobs:
       run: |
         e init rkmpp-release --import release --fork qqdasb/electron --target-cpu arm64 --use-https --root=./electron
         sed -i 's|electron/electron|qqdasb/electron-rkmpp|g' electron/.gclient
-        e sync --no-history --no-history
+        gclient sync --with_branch_heads --with_tags --no-history
     - name: Install Depends from Electron
       run: |
         cd electron
