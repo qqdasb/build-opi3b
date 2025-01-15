@@ -33,23 +33,23 @@ jobs:
         git clone https://github.com/electron/build-tools --depth 1 ~/.electron_build_tools && (cd ~/.electron_build_tools && npm install)
     - name: Init and Sync Source
       run: |
-        e init rkmpp-release --import release --fork qqdasb/electron --target-cpu arm64 --use-https --root=./electron
+        mkdir -p ./src
+        e init rkmpp-release --import release --fork qqdasb/electron --target-cpu arm64 --use-https --root=./src/electron
         sed -i 's|electron/electron|qqdasb/electron-rkmpp|g' electron/.gclient
         export PATH=$PATH:/home/runner/.electron_build_tools/third_party/depot_tools
         gclient config --name "src/electron" --unmanaged https://github.com/qqdasb/electron-rkmpp
         gclient sync --with_branch_heads --with_tags --no-history
     - name: Install Depends from Electron
       run: |
-        cd electron
-        ls
+        cd src/electron
         ./build/install-build-deps.sh --no-android
         ./build/linux/sysroot_scripts/install-sysroot.py --arch=arm64
     - name: Build and Package
       run: |
-        cd electron
+        cd src/electron
         e build --target electron:electron_dist_zip -v
         find -name *.zip
     - uses: actions/upload-artifact@v4
       with:
         name: Electron-With-RKMPP
-        path: /home/runner/work/build-opi3b/build-opi3b/electron/out/Release*
+        path: /home/runner/work/build-opi3b/build-opi3b/src/electron/out/Release*
