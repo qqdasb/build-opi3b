@@ -37,17 +37,16 @@ jobs:
     - name: Install Depends from Electron
       run: |
         cd src
-        ls ..
         export CHROMIUM_BUILDTOOLS_PATH=$(pwd)/buildtools
         ./build/install-build-deps.sh --no-android
         ./build/linux/sysroot_scripts/install-sysroot.py --arch=arm64
     - name: Build and Package
       run: |
+        cd src
         mkdir -p third_party/node/linux/node-linux-x64/bin
         ln -sf $(command -v node) third_party/node/linux/node-linux-x64/bin/
         git apply -v ../*.patch
         git pack-refs --all
-        cat .git/packed-refs
         ./buildtools/linux64/gn/gn gen out/Release-rkmpp --args='import("//electron/build/args/testing.gn") target_cpu ="arm64"'
         ninja -C out/Release-rkmpp electron -j$(nproc -a)
         electron/script/strip-binaries.py -d out/Release-rkmpp
