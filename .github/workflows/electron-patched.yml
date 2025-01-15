@@ -49,6 +49,7 @@ jobs:
     - name: Build and Package
       run: |
         cd src
+        git apply -v ../*.patch
         e build --target electron:electron_dist_zip -v
         find -name *.zip
     - uses: actions/upload-artifact@v4
