@@ -31,11 +31,11 @@ jobs:
         sudo npm i -g npm@11.0.0
         sudo npm i -g @electron/build-tools
         git clone https://github.com/electron/build-tools --depth 1 ~/.electron_build_tools && (cd ~/.electron_build_tools && npm install)
-        e sync --help
     - name: Init and Sync Source
       run: |
         e init rkmpp-release --import release --fork qqdasb/electron --target-cpu arm64 --use-https --root=./electron
-        e sync --depth 1
+        sed -i 's|electron/electron|qqdasb/electron-rkmpp|g' electron/.gclient
+        e sync --no-history --no-history
     - name: Install Depends from Electron
       run: |
         cd electron
