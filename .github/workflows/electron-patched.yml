@@ -31,27 +31,22 @@ jobs:
         sudo npm i -g npm@11.0.0
         sudo npm i -g @electron/build-tools
         git clone https://github.com/electron/build-tools ~/.electron_build_tools && (cd ~/.electron_build_tools && npm install)
-        e init --help
     - name: Init Source
       run: |
-        mkdir src
-        git clone --depth 1 https://chromium.googlesource.com/chromium/tools/depot_tools.git
-        export PATH=$PATH:$(pwd)/depot_tools
-        export CHROMIUM_BUILDTOOLS_PATH=$(pwd)/src/src/buildtools
-        cd src
-        gclient config --name "src/electron" --unmanaged https://github.com/qqdasb/electron-rkmpp
-        gclient sync --with_branch_heads --with_tags --no-history
+        e init rkmpp-release --import release --fork qqdasb/electron-rkmpp --target-cpu arm64 --use-https --root=./electron --bootstrap
+        ls
+        ls electron
     - name: Install Depends from Electron
       run: |
-        cd src/src
+        cd electron
         ./build/install-build-deps.sh --no-android
         ./build/linux/sysroot_scripts/install-sysroot.py --arch=arm64
     - name: Build and Package
       run: |
-        cd src/src
+        cd electron
         e build --target electron:electron_dist_zip -v
-        find . -name *.zip
+        find -name *.zip
     - uses: actions/upload-artifact@v4
       with:
         name: Electron-With-RKMPP
-        path: /home/runner/work/build-opi3b/build-opi3b/src/src/out/Release*
+        path: /home/runner/work/build-opi3b/build-opi3b/electron/out/Release*
