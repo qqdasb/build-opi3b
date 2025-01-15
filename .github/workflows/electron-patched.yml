@@ -41,12 +41,15 @@ jobs:
     - name: Install Depends from Electron
       run: |
         cd src/src
+        ls ..
+        ls ../..
+        ls ../../..
         ./build/install-build-deps.sh --no-android
         ./build/linux/sysroot_scripts/install-sysroot.py --arch=arm64
     - name: Build
       run: |
         cd src/src
-        git apply -v ../../gh-whitelist.patch
+        git apply -v ../../../gh-whitelist.patch
         mkdir -p out/Release-rkmpp
         gn gen out/Release-rkmpp --args='import("//electron/build/args/release.gn") target_cpu = "arm64"'
         ninja -C out/Release-rkmpp electron -j$(nproc -a)
