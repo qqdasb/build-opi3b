@@ -32,6 +32,7 @@ jobs:
         sudo npm i -g @electron/build-tools
         git clone https://github.com/electron/build-tools ~/.electron_build_tools && (cd ~/.electron_build_tools && npm install)
         e build --help
+        grep -nr gen .electron_build_tools/configs
     - name: Init Source
       run: |
         mkdir src
