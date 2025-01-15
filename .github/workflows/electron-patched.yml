@@ -33,7 +33,9 @@ jobs:
         git clone https://github.com/electron/build-tools ~/.electron_build_tools && (cd ~/.electron_build_tools && npm install)
     - name: Init Source
       run: |
-        e init rkmpp-release --import release --fork qqdasb/electron-rkmpp --target-cpu arm64 --use-https --root=./electron --bootstrap
+        e init rkmpp-release --import release --fork qqdasb/electron-rkmpp --target-cpu arm64 --use-https --root=./electron
+        grep -nr gclient
+        cat electron/.gclient
         ls
         ls electron
     - name: Install Depends from Electron
