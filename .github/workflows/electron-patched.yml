@@ -41,7 +41,14 @@ jobs:
         gclient sync --with_branch_heads --with_tags --no-history
     - name: Install Depends from Electron
       run: |
+        echo "*"
+        ls * -a
+        echo "*/*"
+        ls */* -a
+        find -name install-build-deps.sh
         cd src/electron
+        ls -a
+        find -name install-build-deps.sh
         ./build/install-build-deps.sh --no-android
         ./build/linux/sysroot_scripts/install-sysroot.py --arch=arm64
     - name: Build and Package
