@@ -36,6 +36,7 @@ jobs:
         e init rkmpp-release --import release --fork qqdasb/electron --target-cpu arm64 --use-https --root=./electron
         sed -i 's|electron/electron|qqdasb/electron-rkmpp|g' electron/.gclient
         export PATH=$PATH:/home/runner/.electron_build_tools/third_party/depot_tools
+        gclient config --name "src/electron" --unmanaged https://github.com/qqdasb/electron-rkmpp
         gclient sync --with_branch_heads --with_tags --no-history
     - name: Install Depends from Electron
       run: |
