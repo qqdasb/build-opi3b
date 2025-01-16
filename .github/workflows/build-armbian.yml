@@ -17,14 +17,12 @@ jobs:
       run: |
         sudo apt update
         sudo apt install rsync
-        wget https://github.com/RsyncProject/rsync/releases/download/v3.4.1/rsync-3.4.1.tar.gz
-        tar xvf rsync-3.4.1.tar.gz
-        cd rsync-3.4.1
+        git clone https://github.com/RsyncProject/rsync --depth 1
+        cd rsync
         chmod a+x support/install_deps_ubuntu.sh && support/install_deps_ubuntu.sh
         ./configure --prefix=/usr
         make -j$(nproc -a)
         sudo make install
-        rsync --version
     - name: Install Depends
       run: |
         sudo insmod /lib/modules/6.8.0-1017-azure/kernel/lib/raid6/raid6_pq.ko.zst
@@ -34,6 +32,7 @@ jobs:
       run: |
         git clone https://github.com/armbian/build --depth 1 -b main
         cd build
+        git apply -v ../*.patch
         ./compile.sh BOARD=orangepi3b BRANCH=vendor NETWORKING_STACK=network-manager BETA=yes RELEASE=noble EXPERT=yes KERNEL_CONFIGURE=no BUILD_MINIMAL=no BUILD_DESKTOP=no ENABLE_EXTENSIONS=u-boot-menu,mesa-vpu,v4l2loopback-dkms INSTALL_HEADERS=yes CONSOLE_AUTOLOGIN=yes ROOTFS_TYPE=btrfs BTRFS_COMPRESSION=zstd
     - uses: actions/upload-artifact@v4
       with:

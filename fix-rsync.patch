@@ -1,0 +1,20 @@
+--- a/lib/functions/image/rootfs-to-image.sh
++++ b/lib/functioms/image/rootfs-to-image.sh
+@@ -42,7 +42,7 @@
+ 	if [[ $ROOTFS_TYPE == nilfs2 ]]; then rsync_ea=""; fi
+ 	if [[ $ROOTFS_TYPE != nfs ]]; then
+ 		display_alert "Copying files via rsync to" "/ (MOUNT root)"
+-		run_host_command_logged rsync -aHWh $rsync_ea \
++		run_host_command_logged rsync -aWh $rsync_ea \
+ 			--exclude="/boot" \
+ 			--exclude="/dev/*" \
+ 			--exclude="/proc/*" \
+@@ -77,7 +77,7 @@
+ 		fi
+ 		run_host_command_logged rsync -rLtWh --info=progress0,stats1 "$SDCARD/boot" "$MOUNT" # fat32
+ 	else
+-		run_host_command_logged rsync -aHWXh --info=progress0,stats1 "$SDCARD/boot" "$MOUNT" # ext4
++		run_host_command_logged rsync -aWXh --info=progress0,stats1 "$SDCARD/boot" "$MOUNT" # ext4
+ 	fi
+ 
+ 	call_extension_method "pre_update_initramfs" "config_pre_update_initramfs" <<- 'PRE_UPDATE_INITRAMFS'
