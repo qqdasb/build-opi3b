@@ -15,8 +15,8 @@ jobs:
     - uses: actions/checkout@v4
     - name: Install Depends
       run: |
-        sudo insmod /lib/modules/6.8.0-1027-azure/kernel/lib/raid6/raid6_pq.ko.zst
-        sudo insmod /lib/modules/6.8.0-1027-azure/kernel/crypto/xor.ko.zst
+        sudo insmod /lib/modules/6.8.0-1017-azure/kernel/lib/raid6/raid6_pq.ko.zst
+        sudo insmod /lib/modules/6.8.0-1017-azure/kernel/crypto/xor.ko.zst
         sudo insmod /lib/modules/6.8.0-1017-azure/kernel/fs/btrfs/btrfs.ko.zst
     - name: Build Armbian
       run: |
