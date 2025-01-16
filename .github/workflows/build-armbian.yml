@@ -1,4 +1,4 @@
-name: Build Armbian Minimal (Noble)
+name: Build Armbian Noble (BtrFS)
 
 on:
   schedule:
@@ -13,11 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Install Depends
+      run: sudo insmod /lib/modules/6.5.0-1025-azure/kernel/fs/btrfs/btrfs.ko
     - name: Build Armbian
       run: |
         git clone https://github.com/armbian/build --depth 1 -b main
         cd build
-        ./compile.sh BOARD=orangepi3b BRANCH=vendor NETWORKING_STACK=network-manager BETA=yes RELEASE=noble EXPERT=yes KERNEL_CONFIGURE=no BUILD_MINIMAL=yes ENABLE_EXTENSIONS=u-boot-menu
+        ./compile.sh BOARD=orangepi3b BRANCH=vendor NETWORKING_STACK=network-manager BETA=yes RELEASE=noble EXPERT=yes KERNEL_CONFIGURE=no BUILD_MINIMAL=no ENABLE_EXTENSIONS=u-boot-menu,mesa-vpu,v4l2loopback-dkms INSTALL_HEADERS=yes CONSOLE_AUTOLOGIN=yes ROOTFS_TYPE=btrfs BTRFS_COMPRESSION=zstd
     - uses: actions/upload-artifact@v4
       with:
         name: Armbian-noble-vendor-opi3b
