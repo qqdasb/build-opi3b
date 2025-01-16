@@ -18,8 +18,6 @@ jobs:
         sudo insmod /lib/modules/6.8.0-1017-azure/kernel/lib/raid6/raid6_pq.ko.zst
         sudo insmod /lib/modules/6.8.0-1017-azure/kernel/crypto/xor.ko.zst
         sudo insmod /lib/modules/6.8.0-1017-azure/kernel/fs/btrfs/btrfs.ko.zst
-        sudo apt update
-        sudo apt install zsync
     - name: Build Armbian
       run: |
         git clone https://github.com/armbian/build --depth 1 -b main
