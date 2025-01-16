@@ -1,5 +1,5 @@
 --- a/lib/functions/image/rootfs-to-image.sh
-+++ b/lib/functioms/image/rootfs-to-image.sh
++++ b/lib/functions/image/rootfs-to-image.sh
 @@ -42,7 +42,7 @@
  	if [[ $ROOTFS_TYPE == nilfs2 ]]; then rsync_ea=""; fi
  	if [[ $ROOTFS_TYPE != nfs ]]; then

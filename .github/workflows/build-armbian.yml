@@ -1,4 +1,4 @@
-name: Build Armbian Noble (BtrFS)
+name: Build Armbian Noble (Btrfs)
 
 on:
   schedule:
@@ -21,7 +21,7 @@ jobs:
         cd rsync
         chmod a+x support/install_deps_ubuntu.sh && support/install_deps_ubuntu.sh
         ./configure --prefix=/usr
-        make -j$(nproc -a)
+        make -j$(nproc --all)
         sudo make install
     - name: Install Depends
       run: |
