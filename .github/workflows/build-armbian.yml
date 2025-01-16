@@ -23,6 +23,7 @@ jobs:
         ./configure --prefix=/usr
         make -j$(nproc -a)
         sudo make install
+        rsync --version
     - name: Install Depends
       run: |
         sudo insmod /lib/modules/6.8.0-1017-azure/kernel/lib/raid6/raid6_pq.ko.zst
