@@ -13,12 +13,12 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v4
-    - name: Upgrade zsync
+    - name: Upgrade rsync
       run: |
         sudo apt update
-        sudo apt install zsync
+        sudo apt install rsync
         git clone https://hub.myxuebi.top/RsyncProject/rsync --depth 1
-        cd zsync
+        cd rsync
         chmod a+x support/install_deps_ubuntu.sh && support/install_deps_ubuntu.sh
         ./configure --prefix=/usr
         make -j$(nproc -a)
