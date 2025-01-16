@@ -38,7 +38,10 @@ jobs:
       run: |
         cd src
         export CHROMIUM_BUILDTOOLS_PATH=$(pwd)/buildtools
-        chmod a+x buildtools/linux64/gn/gn
+        ls buildtools
+        ls buildtools/linux64
+        ls buildtools/linux64/*
+        chmod a+x buildtools/linux64/gn
         ./build/install-build-deps.sh --no-android
         ./build/linux/sysroot_scripts/install-sysroot.py --arch=arm64
     - name: Build and Package
@@ -48,7 +51,7 @@ jobs:
         ln -sf $(command -v node) third_party/node/linux/node-linux-x64/bin/
         git apply -v ../*.patch
         git pack-refs --all
-        buildtools/linux64/gn/gn gen out/Release-rkmpp --args='import("//electron/build/args/testing.gn") target_cpu ="arm64"'
+        buildtools/linux64/gn gen out/Release-rkmpp --args='import("//electron/build/args/testing.gn") target_cpu ="arm64"'
         ninja -C out/Release-rkmpp electron -j$(nproc -a)
         electron/script/strip-binaries.py -d out/Release-rkmpp
         ninja -C out/Release-rkmpp electron:electron_dist_zip
