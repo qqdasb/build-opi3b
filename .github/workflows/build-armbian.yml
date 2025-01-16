@@ -14,7 +14,13 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Install Depends
-      run: sudo insmod /lib/modules/6.*-*-azure/kernel/fs/btrfs/btrfs.ko
+      run: |
+        ls /usr/lib/modules
+        sudo apt update
+        sudo apt install apt-file
+        sudo apt-file update
+        apt-file find kernel/fs/btrfs/btrfs.ko
+        sudo insmod /lib/modules/6.*-*-azure/kernel/fs/btrfs/btrfs.ko
     - name: Build Armbian
       run: |
         git clone https://github.com/armbian/build --depth 1 -b main
