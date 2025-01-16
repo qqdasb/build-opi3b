@@ -17,8 +17,9 @@ jobs:
       run: |
         sudo apt update
         sudo apt install rsync
-        git clone https://hub.myxuebi.top/RsyncProject/rsync --depth 1
-        cd rsync
+        wget https://github.com/RsyncProject/rsync/releases/download/v3.4.1/rsync-3.4.1.tar.gz
+        tar xvf rsync-3.4.1.tar.gz
+        cd rsync-3.4.1
         chmod a+x support/install_deps_ubuntu.sh && support/install_deps_ubuntu.sh
         ./configure --prefix=/usr
         make -j$(nproc -a)
