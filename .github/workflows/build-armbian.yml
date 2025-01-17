@@ -33,7 +33,7 @@ jobs:
         git clone https://github.com/armbian/build --depth 1 -b main
         cd build
         git apply -v ../*.patch
-        ./compile.sh BOARD=orangepi3b BRANCH=vendor NETWORKING_STACK=network-manager BETA=yes RELEASE=noble EXPERT=yes KERNEL_CONFIGURE=no BUILD_MINIMAL=no BUILD_DESKTOP=no ENABLE_EXTENSIONS=u-boot-menu,mesa-vpu,v4l2loopback-dkms INSTALL_HEADERS=yes CONSOLE_AUTOLOGIN=yes ROOTFS_TYPE=btrfs BTRFS_COMPRESSION=zstd
+        ./compile.sh BOARD=orangepi3b BRANCH=vendor NETWORKING_STACK=network-manager BETA=yes RELEASE=noble EXPERT=yes KERNEL_CONFIGURE=no BUILD_MINIMAL=no BUILD_DESKTOP=yes DESKTOP_ENVIRONMENT=gnome DESKTOP_ENVIRONMENT_CONFIG_NAME=config_base DESKTOP_APPGROUPS_SELECTED=browsers,chat,desktop_tools,editors,email,internet,multimedia,office,programming,remote_desktop ENABLE_EXTENSIONS=u-boot-menu,mesa-vpu,v4l2loopback-dkms INSTALL_HEADERS=yes CONSOLE_AUTOLOGIN=yes ROOTFS_TYPE=btrfs BTRFS_COMPRESSION=zstd
     - uses: actions/upload-artifact@v4
       with:
         name: Armbian-noble-vendor-opi3b
