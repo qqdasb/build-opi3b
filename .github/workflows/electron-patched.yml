@@ -26,7 +26,10 @@ jobs:
         git clone --depth 1 https://chromium.googlesource.com/chromium/tools/depot_tools.git
         export PATH=$PATH:$(pwd)/depot_tools
         mkdir ~/chromium && cd ~/chromium
-        fetch --nohooks --no-history chromium -b 131.0.6778.268
+        fetch --nohooks --no-history chromium
+        cd src
+        git fetch origin --tagsgit reset --hard 131.0.6778.268
+        gclient sync --force --nohooks --with_branch_heads
     - name: Install Dependencies
       run: |
         cd src
