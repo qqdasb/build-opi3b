@@ -49,10 +49,10 @@ jobs:
         sudo arch-chroot ./manjaro pacman -Sy 7ji-keyring --needed --noconfirm
         sudo arch-chroot ./manjaro pacman -Rdd linux-rc linux-rc-headers --noconfirm
         sudo arch-chroot ./manjaro pacman -S mkinitcpio cryptsetup --needed --noconfirm
-        sudo arch-chroot ./manjaro pacman -S 7Ji/linux-aarch64-rockchip-bsp6.1-joshua-git 7Ji/linux-aarch64-rockchip-bsp6.1-joshua-git-headers --noconfirm
-        sudo arch-chroot ./manjaro sed -i 's|Image|vmlinuz-linux-aarch64-rockchip-bsp6.1-joshua-git|g' /boot/extlinux/extlinux.conf
-        sudo arch-chroot ./manjaro sed -i 's|dtbs|dtbs/linux-aarch64-rockchip-bsp6.1-joshua-git|g' /boot/extlinux/extlinux.conf
-        sudo arch-chroot ./manjaro sed -i 's|initramfs-linux|initramfs-linux-aarch64-rockchip-bsp6.1-joshua-git|g' /boot/extlinux/extlinux.conf
+        sudo arch-chroot ./manjaro pacman -S 7Ji/linux-aarch64-rockchip-bsp5.10-joshua-git 7Ji/linux-aarch64-rockchip-bsp5.10-joshua-git-headers --noconfirm
+        sudo arch-chroot ./manjaro sed -i 's|Image|vmlinuz-linux-aarch64-rockchip-bsp5.10-joshua-git|g' /boot/extlinux/extlinux.conf
+        sudo arch-chroot ./manjaro sed -i 's|dtbs|dtbs/linux-aarch64-rockchip-bsp5.10-joshua-git|g' /boot/extlinux/extlinux.conf
+        sudo arch-chroot ./manjaro sed -i 's|initramfs-linux|initramfs-linux-aarch64-rockchip-bsp5.10-joshua-git|g' /boot/extlinux/extlinux.conf
         sudo arch-chroot ./manjaro ldconfig
         sudo arch-chroot ./manjaro sync
         sudo rm -v ./manjaro/usr/bin/qemu-aarch64-static
