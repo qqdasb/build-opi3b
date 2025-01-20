@@ -1,0 +1,29 @@
+name: Build Armbian Noble Minimal
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  push:
+    branches: [ "armbian" ]
+  pull_request:
+    branches: [ "armbian" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+    - name: Upgrade rsync
+      run: |
+        sudo apt update
+        wget https://launchpadlibrarian.net/770856828/rsync_3.2.7-1ubuntu1.2_amd64.deb
+        sudo apt install ./*.deb
+    - name: Build Armbian
+      run: |
+        git clone https://github.com/armbian/build --depth 1 -b main
+        cd build
+        ./compile.sh BOARD=orangepi3b BRANCH=vendor NETWORKING_STACK=network-manager BETA=yes RELEASE=noble EXPERT=yes KERNEL_CONFIGURE=no BUILD_MINIMAL=yes INSTALL_HEADERS=no
+    - uses: actions/upload-artifact@v4
+      with:
+        name: Armbian-noble-vendor-opi3b
+        path: /home/runner/work/build-opi3b/build-opi3b/build/output/images/*

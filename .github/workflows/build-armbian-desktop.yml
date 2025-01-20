@@ -1,8 +1,6 @@
-name: Build Armbian Noble (Btrfs)
+name: Build Armbian Noble Desktop (Btrfs)
 
 on:
-  schedule:
-    - cron: "0 0 * * *"
   push:
     branches: [ "armbian" ]
   pull_request:
