@@ -25,7 +25,7 @@ jobs:
         sudo arch-chroot root.x86_64 pacman-key --init
         sudo arch-chroot root.x86_64 pacman-key --populate
         echo 'Server = https://geo.mirror.pkgbuild.com/$repo/os/$arch' | sudo tee root.x86_64/etc/pacman.d/mirrorlist
-        sudo arch-chroot root.x86_64 pacman -Syu --noconfirm --needed base-devel sudo
+        sudo arch-chroot root.x86_64 pacman -Syu --noconfirm --needed base-devel sudo git
         sudo sed -i 's|# $wheel  ALL=(ALL:ALL) NOPASSWD:ALL|$wheel  ALL=(ALL:ALL) NOPASSWD:ALL|g' root.x86_64/etc/sudoers
         sudo arch-chroot root.x86_64 useradd -m -g wheel -s /bin/bash builder
     - name: Build
