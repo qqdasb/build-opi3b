@@ -1,0 +1,33 @@
+name: Build Armbian's Kernel for Arch-based
+
+on:
+#  schedule:
+#    - cron: "0 0 * * *"
+  push:
+    branches: [ "manjaro" ]
+  pull_request:
+    branches: [ "manjaro" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Prepare Arch Linux Chroot
+      run: |
+        sudo apt update && sudo apt install arch-install-scripts
+        wget https://geo.mirror.pkgbuild.com/iso/latest/archlinux-bootstrap-x86_64.tar.zst
+        tar xf archlinux-bootstrap-x86_64.tar.zst
+        rm archlinux-bootstrap-x86_64.tar.zst pkglist.x86_64.txt
+        sudo arch-chroot root.x86_64 pacman -Syu --noconfirm base-devel
+    - name: Build
+      run: |
+        git clone https://github.com/qqdasb/linux-aarch64-rockchip-rk6.1-opi3b-git
+        sudo arch-chroot root.x86_64 makepkg -s ./linux-aarch64-rockchip-rk6.1-opi3b-git
+    - name: 'Upload Built Packages'
+      uses: actions/upload-artifact@v4
+      with:
+        name: Arch-based-kernel-armbian
+        path: ./*.zst
