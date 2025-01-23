@@ -1,12 +1,12 @@
 name: Build Armbian Noble Kernel
 
 on:
-  schedule:
-     - cron: "0 0 * * *"
-  push:
-    branches: [ "armbian" ]
-  pull_request:
-    branches: [ "armbian" ]
+#  schedule:
+#     - cron: "0 0 * * *"
+#  push:
+#    branches: [ "armbian" ]
+#  pull_request:
+#    branches: [ "armbian" ]
 
 jobs:
   build:
