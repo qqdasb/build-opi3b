@@ -22,7 +22,7 @@ jobs:
       run: |
         git clone https://github.com/armbian/build --depth 1 -b main
         cd build
-        ./compile.sh kernel BOARD=orangepi3b BRANCH=vendor PREFER_DOCKER=no BUILD_KSRC=yes
+        ./compile.sh kernel BOARD=orangepi3b BRANCH=vendor PREFER_DOCKER=no BUILD_KSRC=yes BUILD_ONLY="kernel"
     - uses: actions/upload-artifact@v4
       with:
         name: Armbian-vendor-kernel-src
