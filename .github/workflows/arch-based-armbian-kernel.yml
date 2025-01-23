@@ -29,8 +29,7 @@ jobs:
     - name: Build
       run: |
         git clone https://github.com/qqdasb/linux-aarch64-rockchip-rk6.1-opi3b-git
-        sudo arch-chroot root.x86_64 makepkg -s ./linux-aarch64-rockchip-rk6.1-opi3b-git
-        sudo umount mountpoint
+        sudo arch-chroot root.x86_64 makepkg -s --asroot ./linux-aarch64-rockchip-rk6.1-opi3b-git 
     - name: 'Upload Built Packages'
       uses: actions/upload-artifact@v4
       with:
