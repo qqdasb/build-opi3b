@@ -1,4 +1,4 @@
-name: Build Armbian Noble Minimal
+name: Build Armbian Noble Kernel
 
 on:
 #   schedule:
@@ -18,11 +18,11 @@ jobs:
         sudo apt update
         wget https://launchpadlibrarian.net/770856828/rsync_3.2.7-1ubuntu1.2_amd64.deb
         sudo apt install ./*.deb
-    - name: Build Armbian
+    - name: Build Armbian Kernel
       run: |
         git clone https://github.com/armbian/build --depth 1 -b main
         cd build
-        ./compile.sh kernel BOARD=orangepi3b BRANCH=vendor PREFER_DOCKER=no
+        ./compile.sh kernel BOARD=orangepi3b BRANCH=vendor PREFER_DOCKER=no BUILD_KSRC=yes
     - uses: actions/upload-artifact@v4
       with:
         name: Armbian-vendor-kernel-src
