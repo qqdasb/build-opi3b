@@ -28,7 +28,7 @@ jobs:
         sudo arch-chroot rootfs pacman-key --init
         sudo arch-chroot rootfs pacman-key --populate
         sudo arch-chroot rootfs pacman -R --noconfirm linux-aarch64 linux-firmware
-        sudo arch-chroot rootfs pacman -Syu --noconfirm --needed base-devel sudo git cpio xmlto docbook-xsl inetutils bc dtc
+        sudo arch-chroot rootfs pacman -Syu --noconfirm --needed --disable-download-timeout base-devel sudo git
         sudo sed -i 's|#MAKEFLAGS="-j2"|MAKEFLAGS="-j$(nproc --all)"|g' rootfs/etc/makepkg.conf
         sudo sed -i 's|# %wheel ALL=(ALL:ALL) NOPASSWD: ALL|%wheel ALL=(ALL:ALL) NOPASSWD: ALL|g' rootfs/etc/sudoers
         sudo arch-chroot rootfs useradd -m -s /bin/bash builder
