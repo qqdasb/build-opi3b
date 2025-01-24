@@ -36,7 +36,7 @@ jobs:
     - name: Build
       run: |
         sudo arch-chroot rootfs su builder -c 'git clone https://github.com/qqdasb/linux-aarch64-rockchip-6.1-armbian-git /home/builder/linux-aarch64-rockchip-6.1-armbian-git'
-        sudo arch-chroot rootfs su builder -c 'cd /home/builder/linux-aarch64-rockchip-6.1-armbian-git && makepkg -s'
+        sudo arch-chroot rootfs su builder -c 'cd /home/builder/linux-aarch64-rockchip-6.1-armbian-git && makepkg -s --noconfirm'
         sudo mv rootfs/home/builder/linux-aarch64-rockchip-6.1-armbian-git/*.zst .
     - name: 'Upload Built Packages'
       uses: actions/upload-artifact@v4
