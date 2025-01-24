@@ -31,7 +31,7 @@ jobs:
     - name: Build
       run: |
         sudo arch-chroot root.x86_64 su builder -c 'git clone https://github.com/qqdasb/linux-aarch64-rockchip-rk6.1-opi3b-git /home/builder/linux-aarch64-rockchip-rk6.1-opi3b-git'
-        sudo arch-chroot root.x86_64 su builder -c 'cd /home/builder/linux-aarch64-rockchip-rk6.1-opi3b-git && makepkg -s'
+        sudo arch-chroot root.x86_64 su builder -c 'cd /home/builder/linux-aarch64-rockchip-rk6.1-opi3b-git && env CC=aarch64-linux-gnu-gcc CXX=aarch64-linux-gnu-cpp makepkg -s'
         sudo mv root.x86_64/home/builder/linux-aarch64-rockchip-rk6.1-opi3b-git/*.zst .
     - name: 'Upload Built Packages'
       uses: actions/upload-artifact@v4
