@@ -1,8 +1,8 @@
 name: Build Armbian's Kernel for Arch-based
 
 on:
-#  schedule:
-#    - cron: "0 0 * * *"
+  schedule:
+    - cron: "0 0 * * *"
   push:
     branches: [ "manjaro" ]
   pull_request:
@@ -33,10 +33,9 @@ jobs:
     - name: Build
       run: |
         sudo arch-chroot root.x86_64 su builder -c 'git clone https://github.com/qqdasb/linux-aarch64-rockchip-6.1-armbian-git-cross /home/builder/linux-aarch64-rockchip-6.1-armbian-git-cross'
-        sudo arch-chroot root.x86_64 su builder -c 'cd /home/builder/linux-aarch64-rockchip-6.1-armbian-git-cross && makepkg -s --noconfirm'
-        sudo find root.x86_64 -name *.zst
+        sudo arch-chroot root.x86_64 su builder -c 'cd /home/builder/linux-aarch64-rockchip-6.1-armbian-git-cross && makepkg -s -A --noconfirm'
     - name: 'Upload Built Packages'
       uses: actions/upload-artifact@v4
       with:
         name: Arch-based-kernel-armbian
-        path: ./*.zst
+        path: ./root.x86_64/home/builder/linux-aarch64-rockchip-6.1-armbian-git-cross/*.zst
