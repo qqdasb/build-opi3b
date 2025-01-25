@@ -26,19 +26,19 @@ jobs:
         sudo arch-chroot root.x86_64 pacman-key --populate
         sudo sed -i 's|#Server = https://geo.mirror.pkgbuild.com/$repo/os/$arch|Server = https://geo.mirror.pkgbuild.com/$repo/os/$arch|g' root.x86_64/etc/pacman.d/mirrorlist
         sudo arch-chroot root.x86_64 pacman -Syu --noconfirm --needed --disable-download-timeout base-devel sudo git
-        sudo sed -i 's|#MAKEFLAGS="-j2"|MAKEFLAGS="-j$(nproc --all)"|g' root.x86_64/etc/makepkg.conf
+        sudo git apply -v ./makepkg-cross.patch
         sudo sed -i 's|# %wheel ALL=(ALL:ALL) NOPASSWD: ALL|%wheel ALL=(ALL:ALL) NOPASSWD: ALL|g' root.x86_64/etc/sudoers
         sudo arch-chroot root.x86_64 useradd -m -s /bin/bash builder
         sudo arch-chroot root.x86_64 usermod -g wheel builder
     - name: Build
       run: |
-        sudo arch-chroot root.x86_64 su builder -c 'git clone https://github.com/qqdasb/linux-aarch64-rockchip-6.1-armbian-git-cross /home/builder/linux-aarch64-rockchip-6.1-armbian-git-cross'
-        sudo arch-chroot root.x86_64 su builder -c 'cd /home/builder/linux-aarch64-rockchip-6.1-armbian-git-cross && makepkg -s -A --noconfirm'
-        sudo chown -R $USER root.x86_64/home/builder/linux-aarch64-rockchip-6.1-armbian-git-cross
-        sudo ls root.x86_64/home/builder/linux-aarch64-rockchip-6.1-armbian-git-cross
-        sudo tar cvf Armbian-kernel.tar.gz root.x86_64/home/builder/linux-aarch64-rockchip-6.1-armbian-git-cross/*.zst
+        sudo arch-chroot root.x86_64 su builder -c 'git clone https://github.com/qqdasb/linux-aarch64-rockchip-6.1-armbian-git /home/builder/linux-aarch64-rockchip-6.1-armbian-git'
+        sudo arch-chroot root.x86_64 su builder -c 'cd /home/builder/linux-aarch64-rockchip-6.1-armbian-git && makepkg -s -A --noconfirm'
+        sudo ls root.x86_64/home/builder/linux-aarch64-rockchip-6.1-armbian-git
+        sudo chown $USER root.x86_64/home/builder/linux-aarch64-rockchip-6.1-armbian-git/*.zst
+        sudo chmod a+x root.x86_64/home/builder/linux-aarch64-rockchip-6.1-armbian-git/*.zst
     - name: 'Upload Built Packages'
       uses: actions/upload-artifact@v4
       with:
         name: Arch-based-kernel-armbian
-        path: Armbian-kernel.tar.gz
+        path: root.x86_64/home/builder/linux-aarch64-rockchip-6.1-armbian-git/*.zst
