@@ -15,7 +15,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Prepare Arch Linux ARM Chroot
+    - name: Prepare Arch Linux x86_64 Chroot
       run: |
         sudo apt update && sudo apt install arch-install-scripts
         wget https://geo.mirror.pkgbuild.com/iso/latest/archlinux-bootstrap-x86_64.tar.zst -q
