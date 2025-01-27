@@ -25,7 +25,7 @@ jobs:
         sudo arch-chroot root.x86_64 pacman-key --init
         sudo arch-chroot root.x86_64 pacman-key --populate
         sudo sed -i 's|#Server = https://geo.mirror.pkgbuild.com/$repo/os/$arch|Server = https://geo.mirror.pkgbuild.com/$repo/os/$arch|g' root.x86_64/etc/pacman.d/mirrorlist
-        sudo arch-chroot root.x86_64 pacman -Syu --noconfirm --needed --disable-download-timeout base-devel sudo git
+        sudo arch-chroot root.x86_64 pacman -Syu --noconfirm --needed --disable-download-timeout base-devel sudo git aarch64-linux-gnu-gcc
         sudo git apply -v ./makepkg-cross.patch
         sudo sed -i 's|# %wheel ALL=(ALL:ALL) NOPASSWD: ALL|%wheel ALL=(ALL:ALL) NOPASSWD: ALL|g' root.x86_64/etc/sudoers
         sudo arch-chroot root.x86_64 useradd -m -s /bin/bash builder
@@ -33,12 +33,9 @@ jobs:
     - name: Build
       run: |
         sudo arch-chroot root.x86_64 su builder -c 'git clone https://github.com/qqdasb/linux-aarch64-rockchip-6.1-armbian-git /home/builder/linux-aarch64-rockchip-6.1-armbian-git'
-        sudo arch-chroot root.x86_64 su builder -c 'cd /home/builder/linux-aarch64-rockchip-6.1-armbian-git && makepkg -s -A --noconfirm'
-        sudo ls root.x86_64/home/builder/linux-aarch64-rockchip-6.1-armbian-git
-        sudo chown $USER root.x86_64/home/builder/linux-aarch64-rockchip-6.1-armbian-git/*.zst
-        sudo chmod a+x root.x86_64/home/builder/linux-aarch64-rockchip-6.1-armbian-git/*.zst
+        sudo arch-chroot root.x86_64 su builder -c 'cd /home/builder/linux-aarch64-rockchip-6.1-armbian-git && makepkg -s -A aarch64 --noconfirm'
     - name: 'Upload Built Packages'
       uses: actions/upload-artifact@v4
       with:
         name: Arch-based-kernel-armbian
-        path: root.x86_64/home/builder/linux-aarch64-rockchip-6.1-armbian-git/*.zst
+        path: 
